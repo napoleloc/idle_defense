@@ -1,11 +1,12 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using EncosyTower.Modules.AddressableKeys;
 using EncosyTower.Modules.Logging;
 using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.Extended.UI;
+using Module.Entities.Tower;
+using Module.Entities.Tower.PubSub;
 using Module.GameCommon.PubSub;
 using Module.GameUI;
 using Module.Worlds.BattleWorld.Map;
@@ -47,10 +48,14 @@ namespace Module.MainGame.Gameplay
         {
             // TODO:
             await GlobalValueVault<bool>.WaitUntil(MapLoader.PresetId, true, token);
+            await GlobalValueVault<bool>.WaitUntil(TowerLoader.PresetId, true, token);
 
             // TODO:
             await WorldMessenger.Publisher.MapScope()
                 .PublishAsync(new AsyncMessage<LoadMapMessage>(new LoadMapMessage()));
+
+            await WorldMessenger.Publisher.TowerScope()
+                .PublishAsync(new AsyncMessage<LoadTowerMessage>(new LoadTowerMessage(1)));
 
             // TODO:
             await WorldMessenger.Publisher.UIScope()
@@ -61,6 +66,9 @@ namespace Module.MainGame.Gameplay
         {
             await WorldMessenger.Publisher.MapScope()
                 .PublishAsync(new AsyncMessage<UnloadMapMessage>(new UnloadMapMessage()));
+
+            WorldMessenger.Publisher.TowerScope()
+                .Publish(new UnloadMapMessage());
         }
     }
 }
