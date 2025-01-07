@@ -19,7 +19,7 @@ namespace Module.Entities.Characters.Enemy.Builder
             return go.GetComponent<MinionBuilder>();
         }
 
-        protected override async UniTask InitializePool()
+        public override async UniTask InitializePool()
         {
             var map = PoolMap;
 

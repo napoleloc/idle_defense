@@ -11,7 +11,12 @@ namespace Module.Entities.Characters.Enemy.Builder
     {
         protected readonly Dictionary<TId, GameObjectPool> PoolMap = new();
         
-        protected abstract UniTask InitializePool();
+        private async void Start()
+        {
+            await InitializePool();
+        }
+
+        public abstract UniTask InitializePool();
 
         public bool TryGetFromPool(TId id, bool activate, out GameObject instance)
         {
@@ -23,6 +28,16 @@ namespace Module.Entities.Characters.Enemy.Builder
 
             instance = default(GameObject);
             return false;
+        }
+
+        public GameObject GetFromPool(TId id, bool activate)
+        {
+            if (PoolMap.TryGetValue(id, out GameObjectPool pool))
+            {
+                return pool.RentGameObject(activate);
+            }
+
+           return default(GameObject);
         }
 
         public void ReturnToPool(TId id, GameObject instance)
