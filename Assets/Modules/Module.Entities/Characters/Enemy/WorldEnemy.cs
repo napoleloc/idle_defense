@@ -4,7 +4,6 @@ using EncosyTower.Modules.Pooling;
 using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
-using Module.Entities.Characters.Enemy.Builder;
 using Module.Entities.Characters.Enemy.PubSub;
 using UnityEngine;
 
@@ -15,12 +14,6 @@ namespace Module.Entities.Characters.Enemy
         public static readonly Id<WorldEnemy> PresetId = default;
 
         private readonly ArrayMap<Id, GameObject> _enemies = new();
-
-        [SerializeField]
-        private EnemyBuildingConfigAsset _buildingConfig;
-
-        private MinionBuilder _minionBuilder;
-        private EliteBuilder _eliteBuilder;
 
         private void Start()
         {
@@ -36,33 +29,6 @@ namespace Module.Entities.Characters.Enemy
         }
 
         private void Initialize()
-        {
-            var configs = _buildingConfig.BuildingConfigs.Span;
-
-            for (int i = 0; i < configs.Length; i++)
-            {
-                var config = configs[i];
-
-                switch (config.Type)
-                {
-                    case GameCommon.EnemyType.Minion:
-                    {
-                        _minionBuilder = MinionBuilder.CreateInstance(config, transform);
-                        break;
-                    }
-
-                    case GameCommon.EnemyType.Elite:
-                    {
-                        _eliteBuilder = EliteBuilder.CreateInstance(config, transform);
-                        break;
-                    }
-                }
-            }
-
-            OnInitialize();
-        }
-
-        private void OnInitialize()
         {
             var subscriber = WorldMessenger.Subscriber.EnemyScope().WithState(this);
             subscriber.Subscribe<RegisterEnemyMessage>(static (state, msg) => state.Handle(msg));
