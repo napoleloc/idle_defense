@@ -1,0 +1,27 @@
+{
+    "name": "Module.GameUI",
+    "rootNamespace": "Module.GameUI",
+    "references": [
+        "EncosyTower.Modules",
+        "LitMotion",
+        "LitMotion.Extensions",
+        "Module.Core",
+        "Module.Core.Extended",
+        "Module.Data",
+        "Module.Entities",
+        "Module.GameCommon",
+        "UniTask",
+        "Unity.Collections",
+        "Unity.TextMeshPro",
+        "ZBase.UnityScreenNavigator"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

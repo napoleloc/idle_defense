@@ -1,0 +1,14 @@
+{
+    "name": "Module.Entities.Authoring",
+    "rootNamespace": "Module.Entities.Authoring",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

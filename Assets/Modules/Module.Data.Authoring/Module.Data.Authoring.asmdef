@@ -1,0 +1,14 @@
+{
+    "name": "Module.Data.Authoring",
+    "rootNamespace": "Module.Data.Authoring",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

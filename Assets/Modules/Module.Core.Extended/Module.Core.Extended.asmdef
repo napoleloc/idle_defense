@@ -1,0 +1,28 @@
+{
+    "name": "Module.Core.Extended",
+    "rootNamespace": "Module.Core.Extended",
+    "references": [
+        "EncosyTower.Modules",
+        "LitMotion",
+        "LitMotion.Extensions",
+        "Module.Core",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables",
+        "Unity.Cinemachine",
+        "Unity.Collections",
+        "Unity.ResourceManager",
+        "Unity.TextMeshPro",
+        "ZBase.UnityScreenNavigator",
+        "ZString"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

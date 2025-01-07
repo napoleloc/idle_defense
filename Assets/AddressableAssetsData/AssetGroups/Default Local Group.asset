@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: e39a26e90d837e54faebaae754c4af5d
+  m_SerializeEntries:
+  - m_GUID: 00847929326fedf47a131061a9b6d505
+    m_Address: prefab-world-camera
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 154a2f3b776a9a845930e20f65094ed2
+    m_Address: prefab-gameplay-manager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2aa3745651801334ba3d2d3dfe0f5248
+    m_Address: 1-scene-gameplay-map-1-3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2f17980d96792ee42a580fd5e6c0abe5
+    m_Address: 1-scene-gameplay-map-1-2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3353a210c34c5ac45ba7fd080e6cecc2
+    m_Address: prefab-screen-shop
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3a281a9f953a4fe4086bb6de863a6fc4
+    m_Address: prefab-world-timer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 42b73c07e7597c041be8b7e90235b4e4
+    m_Address: prefab-input-recevier
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c13ab91f4359224890196ff5abd3fd9
+    m_Address: sfx_ui_claim
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 931b8aa06e046c348afff52bef6346fa
+    m_Address: prefab-screen-main-lobby
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93297896e5feab0439a939392857dd5b
+    m_Address: prefab-world-enemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9983ecfcbe784874ea93da93a67a4a47
+    m_Address: prefab-character-minion_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f6cb149f788021489f109a8967811cd
+    m_Address: prefab-modal-setting
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8d30e705bf866c4ab3e710fe74b10ce
+    m_Address: prefab-screen-ingame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ab9084a5262042142b4148a60b072cb6
+    m_Address: 1-scene-gameplay-map-1-1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b189e5ee72420214f9f52ad79bae4aab
+    m_Address: prefab-world-audio
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b621c6152ce9e994381d932f43288e06
+    m_Address: prefab-modal-mail
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd1537b17beb452478925d067add9a2e
+    m_Address: 1-scene-gameplay-map-1-4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c3ddeb37b09fe8b4da5e0f14ac368c70
+    m_Address: 1-scene-gameplay-map-1-5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d11e2d79cbb45414c9981ec86dcf91b1
+    m_Address: prefab-map-loader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f3dcc6eff0399174d9a961da0999cdfc
+    m_Address: prefab-currency-manager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f8239a5fa0067e94cab40d87063e9429
+    m_Address: prefab-modal-pause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1558df4e52bfb91449578bb5800bcc45, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 6b0373987a565d74aa0af8e4d3ee6849, type: 2}
+    - {fileID: 11400000, guid: b91f535fe8faa104cb7609c0fcd27f80, type: 2}

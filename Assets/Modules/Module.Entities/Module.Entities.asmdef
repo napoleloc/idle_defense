@@ -1,0 +1,25 @@
+{
+    "name": "Module.Entities",
+    "rootNamespace": "Module.Entities",
+    "references": [
+        "EncosyTower.Modules",
+        "Module.Core",
+        "Module.Core.Extended",
+        "Module.GameCommon",
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables",
+        "Unity.Cinemachine",
+        "Unity.Collections",
+        "Unity.ResourceManager"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
