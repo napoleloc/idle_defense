@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using EncosyTower.Modules;
 using EncosyTower.Modules.Vaults;
+using Module.Core.Extended.Camera;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -18,20 +20,21 @@ namespace Module.Entities.Tower
         private TowerTargetFindingComponent _targetFindingComponent;
         private TowerUpgradeComponent _upgradeComponent;
 
+        private WorldCamera _worldCamera;
+
         private void Awake()
         {
             InitializeDependencies();
         }
 
-        private void Start()
+        private async void Start()
         {
-            Initialize();
+            await InitializeAsync();
         }
 
         private void OnDestroy()
         {
-            GlobalValueVault<bool>.TrySet(PresetId, false);
-            GlobalObjectVault.TryRemove(PresetId, out _);
+            Deinitialize();
         }
 
         private void Update()
@@ -49,17 +52,40 @@ namespace Module.Entities.Tower
             _upgradeComponent = GetComponent<TowerUpgradeComponent>();
         }
 
-        private void Initialize()
+        private async UniTask InitializeAsync()
         {
+            await GlobalValueVault<bool>.WaitUntil(WorldCamera.PresetId, true);
             OnInitialize();
         }
 
         private void OnInitialize()
         {
+            if(GlobalObjectVault.TryGet(WorldCamera.PresetId, out _worldCamera))
+            {
+                _worldCamera.Cameras.Span[0].Follow = transform;
+            }
+
+            _attributeComponent.Initialize();
+            _upgradeComponent.Initialize();
+
             _initialized = true;
 
             GlobalObjectVault.TryAdd(PresetId, this);
             GlobalValueVault<bool>.TrySet(PresetId, true);
+        }
+
+        private void Deinitialize()
+        {
+            if(_initialized == false)
+            {
+                return;
+            }
+
+            _attributeComponent.Deinitialize();
+            _upgradeComponent.Deinitialize();
+
+            GlobalValueVault<bool>.TrySet(PresetId, false);
+            GlobalObjectVault.TryRemove(PresetId, out _);
         }
 
         private void UpdateComponents()
