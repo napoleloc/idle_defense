@@ -131,7 +131,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fc0c2df981da0554bbb74d50d918e616
-    m_Address: Assets/Addressables/assets-prefab-preload/1-scene-gameplay/prefab-quest-progress-manager.prefab
+    m_Address: prefab-quest-progress-manager
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
