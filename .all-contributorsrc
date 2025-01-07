@@ -1,0 +1,36 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitType": "docs",
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "xMikelzt0",
+      "name": "bn_khanh",
+      "avatar_url": "https://avatars.githubusercontent.com/u/130061141?v=4",
+      "profile": "https://github.com/xMikelzt0",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ntk27092004",
+      "name": "ntk27092004",
+      "avatar_url": "https://avatars.githubusercontent.com/u/130061141?v=4",
+      "profile": "https://github.com/ntk27092004",
+      "contributions": [
+        "code"
+      ]
+    }
+    
+  ],
+  "contributorsPerLine": 7,
+  "skipCi": true,
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "projectName": "idle_defense",
+  "projectOwner": "napoleloc"
+}
