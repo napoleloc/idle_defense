@@ -29,6 +29,8 @@ namespace Module.MainGame
         private const string TOWER_LOADER_NAME = "prefab-tower-loader";
 
         private const string WORLD_ENEMY_NAME = "prefab-world-enemy";
+        private const string ENEMY_POOLER_NAME = "prefab-enemy-pooler";
+        private const string ENEMY_PROGRESS_MANAGER_NAME = "prefab-enemy-progress-manager";
 
         private CancellationTokenSource _initCts;
 
@@ -70,14 +72,14 @@ namespace Module.MainGame
             var gamePlayScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
 
             var handleGameplay = new AddressableKey<GameObject>(GAMEPLAY_MANAGER_NAME);
-            var currencyHandle = new AddressableKey<GameObject>(CURRENCY_MANAGER_NAME);
+            var handleCurrency = new AddressableKey<GameObject>(CURRENCY_MANAGER_NAME);
             var handleInput = new AddressableKey<GameObject>(INPUT_RECEVIER_NAME);
             var handleQuest = new AddressableKey<GameObject>(QUEST_PROGRESS_MANAGER_NAME);
             var handleMapLoader = new AddressableKey<GameObject>(MAP_LOADER_NAME);
             var handleTowerLoader = new AddressableKey<GameObject>(TOWER_LOADER_NAME);
             
             await handleGameplay.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
-            await currencyHandle.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
+            await handleCurrency.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleInput.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleQuest.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleMapLoader.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
@@ -87,11 +89,15 @@ namespace Module.MainGame
         private async UniTask InitEnemySceneAsyncInternal(CancellationToken token)
         {
             //TODO: Initialization logic for the created scene.
-            var scene = SceneManager.CreateScene(SCENE_ENTITIES_ENEMY_NAME);
+            var sceneScene = SceneManager.CreateScene(SCENE_ENTITIES_ENEMY_NAME);
 
             var handleWorldEnemy = new AddressableKey<GameObject>(WORLD_ENEMY_NAME);
+            var handleEnemyPooler = new AddressableKey<GameObject>(ENEMY_POOLER_NAME);
+            var handleEnemyProgress = new AddressableKey<GameObject>(ENEMY_PROGRESS_MANAGER_NAME);
 
-            await handleWorldEnemy.InstantiateAsync(scene, trimCloneSuffix: true);
+            await handleWorldEnemy.InstantiateAsync(sceneScene, trimCloneSuffix: true);
+            await handleEnemyPooler.InstantiateAsync(sceneScene, trimCloneSuffix: true);
+            await handleEnemyProgress.InstantiateAsync(sceneScene, trimCloneSuffix: true);
         }
 
         private async UniTask InitDebugSceneAsyncInternal(CancellationToken token)
