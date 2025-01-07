@@ -34,11 +34,11 @@ namespace Module.Entities.Tower.PubSub
     public static class MessengerTowerScopeExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MessageSubscriber.Subscriber<TowerScope> TowerScope(MessageSubscriber self)
+        public static MessageSubscriber.Subscriber<TowerScope> TowerScope(this MessageSubscriber self)
             => self.Scope<TowerScope>(default);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MessagePublisher.Publisher<TowerScope> TowerScope(MessagePublisher self)
+        public static MessagePublisher.Publisher<TowerScope> TowerScope(this MessagePublisher self)
             => self.Scope<TowerScope>(default);
     }
 }
