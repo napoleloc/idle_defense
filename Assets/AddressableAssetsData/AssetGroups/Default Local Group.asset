@@ -55,6 +55,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 506d7f87f2e42dd4c97c7f00d75c293c
+    m_Address: Assets/Addressables/assets-prefab-preload/prefab-tower-loader.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 931b8aa06e046c348afff52bef6346fa
     m_Address: prefab-screen-main-lobby
     m_ReadOnly: 0
