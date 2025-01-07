@@ -65,7 +65,7 @@ namespace Module.Core
             }
         }
 
-        public static void GetRandomPointsOnEdge(this Vector3 center, float radius, ref NativeList<Vector3> points, int count)
+        public static void GetRandomPointsOnEdge(this Vector3 center, float radius, ref NativeList<Vector3> points, uint count)
         {
             if (points.IsCreated == false)
             {
