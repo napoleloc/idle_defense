@@ -56,7 +56,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 506d7f87f2e42dd4c97c7f00d75c293c
-    m_Address: Assets/Addressables/assets-prefab-preload/prefab-tower-loader.prefab
+    m_Address: prefab-tower-loader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 74dc640e510ad1e4c920eceb3ca34032
+    m_Address: prefab-tower-1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -122,6 +127,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f8239a5fa0067e94cab40d87063e9429
     m_Address: prefab-modal-pause
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fc0c2df981da0554bbb74d50d918e616
+    m_Address: Assets/Addressables/assets-prefab-preload/1-scene-gameplay/prefab-quest-progress-manager.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
