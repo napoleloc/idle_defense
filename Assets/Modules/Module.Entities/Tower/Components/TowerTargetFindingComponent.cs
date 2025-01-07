@@ -11,15 +11,18 @@ namespace Module.Entities.Tower
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField, ReadOnly]
         private bool _hasTarget;
-        [SerializeField, ReadOnly]
+        [SerializeField]
         private float _searchRange;
-        [SerializeField, ReadOnly]
+        [SerializeField]
         private float _searchInerval;
         [SerializeField, ReadOnly]
         private float _nextClosestCheckTime;
 
         private WorldEnemy _worldEnemy;
         private GameObject _enemyTarget;
+
+        public bool HasTarget => _hasTarget;
+        public GameObject TargetEnemy => _enemyTarget;
 
         public void UpdateComponent()
         {

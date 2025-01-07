@@ -11,13 +11,14 @@ namespace Module.Entities.Tower
     {
         public static readonly Id<TowerController> PresetId = default;
 
-        [BoxGroup("Debugging", centerLabel: true)]
+        [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField, ReadOnly]
         private bool _initialized;
 
         // Components
         private TowerAttributeComponent _attributeComponent;
         private TowerTargetFindingComponent _targetFindingComponent;
+        private TowerWeaponComponent _weaponComponent;
         private TowerUpgradeComponent _upgradeComponent;
 
         private WorldCamera _worldCamera;
@@ -49,6 +50,7 @@ namespace Module.Entities.Tower
         {
             _attributeComponent = GetComponent<TowerAttributeComponent>();
             _targetFindingComponent = GetComponent<TowerTargetFindingComponent>();
+            _weaponComponent = GetComponent<TowerWeaponComponent>();
             _upgradeComponent = GetComponent<TowerUpgradeComponent>();
         }
 
