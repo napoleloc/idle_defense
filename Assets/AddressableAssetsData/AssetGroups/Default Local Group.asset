@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 25a1f9a4d5ef28a4c8a0436473666424
+    m_Address: prefab-enemy-progress-manager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2aa3745651801334ba3d2d3dfe0f5248
     m_Address: 1-scene-gameplay-map-1-3
     m_ReadOnly: 0
@@ -60,6 +65,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 52d91da01435834468b1e6576e356917
+    m_Address: prefab-enemy-pooler
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74dc640e510ad1e4c920eceb3ca34032
     m_Address: prefab-tower-1
     m_ReadOnly: 0
@@ -87,6 +97,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a8d30e705bf866c4ab3e710fe74b10ce
     m_Address: prefab-screen-ingame
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa8b8fce425b9c54c9d875327ce30355
+    m_Address: prefab-character-elite_1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
