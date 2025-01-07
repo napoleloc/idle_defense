@@ -16,6 +16,7 @@ namespace Module.Entities.Characters.Enemy.AI
         protected NavMeshAgent navMeshAgent;
         protected CharacterController characterController;
         protected CharacterPhysicsComponent characterPhysicsComponent;
+        protected CharacterAnimationComponent characterAnimationComponent;
 
         protected Id uniqueId;
         protected bool isAlive;
@@ -23,6 +24,7 @@ namespace Module.Entities.Characters.Enemy.AI
         public NavMeshAgent NavMeshAgent => navMeshAgent;
         public CharacterController CharacterController => characterController;
         public CharacterPhysicsComponent CharacterPhysicsComponent => characterPhysicsComponent;
+        public CharacterAnimationComponent CharacterAnimationComponent => characterAnimationComponent;
 
         public bool IsAlive => isAlive;
 
@@ -52,6 +54,7 @@ namespace Module.Entities.Characters.Enemy.AI
             navMeshAgent = GetComponent<NavMeshAgent>();
             characterController = GetComponent<CharacterController>();
             characterPhysicsComponent = GetComponent<CharacterPhysicsComponent>();
+            characterAnimationComponent = GetComponent<CharacterAnimationComponent>();
 
             navMeshAgent.enabled = false;
             characterPhysicsComponent.Deactivate();
