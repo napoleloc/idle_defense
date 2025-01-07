@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4066496004667733386}
+  - component: {fileID: 3838839914403174552}
   m_Layer: 0
   m_Name: model-character-enemy-1-0
   m_TagString: Untagged
@@ -32,6 +33,29 @@ Transform:
   - {fileID: 4400788806238663923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3838839914403174552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3141190789411615888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6d52c7e9120c3e4c9ec2bf0026158f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _anims:
+  - anim: 10
+    clip: {fileID: 4619305532684575560, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+  - anim: 0
+    clip: {fileID: 345275505875579249, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+  - anim: 30
+    clip: {fileID: 3174661419259135242, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+  - anim: 20
+    clip: {fileID: 4195386022990170606, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+  - anim: 21
+    clip: {fileID: -6245521900707845422, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
 --- !u!1001 &4222132790325646104
 PrefabInstance:
   m_ObjectHideFlags: 0
