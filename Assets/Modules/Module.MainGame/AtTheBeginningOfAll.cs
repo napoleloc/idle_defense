@@ -25,6 +25,7 @@ namespace Module.MainGame
         private const string CURRENCY_MANAGER_NAME = "prefab-currency-manager";
         private const string INPUT_RECEVIER_NAME = "prefab-input-recevier";
         private const string MAP_LOADER_NAME = "prefab-map-loader";
+        private const string TOWER_LOADER_NAME = "prefab-tower-loader";
 
         private const string WORLD_ENEMY_NAME = "prefab-world-enemy";
 
@@ -71,11 +72,13 @@ namespace Module.MainGame
             var currencyHandle = new AddressableKey<GameObject>(CURRENCY_MANAGER_NAME);
             var handleInput = new AddressableKey<GameObject>(INPUT_RECEVIER_NAME);
             var handleMapLoader = new AddressableKey<GameObject>(MAP_LOADER_NAME);
+            var handleTowerLoader = new AddressableKey<GameObject>(TOWER_LOADER_NAME);
             
             await handleGameplay.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await currencyHandle.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleInput.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleMapLoader.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
+            await handleTowerLoader.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
         }
 
         private async UniTask InitEnemySceneAsyncInternal(CancellationToken token)
