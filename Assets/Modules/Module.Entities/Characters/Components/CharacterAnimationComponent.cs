@@ -12,9 +12,20 @@ namespace Module.Entities.Characters
     public struct AnimEntry
     {
         [HideLabel]
-        public CharAnim anim;
-        [HideLabel]
+        [OnValueChanged("OnValueChanged")]
         public AnimationClip clip;
+        [HideLabel]
+        [ReadOnly]
+        public string animName;
+        [HideLabel]
+        public CharAnim anim;
+
+#if UNITY_EDITOR
+        private void OnValueChanged()
+        {
+            animName = clip.name;
+        }
+#endif
     }
 
     public class CharacterAnimationComponent : MonoBehaviour, IEntityComponent
@@ -76,7 +87,7 @@ namespace Module.Entities.Characters
         {
             if(TryGet(anim, out AnimEntry entry))
             {
-                return TryGetAnimatorStateInfoInternal(entry.clip.name, 0, ref animatorState);
+                return TryGetAnimatorStateInfoInternal(entry.animName, 0, ref animatorState);
             }
 
             return false;
