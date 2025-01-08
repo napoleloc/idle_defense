@@ -1,25 +1,15 @@
 using Cysharp.Threading.Tasks;
-using EncosyTower.Modules;
 using EncosyTower.Modules.AddressableKeys;
 using EncosyTower.Modules.Pooling;
-using JetBrains.Annotations;
 using Module.GameCommon;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Module.Entities.Characters.Enemy.Builder
 {
     public class EliteBuilder : EnemyBuilder<EliteId>
     {
-        public static EliteBuilder CreateInstance([NotNull] BuildingConfig buildingConfig, Transform parent)
-        {
-            var type = TypeCache.Get<EliteBuilder>();
-            var go = new GameObject(buildingConfig.Name, type);
-            go.transform.parent = parent;
-
-            return go.GetComponent<EliteBuilder>();
-        }
-
-        public override async UniTask InitializePool()
+        public override async UniTask InitializePool(Scene scene)
         {
             var map = PoolMap;
 
@@ -38,7 +28,7 @@ namespace Module.Entities.Characters.Enemy.Builder
 
                 var prefab = new GameObjectPrefab(){
                     Source = sourceOpt.ValueOrDefault(),
-                    Scene = gameObject.scene,
+                    Scene = scene,
                 };
 
                 if (map.TryAdd(ids.Span[i], new GameObjectPool(prefab)))

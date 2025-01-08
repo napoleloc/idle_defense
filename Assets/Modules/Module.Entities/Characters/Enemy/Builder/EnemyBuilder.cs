@@ -3,20 +3,16 @@ using Cysharp.Threading.Tasks;
 using EncosyTower.Modules.Logging;
 using EncosyTower.Modules.Pooling;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Module.Entities.Characters.Enemy.Builder
 {
-    public abstract class EnemyBuilder<TId> : MonoBehaviour
+    public abstract class EnemyBuilder<TId>
         where TId : unmanaged
     {
         protected readonly Dictionary<TId, GameObjectPool> PoolMap = new();
-        
-        private async void Start()
-        {
-            await InitializePool();
-        }
 
-        public abstract UniTask InitializePool();
+        public abstract UniTask InitializePool(Scene scene);
 
         public bool TryGetFromPool(TId id, bool activate, out GameObject instance)
         {
@@ -50,11 +46,5 @@ namespace Module.Entities.Characters.Enemy.Builder
 
             pool.Return(instance);
         }
-
-        public void Provide(EnemyBuildingOptions options)
-        {
-
-        }
-
     }
 }
