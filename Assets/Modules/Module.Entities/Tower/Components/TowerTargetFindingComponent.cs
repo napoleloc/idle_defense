@@ -51,7 +51,7 @@ namespace Module.Entities.Tower
             }
         }
 
-        private void ValidateClosestTarget(ReadOnlySpan<GameObject> enemies)
+        private void ValidateClosestTarget(ReadOnlySpan<EnemyAIController> enemies)
         {
             bool flag = false;
             int lenght = enemies.Length;
@@ -72,7 +72,7 @@ namespace Module.Entities.Tower
                 }
             }
 
-            _enemyTarget = flag ? enemies[closestIndex] : default;
+            _enemyTarget = flag ? enemies[closestIndex].gameObject : default;
 
         }
 
