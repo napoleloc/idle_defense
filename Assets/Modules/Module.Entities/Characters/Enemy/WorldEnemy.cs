@@ -4,6 +4,7 @@ using EncosyTower.Modules.Pooling;
 using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
+using Module.Entities.Characters.Enemy.AI;
 using Module.Entities.Characters.Enemy.PubSub;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace Module.Entities.Characters.Enemy
     {
         public static readonly Id<WorldEnemy> PresetId = default;
 
-        private readonly ArrayMap<Id, GameObject> _enemies = new();
+        private readonly ArrayMap<Id, EnemyAIController> _enemies = new();
 
         private void Start()
         {
@@ -50,7 +51,7 @@ namespace Module.Entities.Characters.Enemy
             map.Remove(message.Id);
         }
 
-        public FasterList<GameObject> GetEnemies()
+        public FasterList<EnemyAIController> GetEnemies()
         {
             lock (_enemies)
             {
@@ -68,7 +69,7 @@ namespace Module.Entities.Characters.Enemy
         #region    EXTENSION_METHODS
         #endregion =================
 
-        private static FasterList<GameObject> GetEnemyList()
-            => FasterListPool<GameObject>.Get();
+        private static FasterList<EnemyAIController> GetEnemyList()
+            => FasterListPool<EnemyAIController>.Get();
     }
 }

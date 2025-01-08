@@ -1,5 +1,6 @@
 using EncosyTower.Modules;
 using EncosyTower.Modules.PubSub;
+using Module.Entities.Characters.Enemy.AI;
 using UnityEngine;
 
 namespace Module.Entities.Characters.Enemy.PubSub
@@ -7,9 +8,9 @@ namespace Module.Entities.Characters.Enemy.PubSub
     public readonly struct RegisterEnemyMessage : IMessage
     {
         public readonly Id Id;
-        public readonly GameObject Enemy;
+        public readonly EnemyAIController Enemy;
 
-        public RegisterEnemyMessage(Id id, GameObject enemy)
+        public RegisterEnemyMessage(Id id, EnemyAIController enemy)
         {
             Id = id;
             Enemy = enemy;
