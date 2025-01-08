@@ -559,7 +559,6 @@ GameObject:
   - component: {fileID: 952270634}
   - component: {fileID: 952270633}
   - component: {fileID: 952270638}
-  - component: {fileID: 952270637}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -649,18 +648,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!225 &952270637
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952270632}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!114 &952270638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -673,11 +660,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43cae1ec29c83fe4a969fe8c0330727e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dontAddCanvasGroupAutomatically: 0
+  _dontAddCanvasGroupAutomatically: 1
   _usePrefabNameAsIdentifier: 1
   _identifier: 
   _rectTransform: {fileID: 0}
-  _canvasGroup: {fileID: 952270637}
+  _canvasGroup: {fileID: 0}
   unityScreenNavigatorSettings: {fileID: 11400000, guid: 24f1341bc1592df4c8cc8e9db3a1adf4,
     type: 2}
   windowContainerSettings: {fileID: 11400000, guid: 55e050bea8eac6a4ab4c54f25d082e72,
