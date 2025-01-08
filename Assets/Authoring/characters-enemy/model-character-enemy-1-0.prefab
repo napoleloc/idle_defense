@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4066496004667733386}
   - component: {fileID: 3838839914403174552}
+  - component: {fileID: 3090371780651257544}
   m_Layer: 0
   m_Name: model-character-enemy-1-0
   m_TagString: Untagged
@@ -56,6 +57,19 @@ MonoBehaviour:
     clip: {fileID: 4195386022990170606, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
   - anim: 21
     clip: {fileID: -6245521900707845422, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+--- !u!114 &3090371780651257544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3141190789411615888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee2ed0ba2b1bab4449146c3996041919, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hands: []
 --- !u!1001 &4222132790325646104
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,6 +133,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: character-skeleton_minion
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 685128765f8380942b2b30ce4d40831e,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 387be0b23db54da44a2cbe03909a6d88, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
