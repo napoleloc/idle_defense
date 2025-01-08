@@ -1,7 +1,8 @@
+using Cysharp.Threading.Tasks;
 using EncosyTower.Modules;
-using EncosyTower.Modules.Logging;
 using EncosyTower.Modules.Vaults;
 using Module.Entities.Characters.Enemy.Builder;
+using Module.Entities.Tower;
 using Module.GameCommon;
 using UnityEngine;
 
@@ -11,15 +12,12 @@ namespace Module.Entities.Characters.Enemy
     {
         public static readonly Id<EnemyPooler> PresetId = default;
 
-        [SerializeField]
-        private EnemyBuildingConfigAsset _buildingConfig;
-
         private MinionBuilder _minionBuilder;
         private EliteBuilder _eliteBuilder;
 
-        private void Start()
+        private async void Start()
         {
-            Initialize();
+            await InitializeAsync();
         }
 
         private void OnDestroy()
@@ -28,29 +26,14 @@ namespace Module.Entities.Characters.Enemy
             GlobalObjectVault.TryRemove(PresetId, out _);
         }
 
-        private void Initialize()
+        private async UniTask InitializeAsync()
         {
-            var configs = _buildingConfig.BuildingConfigs.Span;
+            _minionBuilder = new MinionBuilder();
+            _eliteBuilder = new EliteBuilder();
 
-            for (int i = 0; i < configs.Length; i++)
-            {
-                var config = configs[i];
-
-                switch (config.Type)
-                {
-                    case GameCommon.EnemyType.Minion:
-                    {
-                        _minionBuilder = MinionBuilder.CreateInstance(config, transform);
-                        break;
-                    }
-
-                    case GameCommon.EnemyType.Elite:
-                    {
-                        _eliteBuilder = EliteBuilder.CreateInstance(config, transform);
-                        break;
-                    }
-                }
-            }
+            await GlobalValueVault<bool>.WaitUntil(TowerController.PresetId, true);
+            await _minionBuilder.InitializePool(gameObject.scene);
+            await _eliteBuilder.InitializePool(gameObject.scene);
 
             OnInitialize();
         }
@@ -74,6 +57,23 @@ namespace Module.Entities.Characters.Enemy
                 instance.transform.position = position;
                 instance.transform.rotation = Quaternion.LookRotation(rotation, Vector3.up);
                 instance.SetActive(true);
+                if (instance.TryGetComponent<IEntityPoolable>(out var poolable))
+                {
+                    poolable.OnGetFromPool();
+                }
+            }
+        }
+
+        public void ReturnToPoolBy(EnemyType type, GameObject instance)
+        {
+            switch (type)
+            {
+                case EnemyType.Minion:
+                    _minionBuilder.ReturnToPool(MinionId.minion_1, instance);
+                    break;
+                case EnemyType.Elite:
+                    _eliteBuilder.ReturnToPool(EliteId.elite_1, instance);
+                    break;
             }
         }
     }
