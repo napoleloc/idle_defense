@@ -18,6 +18,20 @@ namespace Module.Entities.Characters.Enemy.AI
         public override void OnEnter()
         {
             base.OnEnter();
+
+            CharacterAnimationComponent.CrossFadeAnim(GameCommon.Animation.CharAnim.Dying);
+        }
+
+        public override void OnLogic()
+        {
+            if (CharacterAnimationComponent.TryGetAnimatorStateInfo(GameCommon.Animation.CharAnim.Dying, ref animatorStateInfo))
+            {
+                float currentTime = animatorStateInfo.normalizedTime % 1;
+                if (currentTime >= 0.99F)
+                {
+                    StateMachine.StateCanExit();
+                }
+            }
         }
     }
 }

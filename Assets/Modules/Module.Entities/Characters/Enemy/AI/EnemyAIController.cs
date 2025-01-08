@@ -1,8 +1,10 @@
 using EncosyTower.Modules;
+using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.HFSM;
 using Module.Core.HFSM.States;
 using Module.Entities.Characters.Enemy.PubSub;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -11,15 +13,21 @@ namespace Module.Entities.Characters.Enemy.AI
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyAIController : MonoBehaviour, IEntityComponent, IEntityPoolable
     {
-        protected readonly StateMachine<EnemyState, EnemyStateEvent> StateMachine;
+        protected readonly StateMachine<EnemyState, EnemyStateEvent> StateMachine = new();
+
+        [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
+        [InlineProperty]
+        [SerializeField, ReadOnly]
+        protected Id.Serializable uniqueId;
+        [SerializeField, ReadOnly]
+        protected bool isAlive;
+        [SerializeField, ReadOnly]
+        private EnemyState _currentState;
 
         protected NavMeshAgent navMeshAgent;
         protected CharacterController characterController;
         protected CharacterPhysicsComponent characterPhysicsComponent;
         protected CharacterAnimationComponent characterAnimationComponent;
-
-        protected Id uniqueId;
-        protected bool isAlive;
 
         public NavMeshAgent NavMeshAgent => navMeshAgent;
         public CharacterController CharacterController => characterController;
@@ -35,17 +43,24 @@ namespace Module.Entities.Characters.Enemy.AI
             uniqueId = new(gameObject.GetInstanceID());
         }
 
+        private void Start()
+        {
+            CharacterAnimationComponent.Initialize();
+            InitStateMachine();
+            isAlive = true;
+        }
+
         private void Update()
         {
             if (isAlive)
             {
                 UpdateComponents();
+                _currentState = StateMachine.ActiveStateName;
             }
         }
 
         private void UpdateComponents()
         {
-            characterPhysicsComponent.ApplyGravity();
             StateMachine.OnLogic();
         }
 
@@ -54,7 +69,10 @@ namespace Module.Entities.Characters.Enemy.AI
             navMeshAgent = GetComponent<NavMeshAgent>();
             characterController = GetComponent<CharacterController>();
             characterPhysicsComponent = GetComponent<CharacterPhysicsComponent>();
-            characterAnimationComponent = GetComponent<CharacterAnimationComponent>();
+            characterAnimationComponent = GetComponentInChildren<CharacterAnimationComponent>();
+
+            CharacterPhysicsComponent.InitializeDependencies();
+            characterAnimationComponent.InitializeDependencies();
 
             navMeshAgent.enabled = false;
             characterPhysicsComponent.Deactivate();
@@ -63,7 +81,7 @@ namespace Module.Entities.Characters.Enemy.AI
         public void OnGetFromPool()
         {
             WorldMessenger.Publisher.EnemyScope()
-                .Publish(new RegisterEnemyMessage(uniqueId, gameObject)); 
+                .Publish(new RegisterEnemyMessage(uniqueId, this)); 
         }
 
         public void OnReturnToPool()
@@ -78,10 +96,10 @@ namespace Module.Entities.Characters.Enemy.AI
         {
             // Declare states
             StateMachine.AddState(EnemyState.Appear, new EnemyAppearState(this, true, OnEnterAppearState, OnExitAppearState));
-            StateMachine.AddState(EnemyState.Idle, new EnemyIdleState(this, false));
-            StateMachine.AddState(EnemyState.Chase, new EnemyChaseState(this, false));
+            StateMachine.AddState(EnemyState.Idle, new EnemyIdleState(this, true));
+            StateMachine.AddState(EnemyState.Chase, new EnemyChaseState(this, true));
             StateMachine.AddState(EnemyState.Dying, new EnemyDyingState(this, true, OnEnterDyingState));
-            StateMachine.AddState(EnemyState.Dead, new EnemyDeadState(this, true));
+            StateMachine.AddState(EnemyState.Dead, new EnemyDeadState(this, true, OnEnterDeadState,0.33F));
 
             InitTransitionConditions();
 
@@ -90,7 +108,10 @@ namespace Module.Entities.Characters.Enemy.AI
 
         protected virtual void InitTransitionConditions()
         {
-
+            StateMachine.AddTransition(EnemyState.Appear, EnemyState.Idle);
+            StateMachine.AddTransition(EnemyState.Idle, EnemyState.Chase);
+            StateMachine.AddTransition(EnemyState.Chase, EnemyState.Dying);
+            StateMachine.AddTransition(EnemyState.Dying, EnemyState.Dead);
         }
 
         #region    EVENT_METHODS
@@ -109,7 +130,18 @@ namespace Module.Entities.Characters.Enemy.AI
 
         protected virtual void OnEnterDyingState(State<EnemyState, EnemyStateEvent> state)
         {
+            navMeshAgent.ResetPath();
+            navMeshAgent.enabled = false;
+            CharacterPhysicsComponent.Deactivate();
+        }
 
+        protected virtual void OnEnterDeadState(State<EnemyState, EnemyStateEvent> state)
+        {
+            OnReturnToPool();
+            if(GlobalObjectVault.TryGet(EnemyPooler.PresetId, out var enemyPooler))
+            {
+                enemyPooler.ReturnToPoolBy(GameCommon.EnemyType.Minion, gameObject);
+            }
         }
     }
 }

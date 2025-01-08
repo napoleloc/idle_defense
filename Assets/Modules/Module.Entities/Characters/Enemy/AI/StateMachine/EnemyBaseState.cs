@@ -10,6 +10,7 @@ namespace Module.Entities.Characters.Enemy.AI
     {
         protected readonly EnemyAIController Controller;
         protected readonly NavMeshAgent NavMeshAgent;
+        protected readonly CharacterAnimationComponent CharacterAnimationComponent;
 
         protected readonly StateFunc<EnemyState, EnemyStateEvent> OnEnterState;
         protected readonly StateFunc<EnemyState, EnemyStateEvent> OnExitState;
@@ -34,6 +35,7 @@ namespace Module.Entities.Characters.Enemy.AI
 
             Controller = controller;
             NavMeshAgent = controller.NavMeshAgent;
+            CharacterAnimationComponent = controller.CharacterAnimationComponent;
         }
 
         public override void OnEnter()

@@ -10,15 +10,28 @@ namespace Module.Entities.Characters.Enemy.AI
             , bool needsExitTime
             , StateFunc<EnemyState, EnemyStateEvent> onEnterState
             , StateFunc<EnemyState, EnemyStateEvent> onExitState
-            , float exitTime = 0.33f) : base(controller, needsExitTime, exitTime, onEnterState, onExitState
+            , float exitTime = 0.99f) : base(controller, needsExitTime, exitTime, onEnterState, onExitState
         )
         {
 
         }
 
-        public override void OnEnter()
+        public override void OnLogic()
         {
-            base.OnEnter();
+            if (CharacterAnimationComponent.TryGetAnimatorStateInfo(GameCommon.Animation.CharAnim.Spawn, ref animatorStateInfo))
+            {
+                float currentTime = animatorStateInfo.normalizedTime % 1;
+                if (currentTime >= 0.99F)
+                {
+                    StateMachine.StateCanExit();
+                }
+
+            }
+        }
+
+        public override void OnExit()
+        {
+            OnExitState?.Invoke(this);
         }
     }
 }
