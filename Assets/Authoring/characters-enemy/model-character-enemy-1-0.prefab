@@ -47,16 +47,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _anims:
-  - anim: 10
-    clip: {fileID: 4619305532684575560, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
-  - anim: 0
-    clip: {fileID: 345275505875579249, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
-  - anim: 30
-    clip: {fileID: 3174661419259135242, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
-  - anim: 20
-    clip: {fileID: 4195386022990170606, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
-  - anim: 21
-    clip: {fileID: -6245521900707845422, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+  - clip: {fileID: 4619305532684575560, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+    animName: Spawn_Ground_Skeletons
+    anim: 10
+  - clip: {fileID: 345275505875579249, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+    animName: Idle_B
+    anim: 0
+  - clip: {fileID: 3174661419259135242, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+    animName: Walking_B
+    anim: 30
+  - clip: {fileID: 4195386022990170606, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+    animName: Death_C_Skeletons
+    anim: 20
+  - clip: {fileID: -6245521900707845422, guid: 1d5e6e7cd2b0bb646834cc0ff4434622, type: 3}
+    animName: Death_C_Pose
+    anim: 21
 --- !u!114 &3090371780651257544
 MonoBehaviour:
   m_ObjectHideFlags: 0
