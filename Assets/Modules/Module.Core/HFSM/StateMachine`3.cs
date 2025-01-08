@@ -19,7 +19,7 @@ namespace Module.Core.HFSM
     {
         private readonly FasterList<Transition<TStateId>> _transitionFromAny;
 
-        private readonly ArrayMap<TStateId, StateBundle<TStateId, TEvent>> _idToBundleMap;
+        private readonly Dictionary<TStateId, StateBundle<TStateId, TEvent>> _idToBundleMap;
         private readonly ArrayMap<TEvent, FasterList<Transition<TStateId>>> _triggerTransitionsFromAny;
 
         private State<TStateId> _activeState;
@@ -71,11 +71,7 @@ namespace Module.Core.HFSM
 
         public override void Initialize()
         {
-            if (IsValid == false)
-            {
-                return;
-            }
-
+            if (IsValid) return;
             OnEnter();
         }
 
@@ -642,33 +638,30 @@ namespace Module.Core.HFSM
 
         private bool TryAllDirectTransitions()
         {
-            lock (_idToBundleMap)
+            if (_idToBundleMap.TryGetValue(_activeState.name, out var bundle) == false)
             {
-                if (_idToBundleMap.TryGetValue(_activeState.name, out var bundle) == false)
-                {
-                    return false;
-                }
-
-                var transitions = bundle.Transitions.Span;
-                var length = transitions.Length;
-
-                if (length < 1)
-                {
-                    return false;
-                }
-
-                for (int i = 0; i < length; i++)
-                {
-                    var transition = transitions[i];
-
-                    if (TryTransition(transition))
-                    {
-                        return true;
-                    }
-                }
-
                 return false;
             }
+
+            var transitions = bundle.Transitions.Span;
+            var length = transitions.Length;
+
+            if (length < 1)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < length; i++)
+            {
+                var transition = transitions[i];
+
+                if (TryTransition(transition))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void PerformVerticalTransition()
@@ -696,7 +689,7 @@ namespace Module.Core.HFSM
 
         public void Dispose()
         {
-            _idToBundleMap.Dispose();
+            _idToBundleMap.Clear();
             _triggerTransitionsFromAny.Dispose();
         }
     }
