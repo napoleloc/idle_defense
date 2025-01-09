@@ -12,9 +12,9 @@ using UnityEngine.AddressableAssets;
 
 namespace Module.Entities.Tower
 {
-    public class TowerLoader : MonoBehaviour
+    public class BuildingSpawnr : MonoBehaviour
     {
-        public static readonly Id<TowerLoader> PresetId = default;
+        public static readonly Id<BuildingSpawnr> PresetId = default;
 
         [SerializeField]
         private TowerDatabase _database;    

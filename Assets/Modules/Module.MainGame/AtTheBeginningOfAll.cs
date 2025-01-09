@@ -26,7 +26,7 @@ namespace Module.MainGame
         private const string INPUT_RECEVIER_NAME = "prefab-input-recevier";
         private const string QUEST_PROGRESS_MANAGER_NAME = "prefab-quest-progress-manager";
         private const string MAP_LOADER_NAME = "prefab-map-loader";
-        private const string TOWER_LOADER_NAME = "prefab-tower-loader";
+        private const string BUILDING_SPAWNER_NAME = "prefab-building-spawner";
 
         private const string WORLD_ENEMY_NAME = "prefab-world-enemy";
         private const string ENEMY_POOLER_NAME = "prefab-enemy-pooler";
@@ -76,7 +76,7 @@ namespace Module.MainGame
             var handleInput = new AddressableKey<GameObject>(INPUT_RECEVIER_NAME);
             var handleQuest = new AddressableKey<GameObject>(QUEST_PROGRESS_MANAGER_NAME);
             var handleMapLoader = new AddressableKey<GameObject>(MAP_LOADER_NAME);
-            var handleTowerLoader = new AddressableKey<GameObject>(TOWER_LOADER_NAME);
+            var handleTowerLoader = new AddressableKey<GameObject>(BUILDING_SPAWNER_NAME);
             
             await handleGameplay.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleCurrency.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
