@@ -1,5 +1,6 @@
 using EncosyTower.Modules;
 using EncosyTower.Modules.Collections;
+using EncosyTower.Modules.Logging;
 using EncosyTower.Modules.Pooling;
 using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
@@ -60,7 +61,7 @@ namespace Module.Entities.Characters.Enemy
                 var lenght = enemies.Length;
 
                 list.IncreaseCapacityTo(lenght);
-                list.CopyTo(enemies);
+                list.AddRange(enemies);
 
                 return list;
             }
