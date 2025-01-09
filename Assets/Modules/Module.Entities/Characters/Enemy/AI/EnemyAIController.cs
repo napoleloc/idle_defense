@@ -1,4 +1,5 @@
 using EncosyTower.Modules;
+using EncosyTower.Modules.Logging;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.HFSM;
@@ -110,8 +111,10 @@ namespace Module.Entities.Characters.Enemy.AI
         {
             StateMachine.AddTransition(EnemyState.Appear, EnemyState.Idle);
             StateMachine.AddTransition(EnemyState.Idle, EnemyState.Chase);
-            //StateMachine.AddTransition(EnemyState.Chase, EnemyState.Dying);
-            //StateMachine.AddTransition(EnemyState.Dying, EnemyState.Dead);
+
+            //StateMachine.AddTransition(EnemyState.Chase, EnemyState.Dying, _ => _isDead, forceInstantly: true);
+            StateMachine.AddTriggerTransitionFromAny(EnemyStateEvent.OnDying, EnemyState.Dying, forceInstantly: true);
+            StateMachine.AddTransition(EnemyState.Dying, EnemyState.Dead);
         }
 
         #region    EVENT_METHODS
@@ -143,5 +146,8 @@ namespace Module.Entities.Characters.Enemy.AI
                 enemyPooler.ReturnToPoolBy(GameCommon.EnemyType.Minion, gameObject);
             }
         }
+
+        public void TriggerDying()
+            => StateMachine.Trigger(EnemyStateEvent.OnDying);
     }
 }

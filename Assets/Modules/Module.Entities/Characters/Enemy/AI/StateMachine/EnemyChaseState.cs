@@ -42,7 +42,7 @@ namespace Module.Entities.Characters.Enemy.AI
             _direction = (NavMeshAgent.nextPosition - position).normalized;
 
             _characterPhysicsComponent.ApplyGravity();
-            _characterController.Move(_direction * NavMeshAgent.speed * Time.deltaTime);
+            _characterController.Move(NavMeshAgent.speed * Time.deltaTime * _direction);
         }
     }
 }
