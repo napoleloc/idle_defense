@@ -86,7 +86,7 @@ namespace Module.Core.HFSM
             where TEvent : unmanaged
         {
             var transition = CreateOptimizedTransition(default, to, condition, beforeTransition, afterTransition, forceInstantly);
-            self.AddTriggerTransition(trigger, transition);
+            self.AddTriggerTransitionFromAny(trigger, transition);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
