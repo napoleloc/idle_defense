@@ -110,8 +110,8 @@ namespace Module.Entities.Characters.Enemy.AI
         {
             StateMachine.AddTransition(EnemyState.Appear, EnemyState.Idle);
             StateMachine.AddTransition(EnemyState.Idle, EnemyState.Chase);
-            StateMachine.AddTransition(EnemyState.Chase, EnemyState.Dying);
-            StateMachine.AddTransition(EnemyState.Dying, EnemyState.Dead);
+            //StateMachine.AddTransition(EnemyState.Chase, EnemyState.Dying);
+            //StateMachine.AddTransition(EnemyState.Dying, EnemyState.Dead);
         }
 
         #region    EVENT_METHODS
