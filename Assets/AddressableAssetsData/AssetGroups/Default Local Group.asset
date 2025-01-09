@@ -61,7 +61,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 506d7f87f2e42dd4c97c7f00d75c293c
-    m_Address: prefab-tower-loader
+    m_Address: prefab-building-spawner
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -71,7 +71,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74dc640e510ad1e4c920eceb3ca34032
-    m_Address: prefab-tower-1
+    m_Address: prefab-building-tower-1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
