@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using EncosyTower.Modules;
 using EncosyTower.Modules.Vaults;
 using Module.Entities.Characters.Enemy.Builder;
+using Module.Entities.Characters.Hero;
 using Module.Entities.Tower;
 using Module.GameCommon;
 using UnityEngine;
@@ -31,7 +32,8 @@ namespace Module.Entities.Characters.Enemy
             _minionBuilder = new MinionBuilder();
             _eliteBuilder = new EliteBuilder();
 
-            await GlobalValueVault<bool>.WaitUntil(TowerController.PresetId, true);
+            await GlobalValueVault<bool>.WaitUntil(BuildingTowerController.PresetId, true);
+            await GlobalValueVault<bool>.WaitUntil(MonoHeroController.PresetId, true);
             await _minionBuilder.InitializePool(gameObject.scene);
             await _eliteBuilder.InitializePool(gameObject.scene);
 
