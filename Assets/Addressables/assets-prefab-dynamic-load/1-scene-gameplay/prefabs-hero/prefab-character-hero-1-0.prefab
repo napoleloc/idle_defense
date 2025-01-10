@@ -124,8 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62643d01f96707a46a3af99f939661de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSmoothTimeWithoutTarget: 0.15
-  _attackInterval: 1
+  _rotationSmoothTimeWithoutTarget: 1
   _currentState: 0
 --- !u!1001 &5470844489986997733
 PrefabInstance:
