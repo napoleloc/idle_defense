@@ -43,13 +43,15 @@ namespace Module.MainGame
         private async UniTask InitGameAsync(CancellationToken token)
         {
             await UniTask.NextFrame();
-            await WorldMessenger.Publisher.UIScope()
-                .PublishAsync(new AsyncMessage<ShowScreenMessage>(ScreenNames.MainLobbyScreenName().ToShowScreenMessage()));
-
+            
             await InitMainSceneAsyncInternal(token);
             await InitGamePlaySceneAsyncInternal(token);
             await InitEnemySceneAsyncInternal(token);
             await InitDebugSceneAsyncInternal(token);
+
+            await WorldMessenger.Publisher.UIScope()
+                .PublishAsync(new AsyncMessage<ShowScreenMessage>(ScreenNames.MainLobbyScreenName().ToShowScreenMessage()));
+
         }
 
         private async UniTask InitMainSceneAsyncInternal(CancellationToken token)
