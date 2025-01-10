@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using EncosyTower.Modules;
 using EncosyTower.Modules.Vaults;
+using Module.Core.Extended.Camera;
 using UnityEngine;
 
 namespace Module.Entities.Tower
@@ -33,13 +34,18 @@ namespace Module.Entities.Tower
 
         private async UniTask InitializeAsync()
         {
-            await UniTask.NextFrame();
+            await GlobalValueVault<bool>.WaitUntil(WorldCamera.PresetId, true);
 
             OnInitialize();
         }
 
         private void OnInitialize()
         {
+            if(GlobalObjectVault.TryGet(WorldCamera.PresetId, out var worldCamera))
+            {
+                worldCamera.Cameras.Span[0].Follow = transform;
+            }
+
             _initialized = true;
 
             GlobalObjectVault.TryAdd(PresetId, this);
