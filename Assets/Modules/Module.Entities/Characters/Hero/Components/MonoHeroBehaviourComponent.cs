@@ -47,8 +47,12 @@ namespace Module.Entities.Characters.Hero
 
         public void UpdateComponent()
         {
-            UpdateRotationInternal();
             UpdateStateMachineInternal();
+
+            if(_currentState == HeroState.Idle)
+            {
+                UpdateRotationInternal();
+            }
         }
 
         private void InitStateMachineInternal()
@@ -120,7 +124,7 @@ namespace Module.Entities.Characters.Hero
                         transform.eulerAngles.y
                         , angle
                         , ref _rotationVelocity
-                        , _rotationSmoothTimeWithoutTarget * Time.deltaTime);
+                        , _rotationSmoothTimeWithoutTarget);
 
             transform.rotation = Quaternion.Euler(0.0F, smoothAngle, 0.0F);
         }
