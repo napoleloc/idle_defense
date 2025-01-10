@@ -14,9 +14,15 @@ namespace Module.Entities.Characters
         [HideLabel]
         [OnValueChanged("OnValueChanged")]
         public AnimationClip clip;
+
         [HideLabel]
-        [ReadOnly]
+        [HideInInspector]
         public string animName;
+
+        [HideLabel]
+        [PropertyRange(0f, 1f)]
+        public float timeEvent;
+
         [HideLabel]
         public CharAnim anim;
 
@@ -88,6 +94,16 @@ namespace Module.Entities.Characters
             if(TryGet(anim, out AnimEntry entry))
             {
                 return TryGetAnimatorStateInfoInternal(entry.animName, 0, ref animatorState);
+            }
+
+            return false;
+        }
+
+        public bool CanTriggerEvent(CharAnim anim ,float time)
+        {
+            if(TryGet(anim , out AnimEntry entry))
+            {
+                return time >= entry.timeEvent;
             }
 
             return false;
