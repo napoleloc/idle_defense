@@ -11,12 +11,19 @@ namespace Module.Entities.Characters.Hero
         public readonly static Id<MonoHeroController> PresetId = default;
 
         // Components
+        private CharacterAnimationComponent _characterAnimationComponent;
         private MonoHeroAttributeComponent _attributeComponent;
         private MonoHeroInventoryComponent _inventoryComponent;
         private MonoHeroTargetFindingComponent _targetFindingComponent;
         private MonoHeroBehaviourComponent _behaviourComponent;
 
         private bool _initialized;
+
+        public CharacterAnimationComponent CharacterAnimationComponent => _characterAnimationComponent;
+        public MonoHeroAttributeComponent AttributeComponent => _attributeComponent;
+        public MonoHeroInventoryComponent InventoryComponent => _inventoryComponent;
+        public MonoHeroTargetFindingComponent TargetFindingComponent => _targetFindingComponent;
+        public MonoHeroBehaviourComponent BehaviourComponent => _behaviourComponent;
 
         private void Awake()
         {
@@ -44,6 +51,7 @@ namespace Module.Entities.Characters.Hero
 
         private void InitializeDependencies()
         {
+            _characterAnimationComponent = GetComponent<CharacterAnimationComponent>();
             _attributeComponent = GetComponent<MonoHeroAttributeComponent>();
             _inventoryComponent = GetComponent<MonoHeroInventoryComponent>();
             _targetFindingComponent = GetComponent<MonoHeroTargetFindingComponent>();
@@ -61,7 +69,8 @@ namespace Module.Entities.Characters.Hero
 
         private void OnInitialize()
         {
-            _targetFindingComponent.Initialize();
+            _targetFindingComponent.InitializeComponent();
+            _behaviourComponent.InitializeComponent();
 
             _initialized = true;
 

@@ -27,7 +27,7 @@ namespace Module.Entities.Characters.Hero
         public bool HasTarget => _hasTarget;
         public EnemyAIController TargetEnemy => _enemyTarget;
 
-        public void Initialize()
+        public void InitializeComponent()
         {
             GlobalObjectVault.TryGet(WorldEnemy.PresetId, out _worldEnemy);
         }
