@@ -60,8 +60,16 @@ namespace Module.Entities.Characters.Enemy
                 var enemies = _enemies.GetValues();
                 var lenght = enemies.Length;
 
-                list.IncreaseCapacityTo(lenght);
-                list.AddRange(enemies);
+                for (var i = 0; i < lenght; i++)
+                {
+                    var enemy = enemies[i];
+                    if(enemy.IsAlive == false)
+                    {
+                        continue;
+                    }
+
+                    list.Add(enemy);
+                }
 
                 return list;
             }
