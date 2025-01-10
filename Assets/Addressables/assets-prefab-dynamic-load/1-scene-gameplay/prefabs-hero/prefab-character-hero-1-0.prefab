@@ -53,12 +53,15 @@ MonoBehaviour:
   _anims:
   - clip: {fileID: -3100369314251171874, guid: de380f247b5a5744b88050c2305e9479, type: 3}
     animName: Idle
+    timeEvent: 0
     anim: 0
   - clip: {fileID: 5237015913805051347, guid: de380f247b5a5744b88050c2305e9479, type: 3}
     animName: Spellcast_Shoot
+    timeEvent: 0.11
     anim: 40
   - clip: {fileID: 1683828920807373193, guid: de380f247b5a5744b88050c2305e9479, type: 3}
     animName: Jump_Full_Short
+    timeEvent: 0
     anim: 21
 --- !u!114 &2673937740967876953
 MonoBehaviour:
@@ -84,6 +87,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9e000304152ea469165ec2b5084fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _normalAttackInterval: 0.5
+  _specialAttackInterval: 10
 --- !u!114 &8063601778217211770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hasTarget: 0
   _searchRange: 5.5
-  _searchInerval: 1
+  _searchInerval: 0.15
   _nextClosestCheckTime: 0
 --- !u!114 &51676838740403169
 MonoBehaviour:
@@ -124,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62643d01f96707a46a3af99f939661de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSmoothTimeWithoutTarget: 1
+  _rotationSmoothTimeWithoutTarget: 0.25
   _currentState: 0
 --- !u!1001 &5470844489986997733
 PrefabInstance:
