@@ -21,6 +21,8 @@ namespace Module.Entities.Characters.Enemy.AI
         [SerializeField, ReadOnly]
         protected Id.Serializable uniqueId;
         [SerializeField, ReadOnly]
+        protected bool initialized;
+        [SerializeField, ReadOnly]
         protected bool isAlive;
         [SerializeField, ReadOnly]
         private EnemyState _currentState;
@@ -48,12 +50,13 @@ namespace Module.Entities.Characters.Enemy.AI
         {
             CharacterAnimationComponent.InitializeComponent();
             InitStateMachine();
-            isAlive = true;
+            initialized = true;
+          
         }
 
         private void Update()
         {
-            if (isAlive)
+            if (initialized)
             {
                 UpdateComponents();
                 _currentState = StateMachine.ActiveStateName;
@@ -81,6 +84,8 @@ namespace Module.Entities.Characters.Enemy.AI
 
         public void OnGetFromPool()
         {
+            isAlive = true;
+
             WorldMessenger.Publisher.EnemyScope()
                 .Publish(new RegisterEnemyMessage(uniqueId, this)); 
         }
@@ -112,7 +117,6 @@ namespace Module.Entities.Characters.Enemy.AI
             StateMachine.AddTransition(EnemyState.Appear, EnemyState.Idle);
             StateMachine.AddTransition(EnemyState.Idle, EnemyState.Chase);
 
-            //StateMachine.AddTransition(EnemyState.Chase, EnemyState.Dying, _ => _isDead, forceInstantly: true);
             StateMachine.AddTriggerTransitionFromAny(EnemyStateEvent.OnDying, EnemyState.Dying, forceInstantly: true);
             StateMachine.AddTransition(EnemyState.Dying, EnemyState.Dead);
         }
@@ -136,6 +140,8 @@ namespace Module.Entities.Characters.Enemy.AI
             navMeshAgent.ResetPath();
             navMeshAgent.enabled = false;
             CharacterPhysicsComponent.Deactivate();
+
+            
         }
 
         protected virtual void OnEnterDeadState(State<EnemyState, EnemyStateEvent> state)
@@ -148,6 +154,9 @@ namespace Module.Entities.Characters.Enemy.AI
         }
 
         public void TriggerDying()
-            => StateMachine.Trigger(EnemyStateEvent.OnDying);
+        {
+            isAlive = false;
+            StateMachine.Trigger(EnemyStateEvent.OnDying);
+        }
     }
 }
