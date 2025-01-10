@@ -57,6 +57,7 @@ namespace Module.Entities.Characters.Hero
             _targetFindingComponent = GetComponent<MonoHeroTargetFindingComponent>();
             _behaviourComponent = GetComponent<MonoHeroBehaviourComponent>();
 
+            _characterAnimationComponent.InitializeDependencies();
             _behaviourComponent.InitializeDependencies();
         }
 
@@ -69,6 +70,7 @@ namespace Module.Entities.Characters.Hero
 
         private void OnInitialize()
         {
+            _characterAnimationComponent.InitializeComponent();
             _targetFindingComponent.InitializeComponent();
             _behaviourComponent.InitializeComponent();
 
