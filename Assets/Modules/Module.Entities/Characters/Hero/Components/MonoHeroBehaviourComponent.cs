@@ -1,4 +1,6 @@
+using System;
 using Module.Core.HFSM;
+using Module.Core.HFSM.Transitions;
 using Module.Entities.Characters.Hero.StateMachine;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -14,44 +16,46 @@ namespace Module.Entities.Characters.Hero
         [PropertyRange(0, 1)]
         [LabelText("Damping")]
         [SerializeField]
-        private float _rotationSmoothTimeWithoutTarget = 5;
+        private float _rotationSmoothTimeWithoutTarget = 0.15F;
 
         [TabGroup("Inspector/Debugging", "Debugging", order: 2)]
         [SerializeField, ReadOnly]
         private HeroState _currentState;
 
-        private CharacterAnimationComponent _characterAnimationComponent;
         private MonoHeroController _controller;
+        private MonoHeroAttributeComponent _attributeComponent;
         private MonoHeroTargetFindingComponent _targetFindingComponent;
 
         private float _rotationVelocity;
+        private TimeSpan _normalAttackCountdown;
+        private TimeSpan _specialAttackCountdown;
 
         public void InitializeDependencies()
         {
-            _characterAnimationComponent = GetComponentInChildren<CharacterAnimationComponent>();
             _controller = GetComponent<MonoHeroController>();
+            _attributeComponent = GetComponent<MonoHeroAttributeComponent>();
             _targetFindingComponent = GetComponent<MonoHeroTargetFindingComponent>();
-
-            _characterAnimationComponent.InitializeDependencies();
-            _characterAnimationComponent.Initialize();
         }
 
         public void InitializeComponent()
         {
+            _normalAttackCountdown = TimeSpan.Zero;
+            _specialAttackCountdown = TimeSpan.Zero;
+
             InitStateMachineInternal();
         }
 
         public void UpdateComponent()
         {
-            _stateMachine.OnLogic();
             UpdateRotationInternal();
+            UpdateStateMachineInternal();
         }
 
         private void InitStateMachineInternal()
         {
             // Declare states
             _stateMachine.AddState(HeroState.Appear, new HeroAppearState(_controller, true));
-            _stateMachine.AddState(HeroState.Idle, new HeroIdleState(_controller, false));
+            _stateMachine.AddState(HeroState.Idle, new HeroIdleState(_controller, true));
             _stateMachine.AddState(HeroState.NormalAttack, new HeroNormalAttackState(_controller, true));
             _stateMachine.AddState(HeroState.SpecialAttack, new HeroSpecialAttackState(_controller, true));
 
@@ -63,6 +67,43 @@ namespace Module.Entities.Characters.Hero
         private void InitTransitionConditionInternal()
         {
             _stateMachine.AddTransition(HeroState.Appear, HeroState.Idle);
+
+            _stateMachine.AddTransition(HeroState.Idle, HeroState.NormalAttack, CanChangeToNormalAttackState);
+            _stateMachine.AddTransition(HeroState.NormalAttack, HeroState.Idle);
+
+        }
+
+        private bool CanChangeToNormalAttackState(TransitionCondition<HeroState> transition)
+        {
+            _normalAttackCountdown += TimeSpan.FromSeconds(Time.deltaTime);
+
+            if (_targetFindingComponent.HasTarget
+                && _normalAttackCountdown.TotalSeconds >= _attributeComponent.NormalAttackInterval)
+            {
+                _normalAttackCountdown = TimeSpan.Zero;
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool CanChangeToSpecialAttackState(TransitionCondition<HeroState> transition)
+        {
+            if (_targetFindingComponent.HasTarget
+                && _specialAttackCountdown.TotalMilliseconds >= _attributeComponent.SpecialAttackInterval)
+            {
+                _specialAttackCountdown = TimeSpan.Zero;
+                return true;
+            }
+
+            return false;
+        }
+
+        private void UpdateStateMachineInternal()
+        {
+            _stateMachine.OnLogic();
+
+            _currentState = _stateMachine.ActiveStateName;
         }
 
         private void UpdateRotationInternal()
