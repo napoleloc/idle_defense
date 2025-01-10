@@ -12,6 +12,8 @@ namespace Module.Entities.Characters.Hero.StateMachine
         public override void OnEnter()
         {
             base.OnEnter();
+
+            CharacterAnimationComponent.CrossFadeAnim(GameCommon.Animation.CharAnim.Idle);
         }
     }
 }
