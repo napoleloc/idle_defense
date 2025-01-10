@@ -51,7 +51,7 @@ namespace Module.Entities.Characters.Hero
             else
             {
                 float currentDistance = Vector3.Distance(Vector3.zero, _enemyTarget.transform.position);
-                if (currentDistance > _searchRange || _enemyTarget.gameObject.activeSelf == false)
+                if (currentDistance > _searchRange || _enemyTarget.IsAlive == false)
                 {
                     _enemyTarget = default(EnemyAIController);
                     _hasTarget = false;
