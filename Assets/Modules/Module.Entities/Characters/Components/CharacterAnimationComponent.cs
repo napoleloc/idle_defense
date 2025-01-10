@@ -45,7 +45,7 @@ namespace Module.Entities.Characters
             get => _anims;
         }
 
-        public void Initialize()
+        public void InitializeComponent()
         {
             var animToIndexMap = _animToIndexMap;
             var animToHashMap = _animToHashMap;

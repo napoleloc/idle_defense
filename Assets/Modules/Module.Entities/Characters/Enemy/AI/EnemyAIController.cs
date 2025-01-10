@@ -46,7 +46,7 @@ namespace Module.Entities.Characters.Enemy.AI
 
         private void Start()
         {
-            CharacterAnimationComponent.Initialize();
+            CharacterAnimationComponent.InitializeComponent();
             InitStateMachine();
             isAlive = true;
         }
