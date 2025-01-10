@@ -28,8 +28,7 @@ namespace Module.Worlds.BattleWorld.Map
         [SerializeField]
         private ushort _region;
 
-        private bool _loaded;
-        private SceneInstance _sceneInstance;
+        private Option<SceneInstance> _option;
 
         private void Awake()
         {
@@ -43,8 +42,6 @@ namespace Module.Worlds.BattleWorld.Map
 
         private void OnDestroy()
         {
-            UnloadAsyncInternal().Forget();
-
             GlobalValueVault<bool>.TrySet(PresetId, false);
             GlobalObjectVault.TryRemove(PresetId, out _);
         }
@@ -71,24 +68,21 @@ namespace Module.Worlds.BattleWorld.Map
 
         private async UniTask LoadAsycnInternal(CancellationToken token = default)
         {
-            if (_loaded)
+            if (_option.HasValue)
             {
                 await UnloadAsyncInternal();
             }
 
             var handleMap = new AddressableKey<Scene>(string.Format(SCENE_MAP_FORMAT, _mapId, _region));
-            _sceneInstance = await handleMap.LoadAsync(LoadSceneMode.Additive, token: token);
-            _loaded = true;
+            _option = await handleMap.TryLoadAsync(LoadSceneMode.Additive, token: token);
         }
 
         private async UniTask UnloadAsyncInternal()
         {
-            if (_loaded == false)
+            if (_option.HasValue)
             {
-                return;
+                await Addressables.UnloadSceneAsync(_option.Value());
             }
-            await Addressables.UnloadSceneAsync(_sceneInstance);
-            _loaded = false;
         }
     }
 }
