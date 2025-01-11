@@ -15,6 +15,8 @@ namespace Module.GameUI.InGame
         [Title("Panels", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         private InGameProgressPanel _progressPanel;
+        [SerializeField]
+        private HUDPanel _hudPanel;
 
         [Title("Buttons", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
@@ -24,7 +26,8 @@ namespace Module.GameUI.InGame
 
         public override UniTask Initialize(Memory<object> args)
         {
-            _progressPanel.Initialize();
+            _progressPanel.InitializeComponent();
+            _hudPanel.InitializeComponent();
 
             _pauseButton.onClick.AddListener(PauseButton_OnClick);
             _startButton.onClick.AddListener(StartButton_OnClick);

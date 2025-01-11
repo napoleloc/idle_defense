@@ -19,7 +19,7 @@ namespace Module.GameUI
 
         private ISubscription _subscription;
 
-        public void Initialize()
+        public void InitializeComponent()
         {
 
         }
