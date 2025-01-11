@@ -6,25 +6,21 @@ namespace Module.GameUI.InGame
 {
     public class AttributeControl : MonoBehaviour
     {
-        [SerializeField]
-        private TMP_Text _labelAttribute;
-        [SerializeField]
-        private Image _iconAttribute;
-
-        [SerializeField]
-        private Button _upgradeButton;
+        [SerializeField]  private Image _imageAttribute;
+        [SerializeField]  private TMP_Text _labelAttribute;
+        [SerializeField]  private Button _buttonModifierAttribute;
 
         public void InitializeComponent()
         {
-            _upgradeButton.onClick.AddListener(UpgradeButton_OnClick);
+            
         }
 
         public void Cleanup()
         {
-            _upgradeButton.onClick.RemoveAllListeners();
+           
         }
 
-        private void UpgradeButton_OnClick()
+        private void ButtonModifierAttribute_OnClick()
         {
 
         }
