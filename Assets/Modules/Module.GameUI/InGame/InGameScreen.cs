@@ -29,8 +29,8 @@ namespace Module.GameUI.InGame
             _progressPanel.InitializeComponent();
             _hudPanel.InitializeComponent();
 
-            _pauseButton.onClick.AddListener(PauseButton_OnClick);
-            _startButton.onClick.AddListener(StartButton_OnClick);
+            _pauseButton.onClick.AddListener(ButtonPause_OnClick);
+            _startButton.onClick.AddListener(ButtonStart_OnClick);
 
             return base.Initialize(args);
         }
@@ -38,6 +38,7 @@ namespace Module.GameUI.InGame
         public override UniTask Cleanup(Memory<object> args)
         {
             _progressPanel.Cleanup();
+            _hudPanel.Cleanup();
 
             _pauseButton.onClick.RemoveAllListeners();
             _startButton.onClick.RemoveAllListeners();
@@ -45,13 +46,13 @@ namespace Module.GameUI.InGame
             return base.Cleanup(args);
         }
 
-        private void PauseButton_OnClick()
+        private void ButtonPause_OnClick()
         {
             WorldMessenger.Publisher.UIScope()
                 .Publish(ModalNames.PauseModalName().ToShowModalMessage());
         }
 
-        private void StartButton_OnClick()
+        private void ButtonStart_OnClick()
         {
             GlobalObjectVault.TryGet(EnemyProgressManager.PresetId, out var manager);
             manager.BeginProgress();
