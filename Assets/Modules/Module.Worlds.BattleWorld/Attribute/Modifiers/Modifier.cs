@@ -11,7 +11,6 @@ namespace Module.Worlds.BattleWorld.Attribute.Modifiers
         public readonly ushort Id;
 
         public float Value { readonly get; init; }
-        public object Source { readonly get; init; }
         public ModifierType Type { readonly get; init; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,7 +27,7 @@ namespace Module.Worlds.BattleWorld.Attribute.Modifiers
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override string ToString()
-            => $"Value:{Value.ToString(CultureInfo.InvariantCulture)} Type:{Type} Source object: {Source ?? "None"}";
+            => $"Value:{Value.ToString(CultureInfo.InvariantCulture)} Type:{Type}";
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public int CompareTo(Modifier other)
