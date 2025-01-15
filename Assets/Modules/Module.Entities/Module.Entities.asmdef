@@ -6,6 +6,7 @@
         "Module.Core",
         "Module.Core.Extended",
         "Module.GameCommon",
+        "Module.Worlds.BattleWorld",
         "UniTask",
         "UniTask.Addressables",
         "Unity.Addressables",
