@@ -37,6 +37,8 @@ namespace Module.Entities.Characters.Hero
 
         private void OnDestroy()
         {
+            _attributeComponent.Deinitialize();
+
             GlobalValueVault<bool>.TrySet(PresetId, false);
             GlobalObjectVault.TryRemove(PresetId, out _);
         }
@@ -58,6 +60,7 @@ namespace Module.Entities.Characters.Hero
             _behaviourComponent = GetComponent<MonoHeroBehaviourComponent>();
 
             _characterAnimationComponent.InitializeDependencies();
+            _attributeComponent.InitializeDependencies();
             _behaviourComponent.InitializeDependencies();
         }
 
