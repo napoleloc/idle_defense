@@ -2,6 +2,7 @@ using System;
 using Module.Core.HFSM;
 using Module.Core.HFSM.Transitions;
 using Module.Entities.Characters.Hero.StateMachine;
+using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -82,7 +83,7 @@ namespace Module.Entities.Characters.Hero
             _normalAttackCountdown += TimeSpan.FromSeconds(Time.deltaTime);
 
             if (_targetFindingComponent.HasTarget
-                && _normalAttackCountdown.TotalSeconds >= _attributeComponent.NormalAttackInterval)
+                && _normalAttackCountdown.TotalSeconds >= _attributeComponent.GetValue(AttributeType.AttackSpeed))
             {
                 _normalAttackCountdown = TimeSpan.Zero;
                 return true;
@@ -94,7 +95,7 @@ namespace Module.Entities.Characters.Hero
         private bool CanChangeToSpecialAttackState(TransitionCondition<HeroState> transition)
         {
             if (_targetFindingComponent.HasTarget
-                && _specialAttackCountdown.TotalMilliseconds >= _attributeComponent.SpecialAttackInterval)
+                && _specialAttackCountdown.TotalMilliseconds >= 10)
             {
                 _specialAttackCountdown = TimeSpan.Zero;
                 return true;
