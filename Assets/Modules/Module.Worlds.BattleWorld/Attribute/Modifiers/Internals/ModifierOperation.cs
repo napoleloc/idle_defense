@@ -9,7 +9,6 @@ namespace Module.Worlds.BattleWorld.Attribute.Modifiers.Internals
         private const int DEFAULT_SCOPE = 1;
 
         protected readonly ArrayMap<int, FasterList<Modifier>> ScopedModifers = new();
-        protected readonly FasterList<int> ScopesToRemove = new();
 
         public bool IsEmpty => ScopedModifers.Count <= 0;
 
