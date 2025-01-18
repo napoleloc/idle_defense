@@ -1,7 +1,10 @@
 {
     "name": "Module.Data",
     "rootNamespace": "Module.Data",
-    "references": [],
+    "references": [
+        "EncosyTower.Modules",
+        "Module.Worlds.BattleWorld"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

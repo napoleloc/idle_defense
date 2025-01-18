@@ -5,6 +5,7 @@
         "EncosyTower.Modules",
         "Module.Core",
         "Module.Core.Extended",
+        "Module.Data",
         "Module.Entities",
         "Module.GameCommon",
         "Module.GameUI",

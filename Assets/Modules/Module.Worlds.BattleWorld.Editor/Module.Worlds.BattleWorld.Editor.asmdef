@@ -1,7 +1,9 @@
 {
     "name": "Module.Worlds.BattleWorld.Editor",
     "rootNamespace": "Module.Worlds.BattleWorld.Editor",
-    "references": [],
+    "references": [
+        "Module.Worlds.BattleWorld"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
