@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Module.Worlds.BattleWorld.Attribute
 {
-    public class AttributeSystem : IDisposable
+    public class AttributeComponent : MonoBehaviour, IDisposable
     {
         private readonly Dictionary<AttributeType, Attribute> _typeToAttributeMap = new();
 
