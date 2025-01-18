@@ -2,7 +2,7 @@ using EncosyTower.Modules;
 using EncosyTower.Modules.Vaults;
 using UnityEngine;
 
-namespace Module.Worlds.BattleWorld.Quest
+namespace Module.MainGame.Quest
 {
     public class QuestProgressManager : MonoBehaviour
     {

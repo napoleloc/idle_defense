@@ -5,14 +5,13 @@ using EncosyTower.Modules.AddressableKeys;
 using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
-using Module.Worlds.BattleWorld.Map.PubSub;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
-namespace Module.Worlds.BattleWorld.Map
+namespace Module.MainGame.Map
 {
     public class MapLoader : MonoBehaviour
     {

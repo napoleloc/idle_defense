@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.PubSub;
 
-namespace Module.Worlds.BattleWorld.Map.PubSub
+namespace Module.MainGame.Map
 {
     public readonly struct MapScope : IEquatable<MapScope>
     {
