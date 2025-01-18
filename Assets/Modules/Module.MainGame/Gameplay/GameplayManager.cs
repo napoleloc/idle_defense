@@ -5,18 +5,20 @@ using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.Extended.UI;
+using Module.Data.GameSave;
 using Module.Entities.Tower;
 using Module.Entities.Tower.PubSub;
 using Module.GameCommon.PubSub;
 using Module.GameUI;
-using Module.Worlds.BattleWorld.Map;
-using Module.Worlds.BattleWorld.Map.PubSub;
+using Module.MainGame.Map;
 using UnityEngine;
 
 namespace Module.MainGame.Gameplay
 {
     public class GameplayManager : MonoBehaviour
     {
+        private bool _isPaused;
+
         private void Awake()
         {
             var subscriber = WorldMessenger.Subscriber.Global().WithState(this);
@@ -26,6 +28,30 @@ namespace Module.MainGame.Gameplay
 
             subscriber.Subscribe<PauseGameMessage>(static (state, msg) => state.Handle(msg));
             subscriber.Subscribe<UnpauseGameMessage>(static (state, msg) => state.Handle(msg));
+        }
+
+        private void OnApplicationFocus(bool focus)
+        {
+#if !UNITY_EDITOR
+            _isPaused = !hasFocus;
+            SaveOnPaused();
+#endif
+        }
+
+        private void OnApplicationPause(bool pauseStatus)
+        {
+#if !UNITY_EDITOR
+            _isPaused = pauseStatus;
+            SaveOnPaused();
+#endif
+        }
+
+        private void SaveOnPaused()
+        {
+            if (_isPaused)
+            {
+                GameSaveManager.SaveData();
+            }
         }
 
         private async UniTask HandleAsync(AsyncMessage<StartGameMessage> asyncMessage)
