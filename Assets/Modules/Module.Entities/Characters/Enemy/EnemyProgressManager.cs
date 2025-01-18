@@ -24,7 +24,7 @@ namespace Module.Entities.Characters.Enemy
 
         private async void Start()
         {
-            await InitializeAsync(this.GetCancellationTokenOnDestroy());
+            await InitializeAsync(default);
             _positions = new(Allocator.Persistent);
         }
 
