@@ -1,4 +1,4 @@
-using Module.GameUI.InGame.Attribute;
+using Module.GameUI.Talents;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Module.GameUI.InGame
         [SerializeField]
         private HealthBarUI _healthBar;
         [SerializeField]
-        private AttributeGroupPanel _attributeGroup;
+        private TalentPanel _attributeGroup;
 
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField, ReadOnly]

@@ -1,17 +1,17 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
-using Module.GameUI.InGame.Attribute.Control;
+using Module.GameUI.Talents.Control;
 using UnityEngine;
 
-namespace Module.GameUI.InGame.Attribute.GridSheet
+namespace Module.GameUI.Talents.GridSheet
 {
-    public abstract class AttributeControlGridSheet : MonoBehaviour, IAttributeControlGridSheet
+    public abstract class TalentControlGridSheet : MonoBehaviour, ITalentControlGridSheet
     {
         [SerializeField]
-        private AttributeControl[] _attributeControls;
+        private TalentControl[] _attributeControls;
 
-        public ReadOnlyMemory<AttributeControl> AttributeControls
+        public ReadOnlyMemory<TalentControl> AttributeControls
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _attributeControls;
@@ -42,7 +42,7 @@ namespace Module.GameUI.InGame.Attribute.GridSheet
         {
             if (_attributeControls.IsNullOrEmpty())
             {
-                _attributeControls = GetComponentsInChildren<AttributeControl>();
+                _attributeControls = GetComponentsInChildren<TalentControl>();
             }
         }
 #endif

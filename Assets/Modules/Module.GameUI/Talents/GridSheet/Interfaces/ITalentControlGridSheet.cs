@@ -1,9 +1,9 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Module.GameUI.InGame.Attribute.GridSheet
+namespace Module.GameUI.Talents.GridSheet
 {
-    public interface IAttributeControlGridSheet
+    public interface ITalentControlGridSheet
     {
         void Initialize();
         void Cleanup();

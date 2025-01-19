@@ -1,16 +1,16 @@
 using System;
 using System.Threading;
-using Module.GameUI.InGame.Attribute.GridSheet;
+using Module.GameUI.Talents.GridSheet;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Module.GameUI.InGame.Attribute
+namespace Module.GameUI.Talents
 {
-    public class AttributeGroupPanel : MonoBehaviour
+    public class TalentPanel : MonoBehaviour
     {
         [SerializeField]
-        private IAttributeControlGridSheet[] _attributeControlGridSheets;
+        private TalentControlGridSheet[] _talentControlGridSheets;
         [SerializeField]
         private Button[] _activateSheetButtons;
 
@@ -22,7 +22,7 @@ namespace Module.GameUI.InGame.Attribute
 
         public void Initialize(CancellationToken token)
         {
-            var sheets = _attributeControlGridSheets.AsSpan();
+            var sheets = _talentControlGridSheets.AsSpan();
             for (int i = 0; i < sheets.Length; i++)
             {
                 sheets[i].Initialize();
@@ -46,8 +46,8 @@ namespace Module.GameUI.InGame.Attribute
             _previourSheetIndex = _currentSheetIndex;
             _currentSheetIndex = indexSheet;
 
-            var sheets = _attributeControlGridSheets.AsSpan();
-            for (int i = 0;i < _attributeControlGridSheets.Length; i++)
+            var sheets = _talentControlGridSheets.AsSpan();
+            for (int i = 0;i < sheets.Length; i++)
             {
                 var sheet = sheets[i];
             }
