@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 22edcd3b223f16d4bb0346ba1bcc3e8a
+    m_Address: prefab-screen-talents
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 25a1f9a4d5ef28a4c8a0436473666424
     m_Address: prefab-enemy-progress-manager
     m_ReadOnly: 0
@@ -132,6 +137,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d11e2d79cbb45414c9981ec86dcf91b1
     m_Address: prefab-map-loader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dab9619b15e0d974595d33b4b1de5e43
+    m_Address: prefab-screen-ability
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
