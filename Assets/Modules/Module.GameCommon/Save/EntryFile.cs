@@ -1,7 +1,7 @@
 using EncosyTower.Modules.Serialization;
 using UnityEngine;
 
-namespace Module.Data.GameSave
+namespace Module.GameCommon.Save
 {
     [System.Serializable]
     public class EntryFile

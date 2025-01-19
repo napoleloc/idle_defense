@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
 
-namespace Module.Data.GameSave.Multiplatforms
+namespace Module.GameCommon.Save.Multiplatforms
 {
     public class DefaultSaveWrapper : BaseSaveWrapper
     {

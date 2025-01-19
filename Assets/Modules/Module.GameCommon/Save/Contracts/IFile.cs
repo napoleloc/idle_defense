@@ -1,4 +1,4 @@
-namespace Module.Data.GameSave
+namespace Module.GameCommon.Save
 {
     public interface IFile
     {

@@ -3,6 +3,7 @@
     "rootNamespace": "Module.Data",
     "references": [
         "EncosyTower.Modules",
+        "Module.GameCommon",
         "Module.Worlds.BattleWorld"
     ],
     "includePlatforms": [],

@@ -1,7 +1,8 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Logging;
-using Module.Data.GameSave.Multiplatforms;
+using Module.GameCommon.Save;
+using Module.GameCommon.Save.Multiplatforms;
 using UnityEngine;
 
 namespace Module.Data.GameSave

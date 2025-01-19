@@ -6,7 +6,7 @@ using EncosyTower.Modules.Collections.Unsafe;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace Module.Data.GameSave
+namespace Module.GameCommon.Save
 {
     [System.Serializable]
     public class FileTable : IDisposable

@@ -6,7 +6,7 @@ using EncosyTower.Modules.Logging;
 using EncosyTower.Modules.Serialization;
 using UnityEngine;
 
-namespace Module.Data.GameSave.Multiplatforms
+namespace Module.GameCommon.Save.Multiplatforms
 {
     public abstract class BaseSaveWrapper
     {
