@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using EncosyTower.Modules.Collections;
 using EncosyTower.Modules.PubSub;
 using Module.Core.Extended.PubSub;
 using Module.Entities.Characters.Hero.PubSub;
@@ -9,6 +11,7 @@ namespace Module.Entities.Characters.Hero
 {
     public class MonoHeroAttributeComponent : MonoBehaviour, IEntityComponent, IDeinitialization
     {
+        private readonly List<ISubscription> _subscriptions = new();
         private AttributeComponent _attributeComponent;
 
         public void InitializeDependencies()
@@ -16,12 +19,13 @@ namespace Module.Entities.Characters.Hero
             _attributeComponent = GetComponent<AttributeComponent>();
 
             var subscriber = WorldMessenger.Subscriber.HeroScope().WithState(this);
-            subscriber.Subscribe<UpgradeAttributeMessage>(static (state, msg) => state.Handle(msg));
+            subscriber.Subscribe<UpgradeAttributeMessage>(static (state, msg) => state.Handle(msg)).AddTo(_subscriptions);
         }
 
         public void Deinitialize()
         {
             _attributeComponent.Dispose();
+            _subscriptions.Unsubscribe();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

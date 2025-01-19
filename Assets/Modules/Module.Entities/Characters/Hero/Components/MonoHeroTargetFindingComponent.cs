@@ -3,9 +3,7 @@ using Module.Entities.Characters.Enemy;
 using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
-using Cysharp.Threading.Tasks;
 using EncosyTower.Modules.Vaults;
-using EncosyTower.Modules.Logging;
 
 namespace Module.Entities.Characters.Hero
 {
