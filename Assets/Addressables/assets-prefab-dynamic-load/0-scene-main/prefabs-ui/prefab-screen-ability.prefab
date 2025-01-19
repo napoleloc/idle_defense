@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4438060285564953528}
   - component: {fileID: 5689393708668130450}
   m_Layer: 5
-  m_Name: image-equipment
+  m_Name: image-ability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 216698260795855609}
   - component: {fileID: 148598627908077785}
   m_Layer: 5
-  m_Name: prefab-screen-equipment
+  m_Name: prefab-screen-ability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 9144688863350131573}
   - component: {fileID: 3314674399309012951}
   m_Layer: 5
-  m_Name: label-equipment
+  m_Name: label-ability
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,7 +383,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Equipment
+  m_text: 'Ability
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c4be5163caa1e864cabaaeceba64606c, type: 2}
   m_sharedMaterial: {fileID: 4321382949720109981, guid: c4be5163caa1e864cabaaeceba64606c,

@@ -5,9 +5,9 @@ using Module.Core.Extended.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Module.GameUI.MainLobby.Inventory
+namespace Module.GameUI.MainLobby.Ability
 {
-    public class EquipmentScreen : NavScreen
+    public class AbilityScreen : NavScreen
     {
         [SerializeField] private Button _closeButton;
 

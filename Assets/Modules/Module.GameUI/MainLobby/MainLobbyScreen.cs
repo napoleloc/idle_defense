@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Module.Core.Extended.PubSub;
 using Module.Core.Extended.UI;
 using Module.GameCommon.PubSub;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,62 +11,77 @@ namespace Module.GameUI.MainLobby
 {
     public class MainLobbyScreen : NavScreen
     {
-        [SerializeField] private Button _mailButton;
-        [SerializeField] private Button _settingsButton;
-
-        [SerializeField] private Button _shopButton;
-        [SerializeField] private Button _inventoryButton;
-        [SerializeField] private Button _quickFightButton;
+        [Title("Button Events", titleAlignment: TitleAlignments.Centered)]
+        [SerializeField] 
+        private Button _buttonMail;
+        [SerializeField] 
+        private Button _buttonSetting;
+        [SerializeField] 
+        private Button _buttonShop;
+        [SerializeField] 
+        private Button _buttonAbility;
+        [SerializeField] 
+        private Button _buttonTalents;
+        [SerializeField] 
+        private Button _buttonQuickFight;
 
         public override UniTask Initialize(Memory<object> args)
         {
-            _mailButton.onClick.AddListener(MailButton_OnClick);
-            _settingsButton.onClick.AddListener(SettingsButton_OnClick);
+            _buttonMail.onClick.AddListener(ButtonMail_OnClick);
+            _buttonSetting.onClick.AddListener(ButtonSetting_OnClick);
 
-            _shopButton.onClick.AddListener(ShopButton_OnClick);
-            _inventoryButton.onClick.AddListener(InventoryButton_OnClick);
-            _quickFightButton.onClick.AddListener(QuickFightButton_OnClick);
+            _buttonShop.onClick.AddListener(ButtonShop_OnClick);
+            _buttonAbility.onClick.AddListener(ButtonAbility_OnClick);
+            _buttonTalents.onClick.AddListener(ButtonTalents_OnClick);
+            _buttonQuickFight.onClick.AddListener(ButtonQuickFight_OnClick);
 
             return base.Initialize(args);
         }
 
         public override UniTask Cleanup(Memory<object> args)
         {
-            _mailButton.onClick.RemoveAllListeners();
-            _settingsButton.onClick.RemoveAllListeners();
+            _buttonMail.onClick.RemoveAllListeners();
+            _buttonSetting.onClick.RemoveAllListeners();
 
-            _shopButton.onClick.RemoveAllListeners();
-            _inventoryButton.onClick.RemoveAllListeners();
-            _quickFightButton.onClick.RemoveAllListeners();
+            _buttonShop.onClick.RemoveAllListeners();
+            _buttonAbility.onClick.RemoveAllListeners();
+            _buttonTalents.onClick.RemoveAllListeners();
+            _buttonQuickFight.onClick.RemoveAllListeners();
 
             return base.Cleanup(args);
         }
 
-        private void MailButton_OnClick()
+        private void ButtonMail_OnClick()
         {
             WorldMessenger.Publisher.UIScope()
                 .Publish(ModalNames.MailModalName().ToShowModalMessage());
         }
 
-        private void SettingsButton_OnClick()
+        private void ButtonSetting_OnClick()
         {
             WorldMessenger.Publisher.UIScope()
                 .Publish(ModalNames.SettingsModalName().ToShowModalMessage());
         }
 
-        private void ShopButton_OnClick()
+        private void ButtonShop_OnClick()
         {
             WorldMessenger.Publisher.UIScope()
                 .Publish(ScreenNames.ShopScreenName().ToShowScreenMessage());
         }
 
-        private void InventoryButton_OnClick()
+        private void ButtonAbility_OnClick()
         {
             WorldMessenger.Publisher.UIScope()
-                .Publish(ScreenNames.InventoryScreenName().ToShowScreenMessage());
+                .Publish(ScreenNames.AbilityScreenName().ToShowScreenMessage());
         }
 
-        private void QuickFightButton_OnClick()
+        private void ButtonTalents_OnClick()
+        {
+            WorldMessenger.Publisher.UIScope()
+                .Publish(ScreenNames.TalentsScreenName().ToShowScreenMessage());
+        }
+
+        private void ButtonQuickFight_OnClick()
         {
             WorldMessenger.Publisher.UIScope()
                 .Publish(new HideScreenMessage());
