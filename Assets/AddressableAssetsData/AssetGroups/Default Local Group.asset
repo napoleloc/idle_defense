@@ -81,7 +81,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 931b8aa06e046c348afff52bef6346fa
-    m_Address: prefab-screen-main-lobby
+    m_Address: prefab-screen-mainlobby
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
