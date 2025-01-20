@@ -1,3 +1,4 @@
+using System;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -15,7 +16,7 @@ namespace Module.GameUI.Talents.Control
         [SerializeField]
         private TMP_Text _labeTalentName;
         [SerializeField]
-        private TMP_Text _labelTalentAmount;
+        private TMP_Text _labelTalentValue;
         [SerializeField]
         private TMP_Text _labelCostAmount;
         [SerializeField]
@@ -25,6 +26,8 @@ namespace Module.GameUI.Talents.Control
         [SerializeField]
         [ReadOnly]
         private AttributeType _attributeType;
+
+        private event Action ButtonControl_OnClick;
 
         public void InitializeComponent()
         {

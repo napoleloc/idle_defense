@@ -1,5 +1,5 @@
 using System;
-using System.Threading;
+using Module.Data.GameSave.Talents;
 using Module.GameUI.Talents.GridSheet;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,6 +9,11 @@ namespace Module.GameUI.Talents
 {
     public class TalentPanel : MonoBehaviour
     {
+        [Title("Hard Reference", titleAlignment: TitleAlignments.Centered)]
+        [SerializeField]
+        private TalentTableData _tableData;
+
+        [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         private TalentControlGridSheet[] _talentControlGridSheets;
         [SerializeField]
@@ -20,12 +25,12 @@ namespace Module.GameUI.Talents
         [SerializeField, ReadOnly]
         private int _previourSheetIndex;
 
-        public void Initialize(CancellationToken token)
+        public void Initialize()
         {
             var sheets = _talentControlGridSheets.AsSpan();
             for (int i = 0; i < sheets.Length; i++)
             {
-                sheets[i].Initialize();
+                sheets[i].Initialize(_tableData);
             }
 
             var buttons = _activateSheetButtons.AsSpan();

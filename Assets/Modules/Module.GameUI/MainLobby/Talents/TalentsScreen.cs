@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Module.Core.Extended.PubSub;
 using Module.Core.Extended.UI;
+using Module.GameUI.Talents;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +12,9 @@ namespace Module.GameUI.MainLobby.Talents
     {
         [SerializeField]
         private Button _buttonClose;
+
+        [SerializeField]
+        private TalentPanel _talentPanel;
 
         public override UniTask Initialize(Memory<object> args)
         {

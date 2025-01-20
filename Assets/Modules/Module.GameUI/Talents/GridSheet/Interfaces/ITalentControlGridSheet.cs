@@ -1,11 +1,10 @@
-using System.Threading;
-using Cysharp.Threading.Tasks;
+using Module.Data.GameSave.Talents;
 
 namespace Module.GameUI.Talents.GridSheet
 {
     public interface ITalentControlGridSheet
     {
-        void Initialize();
+        void Initialize(TalentTableData tableData);
         void Cleanup();
     }
 }
