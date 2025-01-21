@@ -11,7 +11,7 @@ namespace Module.Worlds.BattleWorld.Attribute
     [EnumExtensions]
     public enum OffensiveAttributeType : byte
     {
-        Dmg,
+        Damage,
         AttackSpeed,
         Range,
     }
