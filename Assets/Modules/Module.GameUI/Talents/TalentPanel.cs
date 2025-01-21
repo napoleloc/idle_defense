@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Module.GameUI.Talents
 {
-    public class TalentPanel : MonoBehaviour
+    public class TalentPanel : MonoBehaviour, IDisposable
     {
         [Title("Hard Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
@@ -24,6 +24,12 @@ namespace Module.GameUI.Talents
         private int _currentSheetIndex;
         [SerializeField, ReadOnly]
         private int _previourSheetIndex;
+
+        public void OnAwake()
+            => _tableData.Initialize();
+
+        public void Dispose()
+            => _tableData.Deinitialize();
 
         public void Initialize()
         {
@@ -50,12 +56,6 @@ namespace Module.GameUI.Talents
 
             _previourSheetIndex = _currentSheetIndex;
             _currentSheetIndex = indexSheet;
-
-            var sheets = _talentControlGridSheets.AsSpan();
-            for (int i = 0;i < sheets.Length; i++)
-            {
-                var sheet = sheets[i];
-            }
         }
     }
 }

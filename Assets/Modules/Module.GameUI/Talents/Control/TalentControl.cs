@@ -29,9 +29,11 @@ namespace Module.GameUI.Talents.Control
 
         private event Action ButtonControl_OnClick;
 
-        public void InitializeComponent()
+        public void Initialize(AttributeType attributeType)
         {
+            _attributeType = attributeType;
 
+            _labeTalentName.SetText(AttributeTypeExtensions.ToDisplayStringFast(attributeType));
         }
 
         public void Cleanup()

@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 048dede719d29d44290f50c72786db2d, type: 3}
   m_Name: talent-table-data
   m_EditorClassIdentifier: 
-  _entries: []
+  _editor: 1
+  _initialized: 0
+  _entries:
+  - kind: 0
+    type: 0
+  - kind: 0
+    type: 1
+  - kind: 0
+    type: 2

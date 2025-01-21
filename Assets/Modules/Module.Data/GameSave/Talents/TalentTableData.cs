@@ -23,16 +23,24 @@ namespace Module.Data.GameSave.Talents
 
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        [ReadOnly]
-        private bool _initialized;
+        private bool _editor;
         [SerializeField]
         [ReadOnly]
+        private bool _initialized;
+        [TableList]
+        [SerializeField]
         private TalentEntry[] _entries;
 
         public ReadOnlyMemory<TalentEntry> Entries
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _entries;
+        }
+
+        public int Count(AttributeKind kind)
+        {
+            var result = _attributeMapping.TryGetValue(kind, out var attributes);
+            return result ? attributes.Count : 0;
         }
 
         public void Initialize()
@@ -42,36 +50,39 @@ namespace Module.Data.GameSave.Talents
                 return;
             }
 
-            if(GameSaveManager.TryGet(UNIQUE_NAME.GetHashCode(), out TalentFile data))
+            if (_editor == false
+                && GameSaveManager.TryGet(UNIQUE_NAME.GetHashCode(), out TalentFile data))
             {
                 data.Entries.CopyTo(_entries);
+            }
 
-                var map = _attributeMapping;
-                var entries = Entries.Span;
+            var map = _attributeMapping;
+            var entries = Entries.Span;
 
-                map.Clear();
+            map.Clear();
 
-                for (int i = 0; i < entries.Length; i++)
+            for (int i = 0; i < entries.Length; i++)
+            {
+                var entry = entries[i];
+
+                if (map.TryGetValue(entry.kind, out var attributes) == false)
                 {
-                    var entry = entries[i]; 
-
-                    if(map.TryGetValue(entry.kind, out var attributes) == false)
-                    {
-                        attributes = new FasterList<AttributeType>() { entry.type };
-                        map[entry.kind] = attributes;
-                        continue;
-                    }
-
-                    attributes.Add(entry.type);
+                    attributes = new FasterList<AttributeType>() { entry.type };
+                    map[entry.kind] = attributes;
+                    continue;
                 }
 
-                _initialized = true;
+                attributes.Add(entry.type);
             }
+
+            _initialized = true;
         }
 
         public void Deinitialize()
         {
-            _entries = Array.Empty<TalentEntry>();
+            if(_editor == false)
+                _entries = Array.Empty<TalentEntry>();
+
             _attributeMapping.Clear();
             _initialized = false;
         }
@@ -79,17 +90,6 @@ namespace Module.Data.GameSave.Talents
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool HasUnlock(AttributeType type)
             => _typeToEntryMap.ContainsKey(type);
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool TryGet(AttributeKind kind, ref NativeArray<AttributeType> attributesToUnlock)
-        {
-            if (attributesToUnlock.IsCreated == false)
-            {
-                return false;
-            }
-
-            return TryGet(kind, attributesToUnlock);
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGet(AttributeKind kind, Span<AttributeType> attributesToUnlock)

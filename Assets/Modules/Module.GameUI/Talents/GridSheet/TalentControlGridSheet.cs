@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
-using Google.Apis.Drive.v3.Data;
+using EncosyTower.Modules.Logging;
 using Module.Data.GameSave.Talents;
 using Module.GameUI.Talents.Control;
 using Module.Worlds.BattleWorld.Attribute;
@@ -13,34 +13,53 @@ namespace Module.GameUI.Talents.GridSheet
 {
     public abstract class TalentControlGridSheet : MonoBehaviour, ITalentControlGridSheet
     {
+        private readonly FasterList<TalentControl> _attributeControls = new();
+
         [Title("Soft Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         protected AttributeKind attributeKind;
 
         [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        private GameObject _prefabTalentControl;
+        private Transform _contents;
+        [SerializeField]
+        private TalentPool _pool;
 
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         [Sirenix.OdinInspector.ReadOnly]
-        private int _numTalents;
-
-        private TalentControl[] _attributeControls;
+        private ushort _numTalents;
 
         public ReadOnlyMemory<TalentControl> AttributeControls
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _attributeControls;
-        }
+            get => _attributeControls.AsReadOnlyMemory();
+        } 
 
         public virtual void Initialize(TalentTableData tableData)
         {
-            var attributes = NativeArray.CreateFast<AttributeType>(10, Allocator.Temp);
-            if(tableData.TryGet(attributeKind, ref attributes))
+            var amount = tableData.Count(attributeKind);
+
+            _attributeControls.AddReplicate(null, amount);
+
+            var attributeControls = _attributeControls.AsSpan();
+            _pool.Rent(attributeControls, true);
+
+            //var attributes = NativeArray.CreateFast<AttributeType>(_numTalents, Allocator.Temp);
+
+            for (int i = 0; i < amount; i++)
             {
-                
+                attributeControls[i].transform.SetParent(_contents);
             }
+
+            //if (tableData.TryGet(attributeKind, attributes))
+            //{
+            //    for (int i = 1; i < _numTalents; i++)
+            //    {
+            //        var type = attributes[i];
+            //        attributeControls[i].Initialize(type);
+            //    }
+            //}
         }
 
         public virtual void Cleanup()

@@ -14,11 +14,27 @@ namespace Module.GameUI.MainLobby.Talents
         private Button _buttonClose;
 
         [SerializeField]
+        private TalentPool _pool;
+        [SerializeField]
         private TalentPanel _talentPanel;
+
+        protected override void Awake()
+        {
+            _pool.Initialize(5);
+            _talentPanel.OnAwake();
+        }
+
+        protected override void OnDestroy()
+        {
+            _pool.Deinitialize();
+            _talentPanel.Dispose();
+        }
 
         public override UniTask Initialize(Memory<object> args)
         {
             _buttonClose.onClick.AddListener(ButtonClose_OnClick);
+
+            _talentPanel.Initialize();
 
             return base.Initialize(args);
         }
