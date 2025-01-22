@@ -16,7 +16,6 @@
         "Unity.Addressables",
         "Unity.Burst",
         "Unity.Collections",
-        "Unity.Localization",
         "Unity.Logging",
         "Unity.Mathematics",
         "Unity.ResourceManager",

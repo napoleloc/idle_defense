@@ -76,13 +76,6 @@
       "dependencies": {},
       "url": "https://package.openupm.com"
     },
-    "com.gilzoide.easy-project-settings": {
-      "version": "1.1.0",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://package.openupm.com"
-    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,
