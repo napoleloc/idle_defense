@@ -319,7 +319,7 @@ namespace Module.Core.Pooling
             }
         }
 
-        public void RentGameObjects(Span<TComponent> components, bool activate = false)
+        public void RentComponents(Span<TComponent> components, bool activate = false)
         {
             var length = components.Length;
 
@@ -412,7 +412,7 @@ namespace Module.Core.Pooling
             instance.gameObject.SetActive(false);
         }
 
-        public void ReturnGameObjects(ReadOnlySpan<TComponent> components)
+        public void ReturnComponents(ReadOnlySpan<TComponent> components)
         {
             var length = components.Length;
 
@@ -435,16 +435,16 @@ namespace Module.Core.Pooling
 
             for (var i = 0; i < length; i++)
             {
-                var obj = components[i];
+                var component = components[i];
 
-                if (obj.IsInvalid())
+                if (component.IsInvalid())
                 {
                     continue;
                 }
 
-                unusedComponents.Add(obj);
-                unusedInstanceIds.Add(postIds[postIdsLength++] = obj.GetInstanceID());
-                unusedTransformIds.Add(obj.transform.GetInstanceID());
+                unusedComponents.Add(component);
+                unusedInstanceIds.Add(postIds[postIdsLength++] = component.gameObject.GetInstanceID());
+                unusedTransformIds.Add(component.transform.GetInstanceID());
             }
 
             postIds = postIds.GetSubArray(0, postIdsLength);
