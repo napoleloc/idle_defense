@@ -1,15 +1,12 @@
 using System;
 using System.Runtime.CompilerServices;
-using EncosyTower.Modules;
 using EncosyTower.Modules.Collections;
-using EncosyTower.Modules.Logging;
 using Module.Data.GameSave.Talents;
 using Module.GameUI.Talents.Control;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Module.GameUI.Talents.GridSheet
 {
@@ -102,12 +99,6 @@ namespace Module.GameUI.Talents.GridSheet
                     var type = attributes[i];
                     var talentControl = attributeControls[i];
 
-                    if (talentControl.IsInvalid())
-                    {
-                        DevLoggerAPI.LogInfo($"Index: {i}");
-                        continue;
-                    }
-                    
                     talentControl.transform.SetParent(_contents);
                     talentControl.Initialize(type);
                 }
@@ -126,9 +117,6 @@ namespace Module.GameUI.Talents.GridSheet
             attributeControl.AddReplicateNoInit(amount);
 
             pool.RentComponents(attributeControl.AsSpan(), true);
-
-
-            DevLoggerAPI.LogInfo(attributeControl.Count);
         }
     }
 }
