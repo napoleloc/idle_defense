@@ -345,6 +345,32 @@ namespace Module.Core.Pooling
             }
         }
 
+        public void RentComponents(int amount, Span<TComponent> components, bool activate = false)
+        {
+            var length = amount;
+
+            Assert.IsTrue(length > 0, "\"objects\" array does not have enough space to contain the items");
+
+            Prepool(length - UnusedCount);
+
+            var startIndex = UnusedCount - length;
+            var instanceIds = NativeArray.CreateFast<int>(length, Allocator.Temp);
+
+            _unusedComponents.CopyTo(startIndex, components);
+            _unusedInstanceIds.CopyTo(startIndex, instanceIds);
+
+            _unusedComponents.RemoveAt(startIndex, length);
+            _unusedInstanceIds.RemoveAt(startIndex, length);
+            _unusedTransformIds.RemoveAt(startIndex, length);
+
+            Prefab.MoveToScene(instanceIds);
+
+            if (activate)
+            {
+                GameObject.SetGameObjectsActive(instanceIds, true);
+            }
+        }
+
         public void RentInstanceIds(Span<int> instanceIds, bool activate = false)
         {
             var length = instanceIds.Length;
