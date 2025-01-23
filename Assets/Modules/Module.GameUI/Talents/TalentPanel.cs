@@ -1,6 +1,6 @@
 using System;
-using Module.Data.GameSave.Talents;
 using Module.GameUI.Talents.GridSheet;
+using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,53 +9,42 @@ namespace Module.GameUI.Talents
 {
     public class TalentPanel : MonoBehaviour, IDisposable
     {
-        [Title("Hard Reference", titleAlignment: TitleAlignments.Centered)]
-        [SerializeField]
-        private TalentTableData _tableData;
-
         [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        private TalentControlGridSheet[] _talentControlGridSheets;
+        private TalentControlGridSheet _talentControlGridSheet;
         [SerializeField]
         private Button[] _activateSheetButtons;
 
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField, ReadOnly]
-        private int _currentSheetIndex;
-        [SerializeField, ReadOnly]
-        private int _previourSheetIndex;
+        private AttributeKind _currentSheetIndex;
 
         public void OnAwake()
-            => _tableData.Initialize();
+        {
+            _talentControlGridSheet.TableData.Initialize();
+        }
 
         public void Dispose()
-            => _tableData.Deinitialize();
+        {
+            _talentControlGridSheet.TableData.Deinitialize();
+        }
 
         public void Initialize()
         {
-            var sheets = _talentControlGridSheets.AsSpan();
-            for (int i = 0; i < sheets.Length; i++)
-            {
-                sheets[i].Initialize(_tableData);
-            }
+            _talentControlGridSheet.Initialize();
 
             var buttons = _activateSheetButtons.AsSpan();
             for (int i = 0; i < buttons.Length; i++)
             {
-                var index = i;
-                buttons[index].onClick.AddListener(() => ButtonActivateSheet_OnClick(index));
+                var attributeKind = (AttributeKind)i;
+                buttons[i].onClick.AddListener(() => ButtonActivateSheet_OnClick(attributeKind));
             }
         }
 
-        private void ButtonActivateSheet_OnClick(int indexSheet)
+        private void ButtonActivateSheet_OnClick(AttributeKind attributeKind)
         {
-            if(_currentSheetIndex == indexSheet)
-            {
-                return;
-            }
-
-            _previourSheetIndex = _currentSheetIndex;
-            _currentSheetIndex = indexSheet;
+            _currentSheetIndex = attributeKind;
+            _talentControlGridSheet.OnChangeAttributeKind(attributeKind);
         }
     }
 }

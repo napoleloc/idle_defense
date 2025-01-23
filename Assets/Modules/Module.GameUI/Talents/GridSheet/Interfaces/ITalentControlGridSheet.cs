@@ -4,7 +4,7 @@ namespace Module.GameUI.Talents.GridSheet
 {
     public interface ITalentControlGridSheet
     {
-        void Initialize(TalentTableData tableData);
+        void Initialize();
         void Cleanup();
     }
 }

@@ -21,3 +21,7 @@ MonoBehaviour:
     type: 1
   - kind: 0
     type: 2
+  - kind: 1
+    type: 50
+  - kind: 1
+    type: 51

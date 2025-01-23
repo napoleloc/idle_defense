@@ -14,19 +14,19 @@ namespace Module.GameUI.MainLobby.Talents
         private Button _buttonClose;
 
         [SerializeField]
-        private TalentPool _pool;
+        private TalentControlPooler _pooler;
         [SerializeField]
         private TalentPanel _talentPanel;
 
         protected override void Awake()
         {
-            _pool.Initialize(5);
+            _pooler.Initialize( true, 5);
             _talentPanel.OnAwake();
         }
 
         protected override void OnDestroy()
         {
-            _pool.Deinitialize();
+            //_pooler.Deinitialize();
             _talentPanel.Dispose();
         }
 

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
+using EncosyTower.Modules;
 using EncosyTower.Modules.Collections;
 using EncosyTower.Modules.Logging;
 using Module.Data.GameSave.Talents;
@@ -8,27 +9,35 @@ using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Module.GameUI.Talents.GridSheet
 {
-    public abstract class TalentControlGridSheet : MonoBehaviour, ITalentControlGridSheet
+    public class TalentControlGridSheet : MonoBehaviour, ITalentControlGridSheet
     {
         private readonly FasterList<TalentControl> _attributeControls = new();
 
-        [Title("Soft Reference", titleAlignment: TitleAlignments.Centered)]
+        [Title("Hard Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        protected AttributeKind attributeKind;
+        private TalentTableData _tableData;
 
         [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         private Transform _contents;
         [SerializeField]
-        private TalentPool _pool;
+        private TalentControlPooler _pooler;
 
-        [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
+        [Title("Soft Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        [Sirenix.OdinInspector.ReadOnly]
-        private ushort _numTalents;
+        private AttributeKind _attributeKind;
+
+        private bool _initialized = false;
+
+        public TalentTableData TableData
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _tableData;
+        }
 
         public ReadOnlyMemory<TalentControl> AttributeControls
         {
@@ -36,30 +45,10 @@ namespace Module.GameUI.Talents.GridSheet
             get => _attributeControls.AsReadOnlyMemory();
         } 
 
-        public virtual void Initialize(TalentTableData tableData)
+        public virtual void Initialize()
         {
-            var amount = tableData.Count(attributeKind);
-
-            _attributeControls.AddReplicate(null, amount);
-
-            var attributeControls = _attributeControls.AsSpan();
-            _pool.Rent(attributeControls, true);
-
-            //var attributes = NativeArray.CreateFast<AttributeType>(_numTalents, Allocator.Temp);
-
-            for (int i = 0; i < amount; i++)
-            {
-                attributeControls[i].transform.SetParent(_contents);
-            }
-
-            //if (tableData.TryGet(attributeKind, attributes))
-            //{
-            //    for (int i = 1; i < _numTalents; i++)
-            //    {
-            //        var type = attributes[i];
-            //        attributeControls[i].Initialize(type);
-            //    }
-            //}
+            _attributeKind = AttributeKind.Offensive;
+            ReloadGridSheet();
         }
 
         public virtual void Cleanup()
@@ -71,6 +60,75 @@ namespace Module.GameUI.Talents.GridSheet
                 attributeControls[i].Cleanup();
                 attributeControls[i].gameObject.SetActive(false);
             }
+        }
+
+        public void OnChangeAttributeKind(AttributeKind kind)
+        {
+            if(_attributeKind == kind)
+            {
+                return;
+            }
+
+            _attributeKind = kind;
+            ReloadGridSheet();
+        }
+
+        private void ReloadGridSheet()
+        {
+            var count = _tableData.Count(_attributeKind);
+            var lenght = _attributeControls.Count - count;
+            
+            if (lenght > 0)
+            {
+                var span = _attributeControls.AsSpan().Slice(0, lenght);
+
+                _pooler.Pool.ReturnComponents(span);
+                _attributeControls.RemoveAt(0, lenght);
+            }
+            else
+            {
+                count = count - _attributeControls.Count;
+                PrepareMany(count);
+            }
+
+            var amount = _attributeControls.Count;
+            var attributes = NativeArray.CreateFast<AttributeType>(amount, Allocator.Temp);
+            var attributeControls = _attributeControls.AsSpan();
+
+            if (_tableData.TryGet(_attributeKind, attributes))
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    var type = attributes[i];
+                    var talentControl = attributeControls[i];
+
+                    if (talentControl.IsInvalid())
+                    {
+                        DevLoggerAPI.LogInfo($"Index: {i}");
+                        continue;
+                    }
+                    
+                    talentControl.transform.SetParent(_contents);
+                    talentControl.Initialize(type);
+                }
+            }
+        }
+
+        private void PrepareMany(int amount)
+        {
+            var pool = _pooler.Pool;
+            var attributeControl = _attributeControls;
+            var capacity = attributeControl.Count + amount;
+
+            pool.ReturnComponents(_attributeControls.AsSpan());
+
+            attributeControl.IncreaseCapacityTo(_attributeControls.Count + amount);
+            attributeControl.AddReplicateNoInit(amount);
+
+            pool.RentComponents(attributeControl.AsSpan(), true);
+
+
+            DevLoggerAPI.LogInfo(attributeControl.Count);
         }
     }
 }

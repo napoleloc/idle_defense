@@ -2,6 +2,7 @@ using EncosyTower.Modules.EnumExtensions;
 
 namespace Module.Worlds.BattleWorld.Attribute
 {
+    [EnumExtensions]
     public enum AttributeKind : byte { Offensive, Defense }
     
     [EnumTemplate]
