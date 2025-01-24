@@ -1,9 +1,8 @@
 using System;
+using System.Data;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
 using EncosyTower.Modules.Vaults;
-using Module.Data.Runtime;
-using Module.Data.Runtime.Talents;
 using Module.GameUI.Talents.Control;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
@@ -62,42 +61,37 @@ namespace Module.GameUI.Talents.GridSheet
 
         private void ReloadGridSheet()
         {
-            GlobalObjectVault.TryGet(GameRuntimeDataManager.PresetId, out var runtimeData);
+            //var count = dataTable.UnlockedCount(_attributeKind);
+            //var lenght = _attributeControls.Count - count;
 
-            if(runtimeData.TryGetDataTableAsset<RuntimeTalentDataTableAsset>(out var dataTable))
-            {
-                var count = dataTable.UnlockedCount(_attributeKind);
-                var lenght = _attributeControls.Count - count;
+            //if (lenght > 0)
+            //{
+            //    var span = _attributeControls.AsSpan().Slice(0, lenght);
 
-                if (lenght > 0)
-                {
-                    var span = _attributeControls.AsSpan().Slice(0, lenght);
+            //    _pooler.Pool.ReturnComponents(span);
+            //    _attributeControls.RemoveAt(0, lenght);
+            //}
+            //else
+            //{
+            //    count = count - _attributeControls.Count;
+            //    PrepareMany(count);
+            //}
 
-                    _pooler.Pool.ReturnComponents(span);
-                    _attributeControls.RemoveAt(0, lenght);
-                }
-                else
-                {
-                    count = count - _attributeControls.Count;
-                    PrepareMany(count);
-                }
+            //var amount = _attributeControls.Count;
+            //var talentsToUnlock = NativeArray.CreateFast<TalentEntry>(amount, Allocator.Temp);
+            //var attributeControls = _attributeControls.AsSpan();
 
-                var amount = _attributeControls.Count;
-                var talentsToUnlock = NativeArray.CreateFast<TalentEntry>(amount, Allocator.Temp);
-                var attributeControls = _attributeControls.AsSpan();
+            //if (dataTable.TryGetTalentsToUnlock(_attributeKind, talentsToUnlock))
+            //{
+            //    for (int i = 0; i < amount; i++)
+            //    {
+            //        var talent = talentsToUnlock[i];
+            //        var talentControl = attributeControls[i];
 
-                if (dataTable.TryGetTalentsToUnlock(_attributeKind, talentsToUnlock))
-                {
-                    for (int i = 0; i < amount; i++)
-                    {
-                        var talent = talentsToUnlock[i];
-                        var talentControl = attributeControls[i];
-
-                        talentControl.transform.SetParent(_contents);
-                        talentControl.Initialize(talent.Id.SubId);
-                    }
-                }
-            }
+            //        talentControl.transform.SetParent(_contents);
+            //        talentControl.Initialize(talent.Id.SubId);
+            //    }
+            //}
         }
 
         private void PrepareMany(int amount)

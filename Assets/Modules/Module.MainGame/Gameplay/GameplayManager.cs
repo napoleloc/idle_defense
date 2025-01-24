@@ -5,7 +5,6 @@ using EncosyTower.Modules.PubSub;
 using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.Extended.UI;
-using Module.Data.GameSave;
 using Module.Entities.Tower;
 using Module.Entities.Tower.PubSub;
 using Module.GameCommon.PubSub;
@@ -50,7 +49,7 @@ namespace Module.MainGame.Gameplay
         {
             if (_isPaused)
             {
-                GameSaveManager.SaveData();
+                
             }
         }
 
