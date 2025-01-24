@@ -12,9 +12,9 @@ namespace Module.Data.Runtime
 {
     using TableRef = LazyLoadReference<RuntimeDataTableAsset>;
 
-    public class GameDataRumtimeManager : MonoBehaviour
+    public class GameRuntimeDataManager : MonoBehaviour
     {
-        public static readonly Id<GameDataRumtimeManager> PresetId = default;
+        public static readonly Id<GameRuntimeDataManager> PresetId = default;
 
         [SerializeField]
         internal TableRef[] _assetRefs = Array.Empty<TableRef>();
@@ -220,31 +220,31 @@ namespace Module.Data.Runtime
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorReferenceIsInvalid(int index, GameDataRumtimeManager context)
+        private static void LogErrorReferenceIsInvalid(int index, GameRuntimeDataManager context)
         {
             DevLoggerAPI.LogError(context, $"Table Asset reference at index {index} is invalid.");
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorAssetIsInvalid(int index, GameDataRumtimeManager context)
+        private static void LogErrorAssetIsInvalid(int index, GameRuntimeDataManager context)
         {
             DevLoggerAPI.LogError(context, $"Table Asset at index {index} is invalid.");
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorDatabaseIsNotInitialized(GameDataRumtimeManager context)
+        private static void LogErrorDatabaseIsNotInitialized(GameRuntimeDataManager context)
         {
             DevLoggerAPI.LogError(context, $"The database is not initialized yet. Please invoke {nameof(Initialize)} method beofre using.");
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorCannotFindAsset(string name, GameDataRumtimeManager context)
+        private static void LogErrorCannotFindAsset(string name, GameRuntimeDataManager context)
         {
             DevLoggerAPI.LogError(context, $"Cannot find any data table asset named {name}.");
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorCannotFindAsset(Type type, GameDataRumtimeManager context)
+        private static void LogErrorCannotFindAsset(Type type, GameRuntimeDataManager context)
         {
             DevLoggerAPI.LogError(context, $"Cannot find any data table asset of type {type}.");
         }
