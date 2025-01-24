@@ -29,11 +29,16 @@ namespace Module.GameUI.Talents
 
             if (prepoolOnStart)
             {
-                PrepoolOnStart(prepoolAmount);
+                PrepoolOnStartInternal(prepoolAmount);
             }
         }
 
-        private void PrepoolOnStart(int prepoolAmount)
+        public void Deinitialize()
+        {
+            _pool.ReleaseInstances(0);
+        }
+
+        private void PrepoolOnStartInternal(int prepoolAmount)
             => _pool.Prepool(prepoolAmount);
     }
 }

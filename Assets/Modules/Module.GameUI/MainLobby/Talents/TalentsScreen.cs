@@ -21,13 +21,11 @@ namespace Module.GameUI.MainLobby.Talents
         protected override void Awake()
         {
             _pooler.Initialize( true, 5);
-            _talentPanel.OnAwake();
         }
 
         protected override void OnDestroy()
         {
-            //_pooler.Deinitialize();
-            _talentPanel.Dispose();
+            _pooler.Deinitialize();
         }
 
         public override UniTask Initialize(Memory<object> args)

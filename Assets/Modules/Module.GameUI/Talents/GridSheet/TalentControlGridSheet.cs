@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
-using Module.Data.GameSave.Talents;
+using Module.Data.Runtime.Talents;
 using Module.GameUI.Talents.Control;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
@@ -107,6 +107,11 @@ namespace Module.GameUI.Talents.GridSheet
 
         private void PrepareMany(int amount)
         {
+            if(amount <= 0)
+            {
+                return;
+            }
+
             var pool = _pooler.Pool;
             var attributeControl = _attributeControls;
             var capacity = attributeControl.Count + amount;

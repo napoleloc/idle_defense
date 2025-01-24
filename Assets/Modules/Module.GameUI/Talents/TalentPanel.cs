@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Module.GameUI.Talents
 {
-    public class TalentPanel : MonoBehaviour, IDisposable
+    public class TalentPanel : MonoBehaviour
     {
         [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
@@ -19,16 +19,6 @@ namespace Module.GameUI.Talents
         [SerializeField, ReadOnly]
         private AttributeKind _currentSheetIndex;
 
-        public void OnAwake()
-        {
-            _talentControlGridSheet.TableData.Initialize();
-        }
-
-        public void Dispose()
-        {
-            _talentControlGridSheet.TableData.Deinitialize();
-        }
-
         public void Initialize()
         {
             _talentControlGridSheet.Initialize();
@@ -38,6 +28,17 @@ namespace Module.GameUI.Talents
             {
                 var attributeKind = (AttributeKind)i;
                 buttons[i].onClick.AddListener(() => ButtonActivateSheet_OnClick(attributeKind));
+            }
+        }
+
+        public void Cleanup()
+        {
+            _talentControlGridSheet.Cleanup();
+
+            var buttons = _activateSheetButtons.AsSpan();
+            for(int i = 0;i < buttons.Length; i++)
+            {
+                buttons[i].onClick.RemoveAllListeners();
             }
         }
 

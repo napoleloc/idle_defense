@@ -4,6 +4,7 @@ using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.Extended.UI;
 using Module.Entities.Characters.Enemy;
+using Module.GameUI.Talents;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,36 +13,49 @@ namespace Module.GameUI.InGame
 {
     public class InGameScreen : NavScreen
     {
-        [Title("Panels", titleAlignment: TitleAlignments.Centered)]
-        [SerializeField]
-        private InGameProgressPanel _progressPanel;
-        [SerializeField]
-        private HUDPanel _hudPanel;
+        private const string TITLE_DIRECT_REF = "Direct Reference";
+        private const string TITLE_DIRECT_BUTTON_REF = "Direct Reference/Buttons";
 
-        [Title("Buttons", titleAlignment: TitleAlignments.Centered)]
+        [BoxGroup(TITLE_DIRECT_REF, centerLabel: true)]
         [SerializeField]
-        private Button _pauseButton;
+        private TalentControlPooler _pooler;
+        [BoxGroup(TITLE_DIRECT_REF, centerLabel: true)]
         [SerializeField]
-        private Button _startButton;
+        private TalentPanel _talentPanel;
+
+        [BoxGroup(TITLE_DIRECT_BUTTON_REF, centerLabel: true)]
+        [SerializeField]
+        private Button _buttonPause;
+        [BoxGroup(TITLE_DIRECT_BUTTON_REF, centerLabel: true)]
+        [SerializeField]
+        private Button _buttonStart;
+
+        protected override void Awake()
+        {
+            _pooler.Initialize(true, 5);
+        }
+
+        protected override void OnDestroy()
+        {
+            _pooler.Deinitialize();
+        }
 
         public override UniTask Initialize(Memory<object> args)
         {
-            _progressPanel.InitializeComponent();
-            _hudPanel.InitializeComponent();
+            _talentPanel.Initialize();
 
-            _pauseButton.onClick.AddListener(ButtonPause_OnClick);
-            _startButton.onClick.AddListener(ButtonStart_OnClick);
+            _buttonPause.onClick.AddListener(ButtonPause_OnClick);
+            _buttonStart.onClick.AddListener(ButtonStart_OnClick);
 
             return base.Initialize(args);
         }
 
         public override UniTask Cleanup(Memory<object> args)
         {
-            _progressPanel.Cleanup();
-            _hudPanel.Cleanup();
+            _talentPanel.Cleanup();
 
-            _pauseButton.onClick.RemoveAllListeners();
-            _startButton.onClick.RemoveAllListeners();
+            _buttonPause.onClick.RemoveAllListeners();
+            _buttonStart.onClick.RemoveAllListeners();
 
             return base.Cleanup(args);
         }
