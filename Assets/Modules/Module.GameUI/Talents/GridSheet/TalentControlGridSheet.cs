@@ -15,7 +15,7 @@ namespace Module.GameUI.Talents.GridSheet
 
         [Title("Hard Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        private TalentDataTableAsset _dataTable;
+        private RuntimeTalentDataTableAsset _dataTable;
 
         [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]

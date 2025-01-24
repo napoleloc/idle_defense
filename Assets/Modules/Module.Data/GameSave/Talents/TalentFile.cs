@@ -1,28 +1,53 @@
 using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using EncosyTower.Modules.Collections.Unsafe;
+using EncosyTower.Modules.Collections;
+using EncosyTower.Modules.Logging;
 using Module.Data.Runtime.Talents;
 using Module.GameCommon.Save;
-using UnityEngine;
 
 namespace Module.Data.GameSave.Talents
 {
     [System.Serializable]
     public class TalentFile : IFile
     {
-        [SerializeField]
-        private List<TalentEntry> _entries;
+        private FasterList<TalentEntry> _talentsToUnlock;
 
         public TalentFile()
         {
-            _entries = new();
+            _talentsToUnlock = new();
         }
 
-        public ReadOnlyMemory<TalentEntry> Entries
+        public int UnlockedCount
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _entries.AsReadOnlyMemoryUnsafe();
+            get => _talentsToUnlock.Count;
+        }
+
+        public ReadOnlyMemory<TalentEntry> TalentsToUnlock
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _talentsToUnlock.AsReadOnlyMemory();
+        }
+
+        public void AddEntry(TalentEntry entry)
+            => _talentsToUnlock.Add(entry);
+
+        public void AddEntries(ReadOnlySpan<TalentEntry> entries)
+            => _talentsToUnlock.AddRange(_talentsToUnlock);
+
+        public void GetEntries(Span<TalentEntry> entries)
+        {
+            var lenght = _talentsToUnlock.Count;
+
+            if(lenght <= 0)
+            {
+                DevLoggerAPI.LogError("");
+                return;
+            }
+
+            _talentsToUnlock.CopyTo(entries);
+
+            _talentsToUnlock.RemoveAt(0, lenght);
         }
 
         public void Flush() { }

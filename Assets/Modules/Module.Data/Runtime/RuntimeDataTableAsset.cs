@@ -2,12 +2,10 @@ using UnityEngine;
 
 namespace Module.Data.Runtime
 {
-    public interface IDataTable { }
+    public interface IRuntimeDataTableAsset { }
 
-    public abstract class DataTable : ScriptableObject, IDataTable
+    public abstract class RuntimeDataTableAsset : ScriptableObject, IRuntimeDataTableAsset
     {
-        internal abstract void SetEntries(object obj);
-
         internal protected virtual void Initialize() { }
 
         internal protected virtual void Deinitialize() { }

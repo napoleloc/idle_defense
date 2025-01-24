@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace Module.Data.Runtime
 {
-    using TableRef = LazyLoadReference<DataTable>;
+    using TableRef = LazyLoadReference<RuntimeDataTableAsset>;
 
     public class GameDataRumtimeManager : MonoBehaviour
     {
@@ -19,8 +19,8 @@ namespace Module.Data.Runtime
         [SerializeField]
         internal TableRef[] _assetRefs = Array.Empty<TableRef>();
 
-        private readonly Dictionary<string, DataTable> _nameToAsset = new();
-        private readonly Dictionary<Type, DataTable> _typeToAsset = new();
+        private readonly Dictionary<string, RuntimeDataTableAsset> _nameToAsset = new();
+        private readonly Dictionary<Type, RuntimeDataTableAsset> _typeToAsset = new();
 
         protected ReadOnlyMemory<TableRef> AssetRefs => _assetRefs;
 
@@ -107,7 +107,7 @@ namespace Module.Data.Runtime
             _typeToAsset.Clear();
         }
 
-        public bool TryGetDataTableAsset([NotNull] string name, out DataTable tableAsset)
+        public bool TryGetDataTableAsset([NotNull] string name, out RuntimeDataTableAsset tableAsset)
         {
             if (Initialized == false)
             {
@@ -131,7 +131,7 @@ namespace Module.Data.Runtime
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public bool TryGetDataTableAsset([NotNull] Type type, out DataTable tableAsset)
+        public bool TryGetDataTableAsset([NotNull] Type type, out RuntimeDataTableAsset tableAsset)
         {
             if (Initialized == false)
             {
@@ -156,7 +156,7 @@ namespace Module.Data.Runtime
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool TryGetDataTableAsset<T>(out T tableAsset)
-            where T : DataTable
+            where T : RuntimeDataTableAsset
         {
             if (Initialized == false)
             {
@@ -189,7 +189,7 @@ namespace Module.Data.Runtime
         }
 
         public bool TryGetDataTableAsset<T>([NotNull] string name, out T tableAsset)
-            where T : DataTable
+            where T : RuntimeDataTableAsset
         {
             if (Initialized == false)
             {
@@ -250,13 +250,13 @@ namespace Module.Data.Runtime
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorFoundAssetIsNotValidType<T>(DataTable context)
+        private static void LogErrorFoundAssetIsNotValidType<T>(RuntimeDataTableAsset context)
         {
             DevLoggerAPI.LogError(context, $"The data table asset is not an instance of {typeof(T)}");
         }
 
         [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
-        private static void LogErrorFoundAssetIsNotValidType(Type type, DataTable context)
+        private static void LogErrorFoundAssetIsNotValidType(Type type, RuntimeDataTableAsset context)
         {
             DevLoggerAPI.LogError(context, $"The data table asset is not an instance of {type}");
         }
