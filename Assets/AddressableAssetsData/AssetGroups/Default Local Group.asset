@@ -75,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6b49609927bfe29449413a686f6a368e
+    m_Address: prefab-game-runtime-data-manager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74dc640e510ad1e4c920eceb3ca34032
     m_Address: prefab-building-tower-1
     m_ReadOnly: 0

@@ -43,8 +43,6 @@ namespace Module.GameCommon.Save
         public float GameTime { get => _gameTime + (_time - _lastFlushTime); }
         public DateTime LastExitTime { get => _lastExitTime; }
 
-        
-
         public void Initialize(float time)
         {
             if (_entries.IsNullOrEmpty())

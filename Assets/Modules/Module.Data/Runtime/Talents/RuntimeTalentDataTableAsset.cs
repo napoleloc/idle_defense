@@ -5,8 +5,6 @@ using EncosyTower.Modules.Collections;
 using Module.Data.GameSave;
 using Module.Data.GameSave.Talents;
 using Module.Worlds.BattleWorld.Attribute;
-using Sirenix.OdinInspector;
-using Unity.Collections;
 using UnityEngine;
 
 namespace Module.Data.Runtime.Talents
@@ -19,8 +17,6 @@ namespace Module.Data.Runtime.Talents
         private readonly Dictionary<AttributeKind, FasterList<TalentEntry>> _unlockedTalents = new();
         private readonly Dictionary<TalentIdData, int> _idToIndexMap = new();
 
-        [ShowInInspector]
-        [TableList]
         private FasterList<TalentEntry> _entries = new();
 
         public ReadOnlyMemory<TalentEntry> Entries
@@ -31,15 +27,15 @@ namespace Module.Data.Runtime.Talents
 
         protected internal override void Initialize()
         {
-            if(GameSaveManager.TryGet<TalentFile>(TALENT_UNIQUE_NAME.GetHashCode(), out var data))
+            if (GameSaveManager.TryGet<TalentFile>(TALENT_UNIQUE_NAME.GetHashCode(), out var data))
             {
                 var entries = _entries;
                 var count = data.UnlockedCount;
-                
+
                 entries.AddReplicateNoInit(count);
                 data.GetEntries(entries.AsSpan());
 
-                for ( var i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
                     TryAddEntry(Entries.Span[i]);
                 }
@@ -61,7 +57,7 @@ namespace Module.Data.Runtime.Talents
             var entries = _entries;
             var id = GetId(entry);
 
-            if(map.ContainsKey(id) == false)
+            if (map.ContainsKey(id) == false)
             {
                 var index = map.Count;
                 var capacity = index + 1;
@@ -92,13 +88,8 @@ namespace Module.Data.Runtime.Talents
             return result ? talentsToUnlock.Count : 0;
         }
 
-        public bool TryGetTalentsToUnlock(AttributeKind kind, ref NativeArray<TalentEntry> entriesToUnlock)
+        public bool TryGetTalentsToUnlock(AttributeKind kind, Span<TalentEntry> entriesToUnlock)
         {
-            if (entriesToUnlock.IsCreated)
-            {
-                return false;
-            }
-
             var result = _unlockedTalents.TryGetValue(kind, out var entries);
             if (result)
             {
@@ -117,14 +108,14 @@ namespace Module.Data.Runtime.Talents
 
         public bool TryRemoveEntry(TalentEntry entry)
         {
-            var id = entry.Id;
+            var id = GetId(entry);
 
             if (_idToIndexMap.ContainsKey(id))
             {
                 _idToIndexMap.Remove(id);
                 _entries.Remove(entry);
 
-                if(_unlockedTalents.TryGetValue(id.Kind, out var talentsToUnlock))
+                if (_unlockedTalents.TryGetValue(id.Kind, out var talentsToUnlock))
                 {
                     talentsToUnlock.Remove(entry);
                 }

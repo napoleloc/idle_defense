@@ -21,6 +21,7 @@ namespace Module.MainGame
         private const string WORLD_TIMER_NAME = "prefab-world-timer";
         private const string WORLD_AUDIO_NAME = "prefab-world-audio";
 
+        private const string RUNTIME_DATA_MANGAER = "prefab-game-runtime-data-manager";
         private const string GAMEPLAY_MANAGER_NAME = "prefab-gameplay-manager";
         private const string CURRENCY_MANAGER_NAME = "prefab-currency-manager";
         private const string INPUT_RECEVIER_NAME = "prefab-input-recevier";
@@ -73,6 +74,7 @@ namespace Module.MainGame
             await SceneManager.LoadSceneAsync(SCENE_GAMEPLAY_NAME, LoadSceneMode.Additive);
             var gamePlayScene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
 
+            var handleRuntimeDataManager = new AddressableKey<GameObject>(RUNTIME_DATA_MANGAER);
             var handleGameplay = new AddressableKey<GameObject>(GAMEPLAY_MANAGER_NAME);
             var handleCurrency = new AddressableKey<GameObject>(CURRENCY_MANAGER_NAME);
             var handleInput = new AddressableKey<GameObject>(INPUT_RECEVIER_NAME);
@@ -80,6 +82,7 @@ namespace Module.MainGame
             var handleMapLoader = new AddressableKey<GameObject>(MAP_LOADER_NAME);
             var handleTowerLoader = new AddressableKey<GameObject>(BUILDING_SPAWNER_NAME);
             
+            await handleRuntimeDataManager.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleGameplay.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleCurrency.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
             await handleInput.InstantiateAsync(gamePlayScene, trimCloneSuffix: true);
