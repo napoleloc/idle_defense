@@ -5,7 +5,6 @@ using Module.Data.Runtime.Talents;
 using Module.GameUI.Talents.Control;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
-using Unity.Collections;
 using UnityEngine;
 
 namespace Module.GameUI.Talents.GridSheet
@@ -16,7 +15,7 @@ namespace Module.GameUI.Talents.GridSheet
 
         [Title("Hard Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
-        private TalentTableData _tableData;
+        private TalentDataTableAsset _dataTable;
 
         [Title("Direct Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
@@ -27,14 +26,6 @@ namespace Module.GameUI.Talents.GridSheet
         [Title("Soft Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         private AttributeKind _attributeKind;
-
-        private bool _initialized = false;
-
-        public TalentTableData TableData
-        {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => _tableData;
-        }
 
         public ReadOnlyMemory<TalentControl> AttributeControls
         {
@@ -72,37 +63,37 @@ namespace Module.GameUI.Talents.GridSheet
 
         private void ReloadGridSheet()
         {
-            var count = _tableData.Count(_attributeKind);
-            var lenght = _attributeControls.Count - count;
+            //var count = _tableData.Count(_attributeKind);
+            //var lenght = _attributeControls.Count - count;
             
-            if (lenght > 0)
-            {
-                var span = _attributeControls.AsSpan().Slice(0, lenght);
+            //if (lenght > 0)
+            //{
+            //    var span = _attributeControls.AsSpan().Slice(0, lenght);
 
-                _pooler.Pool.ReturnComponents(span);
-                _attributeControls.RemoveAt(0, lenght);
-            }
-            else
-            {
-                count = count - _attributeControls.Count;
-                PrepareMany(count);
-            }
+            //    _pooler.Pool.ReturnComponents(span);
+            //    _attributeControls.RemoveAt(0, lenght);
+            //}
+            //else
+            //{
+            //    count = count - _attributeControls.Count;
+            //    PrepareMany(count);
+            //}
 
-            var amount = _attributeControls.Count;
-            var attributes = NativeArray.CreateFast<AttributeType>(amount, Allocator.Temp);
-            var attributeControls = _attributeControls.AsSpan();
+            //var amount = _attributeControls.Count;
+            //var attributes = NativeArray.CreateFast<AttributeType>(amount, Allocator.Temp);
+            //var attributeControls = _attributeControls.AsSpan();
 
-            if (_tableData.TryGet(_attributeKind, attributes))
-            {
-                for (int i = 0; i < amount; i++)
-                {
-                    var type = attributes[i];
-                    var talentControl = attributeControls[i];
+            //if (_tableData.TryGet(_attributeKind, attributes))
+            //{
+            //    for (int i = 0; i < amount; i++)
+            //    {
+            //        var type = attributes[i];
+            //        var talentControl = attributeControls[i];
 
-                    talentControl.transform.SetParent(_contents);
-                    talentControl.Initialize(type);
-                }
-            }
+            //        talentControl.transform.SetParent(_contents);
+            //        talentControl.Initialize(type);
+            //    }
+            //}
         }
 
         private void PrepareMany(int amount)

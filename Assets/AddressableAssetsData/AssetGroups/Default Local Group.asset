@@ -100,11 +100,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a8d30e705bf866c4ab3e710fe74b10ce
-    m_Address: prefab-screen-ingame
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: aa8b8fce425b9c54c9d875327ce30355
     m_Address: prefab-character-elite_1
     m_ReadOnly: 0

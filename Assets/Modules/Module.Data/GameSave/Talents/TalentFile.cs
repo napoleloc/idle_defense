@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections.Unsafe;
+using Module.Data.Runtime.Talents;
 using Module.GameCommon.Save;
 using UnityEngine;
 

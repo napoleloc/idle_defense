@@ -4,7 +4,8 @@
     "references": [
         "EncosyTower.Modules",
         "Module.GameCommon",
-        "Module.Worlds.BattleWorld"
+        "Module.Worlds.BattleWorld",
+        "Unity.Collections"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
