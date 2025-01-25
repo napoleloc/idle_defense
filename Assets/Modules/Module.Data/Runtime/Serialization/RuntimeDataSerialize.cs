@@ -8,14 +8,8 @@ namespace Module.Data.Runtime.Serialization
 
     public class RuntimeDataSerialize : IRuntimeDataSerializable
     {
-        public void Serialize()
-        {
-            throw new System.NotImplementedException();
-        }
+        public virtual void Serialize() { }
 
-        public void Deserialize()
-        {
-            throw new System.NotImplementedException();
-        }
+        public virtual void Deserialize() { }
     }
 }

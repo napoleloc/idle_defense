@@ -1,181 +1,183 @@
-using System.IO;
-using System.Security.Cryptography;
-using System.Text;
 using System;
-using EncosyTower.Modules;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Logging;
-using EncosyTower.Modules.Serialization;
-using EncosyTower.Modules.Vaults;
-using UnityEngine;
 using Module.Data.Runtime.Serialization;
-using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace Module.Data.Runtime
 {
-    public class RuntimeDataManager : MonoBehaviour
+    public static class RuntimeDataManager
     {
         private const string FILE_NAME = "runtime-data";
 
-        public static readonly Id<RuntimeDataManager> PresetId = default;
+        private static readonly Dictionary<string, RuntimeDataSerialize> s_nameToData = new();
+        private static readonly Dictionary<Type, RuntimeDataSerialize> s_typeToData = new();
+        private static RuntimeDataSerializeContainer s_container;
 
-        private string _persistentDataPath;
-        private RuntimeDataSerializeContainer _container;
+        private static bool s_initialized;
 
-        private void Awake()
+        public static void Initialize()
         {
-            _persistentDataPath = Application.persistentDataPath + "/";
-            _container = new();
-
-            GlobalObjectVault.TryAdd(PresetId, this);
-            GlobalValueVault<bool>.TrySet(PresetId, true);
-        }
-
-        private void OnDestroy()
-        {
-            GlobalValueVault<bool>.TrySet(PresetId, false);
-            GlobalObjectVault.TryRemove(PresetId, out _);
-        }
-
-        [Button(buttonSize:35)]
-        public void Load()
-        {
-            _container = JsonDeserializeFromPathInternal(_persistentDataPath + FILE_NAME);
-
-            DevLoggerAPI.LogInfo(_container.Entries.Length);
-        }
-
-        [Button(buttonSize: 35)]
-        public void Save()
-        {
-            JsonSerializeToPathInternal(_container, _persistentDataPath + FILE_NAME);
-
-            DevLoggerAPI.LogInfo(_container.Entries.Length);
-        }
-
-        [Button(buttonSize: 35)]
-        public void TestAdd()
-        {
-            var data = new RuntimeDataSerialize();
-            _container.AddEntry(data);
-        }
-
-        internal protected RuntimeDataSerializeContainer JsonDeserializeFromPathInternal(
-            string absolutePath
-            , string secureKey = ""
-            , bool logIfFileNotExists = false
-        )
-        {
-            if (FileExistsAtPath(absolutePath))
+            if (s_initialized)
             {
-                FileStream file = File.Open(absolutePath, FileMode.Open);
+                return;
+            }
 
-                using (StreamReader reader = new StreamReader(file))
+            var entries = s_container.Entries.Span;
+            var entriesLenght = entries.Length;
+            var nameToData = s_nameToData;
+            var typeToData = s_typeToData;
+
+            nameToData.Clear();
+            nameToData.EnsureCapacity(entriesLenght);
+
+            typeToData.Clear();
+            nameToData.EnsureCapacity(entriesLenght);
+
+            for (var i = 0; i < entriesLenght; i++)
+            {
+                var entry = entries[i];
+
+                var type = entry.GetType();
+                nameToData[type.Name] = entry;
+                typeToData[type] = entry;
+
+                entry.Serialize();
+            }
+
+            s_initialized = true;
+        }
+
+        public static void Deinitialize()
+        {
+            if(s_initialized == false)
+            {
+                return;
+            }
+
+            s_initialized = false;
+
+            foreach (var entry in s_container.Entries.Span)
+            {
+                entry.Deserialize();
+            }
+
+            s_nameToData.Clear();
+            s_typeToData.Clear();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetData([NotNull] string name, out RuntimeDataSerialize data)
+        {
+            if(s_initialized == false)
+            {
+                LogErrorRuntimeDataIsNotInitialized();
+                data = null;
+                return false;
+            }
+
+            if(s_nameToData.TryGetValue(name, out var weakRef))
+            {
+                data = weakRef;
+                return true;
+            }
+            else
+            {
+                LogErrorCannotFindAsset(name);
+            }
+
+            data = null;
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetData([NotNull] Type type, out RuntimeDataSerialize data)
+        {
+            if (s_initialized == false)
+            {
+                LogErrorRuntimeDataIsNotInitialized();
+                data = null;
+                return false;
+            }
+
+            if(s_typeToData.TryGetValue(type, out var weakRef))
+            {
+                data = weakRef;
+                return true;
+            }
+            else
+            {
+                LogErrorCannotFindAsset(type);
+            }
+
+            data = null;
+            return false;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetData<T>(out T data)
+            where T : RuntimeDataSerialize
+        {
+            if(s_initialized == false)
+            {
+                LogErrorRuntimeDataIsNotInitialized();
+                data = null;
+                return false;
+            }
+
+            var type = typeof(T);
+
+            if(s_typeToData.TryGetValue(type,out var weakRef))
+            {
+                if(weakRef is T weakRefT)
                 {
-                    string fileContents = reader.ReadToEnd();
-
-                    if (string.IsNullOrEmpty(secureKey) == false)
-                        fileContents = Decrypt(fileContents, secureKey);
-
-                    try
-                    {
-                        JsonHelper.TryDeserialize<RuntimeDataSerializeContainer>(fileContents, out var data);
-                        return data;
-                    }
-                    catch (Exception ex)
-                    {
-                        DevLoggerAPI.LogError(ex.Message);
-                        return default(RuntimeDataSerializeContainer);
-                    }
-                    finally
-                    {
-                        file.Close();
-                    }
+                    data = weakRefT;
+                    return true;
+                }
+                else
+                {
+                    LogErrorFoundAssetIsNotValidType<T>();
                 }
             }
             else
             {
-                if (logIfFileNotExists)
-                {
-                    DevLoggerAPI.LogError("File at path : \"" + absolutePath + "\" does not exist.");
-                }
-                return default(RuntimeDataSerializeContainer);
+                LogErrorCannotFindAsset(type);
             }
+
+            data = null;
+            return false;
         }
 
-        internal protected void JsonSerializeToPathInternal(RuntimeDataSerializeContainer fileToSerialize, string absolutePath, string secureKey = "")
+        private static void InitializeAndClearInternal()
         {
-            if (JsonHelper.TrySerialize(fileToSerialize, out var json))
-            {
-                if (string.IsNullOrEmpty(secureKey) == false)
-                    json = Encrypt(json, secureKey);
 
-                FileStream stream = File.Open(absolutePath, FileMode.Create);
-                StreamWriter streamWriter = new StreamWriter(stream);
-                streamWriter.Write(json);
-                streamWriter.Flush();
-                streamWriter.Close();
-                stream.Close();
-            }
         }
 
-        internal protected void DeleteFileAtPathInternal(string absolutePath)
-            => File.Delete(absolutePath);
-
-
-        /// <summary>
-        /// Checks if file exists at Persistent Data Path.
-        /// </summary>
-        /// <param name="absolutePath">Absolute path to file(including file name and extention.</param>
-        /// <returns>True if file exists ans false otherwise.</returns>
-        public bool FileExistsAtPath(string absolutePath)
+        [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
+        private static void LogErrorRuntimeDataIsNotInitialized()
         {
-            return File.Exists(absolutePath);
+            DevLoggerAPI.LogError($"The runtime Data is not initialized yet. Please invoke {nameof(Initialize)} method beofre using.");
         }
 
-        #region    Encrypt 
-        #endregion =======
-
-        private string Encrypt(string clearText, string EncryptionKey)
+        [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
+        private static void LogErrorCannotFindAsset(string name)
         {
-            byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateEncryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(clearBytes, 0, clearBytes.Length);
-                        cs.Close();
-                    }
-                    clearText = Convert.ToBase64String(ms.ToArray());
-                }
-            }
-            return clearText;
+            DevLoggerAPI.LogError($"Cannot find any runtime data serialize named {name}.");
         }
 
-        private string Decrypt(string cipherText, string EncryptionKey)
+        [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
+        private static void LogErrorCannotFindAsset(Type type)
         {
-            cipherText = cipherText.Replace(" ", "+");
-            byte[] cipherBytes = Convert.FromBase64String(cipherText);
-            using (Aes encryptor = Aes.Create())
-            {
-                Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });
-                encryptor.Key = pdb.GetBytes(32);
-                encryptor.IV = pdb.GetBytes(16);
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
-                    {
-                        cs.Write(cipherBytes, 0, cipherBytes.Length);
-                        cs.Close();
-                    }
-                    cipherText = Encoding.Unicode.GetString(ms.ToArray());
-                }
-            }
-            return cipherText;
+            DevLoggerAPI.LogError($"Cannot find any runtime data serialize of type {type}.");
+        }
+
+        [HideInCallstack, Conditional("UNITY_EDITOR"), Conditional("DEVELOPMENT_BUILD")]
+        private static void LogErrorFoundAssetIsNotValidType<T>()
+        {
+            DevLoggerAPI.LogError($"The runtime data serialize is not an instance of {typeof(T)}");
         }
     }
 }
