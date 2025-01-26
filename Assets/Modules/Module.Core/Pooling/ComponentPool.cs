@@ -189,7 +189,7 @@ namespace Module.Core.Pooling
             _unusedTransformIds.RemoveAt(keep, removeCount);
         }
 
-        public TComponent RentGameObject(bool activate = false)
+        public TComponent RentComponent(bool activate = false)
         {
             if (UnusedCount < 1)
             {
