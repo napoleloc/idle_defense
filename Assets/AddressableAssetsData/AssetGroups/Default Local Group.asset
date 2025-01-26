@@ -60,11 +60,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4c13ab91f4359224890196ff5abd3fd9
-    m_Address: sfx_ui_claim
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 506d7f87f2e42dd4c97c7f00d75c293c
     m_Address: prefab-building-spawner
     m_ReadOnly: 0
@@ -72,11 +67,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 52d91da01435834468b1e6576e356917
     m_Address: prefab-enemy-pooler
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6b49609927bfe29449413a686f6a368e
-    m_Address: prefab-game-runtime-data-manager
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -117,6 +107,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b189e5ee72420214f9f52ad79bae4aab
     m_Address: prefab-world-audio
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4b05ab68eab01c47a8cde6fcc6ded11
+    m_Address: audio-clip-claim
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

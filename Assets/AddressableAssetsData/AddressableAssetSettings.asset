@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: e39a26e90d837e54faebaae754c4af5d
   m_currentHash:
     serializedVersion: 2
-    Hash: 8ae7c2f68be04356c0bd54025f3bf273
+    Hash: ffb41dda6354a640800c72a7360a78fb
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -60,6 +60,7 @@ MonoBehaviour:
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
   - {fileID: 11400000, guid: f04d392a305fc9046b9053662c61b118, type: 2}
+  - {fileID: 11400000, guid: 63433950c220f014db08190031c844c0, type: 2}
   - {fileID: 11400000, guid: 9e9a97aa98cc9714aa85375f15c03e32, type: 2}
   - {fileID: 11400000, guid: b2f3ac9854a3229409234724259d5f93, type: 2}
   m_BuildSettings:
@@ -102,6 +103,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Locale
+    - audio-clip
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 205a363ba65c8c94089e6a1d22dfdd69, type: 2}

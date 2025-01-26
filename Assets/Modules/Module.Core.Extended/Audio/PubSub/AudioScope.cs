@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.PubSub;
-using JetBrains.Annotations;
 
 namespace Module.Core.Extended.Audio.PubSub
 {
@@ -13,7 +12,7 @@ namespace Module.Core.Extended.Audio.PubSub
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override bool Equals(object obj)
-            => false;
+            => obj is AudioScope;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public override int GetHashCode()
@@ -35,11 +34,11 @@ namespace Module.Core.Extended.Audio.PubSub
     public static class MessengerAudioScopeExtensions
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MessageSubscriber.Subscriber<AudioScope> AudioScope([NotNull] this MessageSubscriber self)
+        public static MessageSubscriber.Subscriber<AudioScope> AudioScope(this MessageSubscriber self)
             => self.Scope<AudioScope>(default);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static MessagePublisher.Publisher<AudioScope> AudioScope([NotNull] this MessagePublisher self)
+        public static MessagePublisher.Publisher<AudioScope> AudioScope(this MessagePublisher self)
             => self.Scope<AudioScope>(default);
     }
 }

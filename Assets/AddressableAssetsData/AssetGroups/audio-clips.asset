@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: audio-clips
+  m_EditorClassIdentifier: 
+  m_GroupName: audio-clips
+  m_GUID: 630f11733381b25469411104f0219f71
+  m_SerializeEntries:
+  - m_GUID: 4c13ab91f4359224890196ff5abd3fd9
+    m_Address: audio-clip-button
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - audio-clip
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1558df4e52bfb91449578bb5800bcc45, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 45c8d85f5ad56e9479245945b9562c88, type: 2}
+    - {fileID: 11400000, guid: 7ef2712ed74a5c945a3bac485d38ddbc, type: 2}
