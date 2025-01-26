@@ -4,8 +4,6 @@
     "references": [
         "AnnulusGames.UnityCodeGen.Editor",
         "EncosyTower.Modules",
-        "Gilzoide.EasyProjectSettings",
-        "Gilzoide.EasyProjectSettings.Editor",
         "SpanExtensions.Net.Unity",
         "UniTask",
         "UniTask.Addressables",
