@@ -5,29 +5,55 @@ namespace Module.Core.Extended.Audio.Sound
 {
     public class SoundChannel : AudioChannel, ISoundChannel
     {
-        public UniTask PlaySoundAsync(float fadeInTime, CancellationToken token = default)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async UniTask PlaySoundAsync(float fadeInTime, CancellationToken token = default)
+            => await PlaySoundAsync(fadeInTime, token);
 
         public void PlaySound(float fadeInTime)
-        {
-            throw new System.NotImplementedException();
-        }
+            => PlaySoundAndForget(fadeInTime).Forget();
 
         public void PauseSound(float fadeOutTime)
         {
-            throw new System.NotImplementedException();
-        }
+            if (paused)
+            {
+                return;
+            }
 
-        public void StopSound(float fadeOutTime)
-        {
-            throw new System.NotImplementedException();
+            audioSource.Pause();
+            paused = true;
         }
 
         public void UnpauseSound(float fadeInTime)
         {
-            throw new System.NotImplementedException();
+            if (paused == false)
+            {
+                return;
+            }
+
+            paused = false;
+            audioSource.UnPause();
+        }
+
+        public void StopSound(float fadeOutTime)
+        {
+            if (audioSource.isPlaying)
+            {
+                return;
+            }
+
+            audioSource.Stop();
+        }
+
+        private UniTaskVoid PlaySoundAndForget(float fadeInTime, CancellationToken token = default)
+            => PlaySoundAndForget(fadeInTime, token);
+
+        private async UniTask PlaySoundAsyncInternal(float fadeInTime, CancellationToken token)
+        {
+            if (Validate() == false)
+            {
+                return;
+            }
+
+            await UniTask.WaitUntil(() => audioSource.isPlaying, cancellationToken: token);
         }
     }
 }

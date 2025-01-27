@@ -22,6 +22,26 @@ namespace Module.Core.Extended.Audio
         {
             _musicChannelContainer = GetComponentInChildren<MusicChannelContainer>();
             _soundChannelContainer = GetComponentInChildren<SoundChannelContainer>();
+        }
+
+        private void Start()
+        {
+            InitializeAndForget().Forget();
+        }
+
+        private void OnDestroy()
+        {
+            _musicChannelContainer.Deinitialize();
+            _soundChannelContainer.Deinitialize();
+
+            GlobalValueVault<bool>.TrySet(PresetId, false);
+            GlobalObjectVault.TryRemove(PresetId, out _);
+        }
+
+        private async UniTaskVoid InitializeAndForget()
+        {
+            await _musicChannelContainer.InitializeAsync();
+            await _soundChannelContainer.InitializeAsync();
 
             var subscriber = WorldMessenger.Subscriber.AudioScope().WithState(this);
 
@@ -33,15 +53,6 @@ namespace Module.Core.Extended.Audio
 
             GlobalObjectVault.TryAdd(PresetId, this);
             GlobalValueVault<bool>.TrySet(PresetId, true);
-        }
-
-        private void OnDestroy()
-        {
-            _musicChannelContainer.Deinitialize();
-            _soundChannelContainer.Deinitialize();
-
-            GlobalValueVault<bool>.TrySet(PresetId, false);
-            GlobalObjectVault.TryRemove(PresetId, out _);
         }
 
         private async UniTask HandleAsync(AsyncMessage<PlaySoundMessage> asyncMessage, CancellationToken token)
