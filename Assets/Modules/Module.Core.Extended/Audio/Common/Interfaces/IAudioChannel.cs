@@ -1,6 +1,6 @@
 using UnityEngine.Audio;
 
-namespace Module.Core.Extended.Audio.Interfaces
+namespace Module.Core.Extended.Audio
 {
     public interface IAudioChannel
     {

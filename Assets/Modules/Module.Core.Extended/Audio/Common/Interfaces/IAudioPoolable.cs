@@ -1,4 +1,4 @@
-namespace Module.Core.Extended.Audio.Interfaces
+namespace Module.Core.Extended.Audio
 {
     public interface IAudioPoolable
     {

@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Module.Core.Extended.Audio.Interfaces
+namespace Module.Core.Extended.Audio
 {
     public interface IAudioChannelContainer
     {
