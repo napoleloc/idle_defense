@@ -10,16 +10,7 @@ namespace Module.Entities.Tower
     {
         public static readonly Id<BuildingTowerController> PresetId = default;
 
-        private TowerAttributeComponent _attributeComponent;
-        private TowerUpgradeComponent _upgradeComponent;
-
         private bool _initialized;
-
-        private void Awake()
-        {
-            _attributeComponent = GetComponent<TowerAttributeComponent>();
-            _upgradeComponent = GetComponent<TowerUpgradeComponent>();
-        }
 
         private async void Start()
         {
