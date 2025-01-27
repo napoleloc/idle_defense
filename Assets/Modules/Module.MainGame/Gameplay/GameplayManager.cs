@@ -79,8 +79,8 @@ namespace Module.MainGame.Gameplay
             await WorldMessenger.Publisher.MapScope()
                 .PublishAsync(new AsyncMessage<LoadMapMessage>(new LoadMapMessage()));
 
-            await WorldMessenger.Publisher.TowerScope()
-                .PublishAsync(new AsyncMessage<LoadTowerMessage>(new LoadTowerMessage(1)));
+            //await WorldMessenger.Publisher.TowerScope()
+            //    .PublishAsync(new AsyncMessage<SpawnTowerMessage>(new SpawnTowerMessage()));
 
             // TODO:
             await WorldMessenger.Publisher.UIScope()

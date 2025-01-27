@@ -1,17 +1,18 @@
 using EncosyTower.Modules.PubSub;
+using Module.Entities.Tower.Data;
 
 namespace Module.Entities.Tower.PubSub
 {
-    public readonly struct LoadTowerMessage : IMessage
+    public readonly struct SpawnTowerMessage : IMessage
     {
-        public readonly ushort Id;
+        public readonly TowerIdConfig Id;
 
-        public LoadTowerMessage(ushort id)
+        public SpawnTowerMessage(TowerIdConfig id)
         {
             Id = id;
         }
     }
 
-    public readonly struct UnloadTowerMessage : IMessage { }
+    public readonly struct ReleaseTowerMessage : IMessage { }
     
 }

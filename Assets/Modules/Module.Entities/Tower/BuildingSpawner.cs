@@ -31,9 +31,9 @@ namespace Module.Entities.Tower
         private void Awake()
         {
             var subscriber = WorldMessenger.Subscriber.TowerScope().WithState(this);
-            subscriber.Subscribe<AsyncMessage<LoadTowerMessage>>(static (state, msg) => state.HandleAsync(msg));
-            subscriber.Subscribe<LoadTowerMessage>(static (state, msg) => state.Handle(msg));
-            subscriber.Subscribe<UnloadTowerMessage>(static (state, msg) => state.Handle(msg));
+            subscriber.Subscribe<AsyncMessage<SpawnTowerMessage>>(static (state, msg) => state.HandleAsync(msg));
+            subscriber.Subscribe<SpawnTowerMessage>(static (state, msg) => state.Handle(msg));
+            subscriber.Subscribe<ReleaseTowerMessage>(static (state, msg) => state.Handle(msg));
 
             GlobalObjectVault.TryAdd(PresetId, this);
             GlobalValueVault<bool>.TrySet(PresetId, true);
@@ -45,33 +45,33 @@ namespace Module.Entities.Tower
             GlobalObjectVault.TryRemove(PresetId, out _);
         }
 
-        private async UniTask HandleAsync(AsyncMessage<LoadTowerMessage> asyncMessage)
+        private async UniTask HandleAsync(AsyncMessage<SpawnTowerMessage> asyncMessage)
         {
             var message = asyncMessage.Message;
             await LoadAsyncInternal(message.Id);
         }
 
-        private void Handle(LoadTowerMessage message)
+        private void Handle(SpawnTowerMessage message)
         {
 
         }
 
-        private void Handle(UnloadTowerMessage message)
+        private void Handle(ReleaseTowerMessage message)
         {
 
         }
 
-        private async UniTaskVoid LoadAndForget(ushort id)
+        private async UniTaskVoid LoadAndForget(TowerIdConfig id)
             => await LoadAsyncInternal(id);
 
-        private async UniTask LoadAsyncInternal(ushort id)
+        private async UniTask LoadAsyncInternal(TowerIdConfig id)
         {
             if (_loaded)
             {
                 UnloadInternal();
             }
 
-            var towerHandle = new AddressableKey<GameObject>(TowerNames.Format(id));
+            var towerHandle = new AddressableKey<GameObject>(TowerNames.Format(id.Kind, id.Type));
 
             _usedObject = await towerHandle.InstantiateAsync(gameObject.scene, trimCloneSuffix: true);
         }
