@@ -8,18 +8,46 @@ namespace Module.Core.Extended.Audio.Sound
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async UniTask PlaySoundAsync(
-            AudioType type
+            AudioType audioType
             , float fadeInTime = 0
             , CancellationToken token = default)
-            => await PlaySoundAsyncInternal(type, fadeInTime, token);
+            => await PlaySoundAsyncInternal(audioType, fadeInTime, token);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void PlaySound(
-            AudioType type
+            AudioType audioType
             , float fadeInTime = 0
             , CancellationToken token = default)
-            => PlaySoundAndForget(type, fadeInTime, token).Forget();
+            => PlaySoundAndForget(audioType, fadeInTime, token).Forget();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void PauseSound(AudioType audioType, float fadeOutTime = 0)
+        {
+            if(TypeToChannel.TryGetValue(audioType, out var channel))
+            {
+                channel.PauseSound(fadeOutTime);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void UnpauseSound(AudioType audioType, float fadeInTime = 0)
+        {
+            if (TypeToChannel.TryGetValue(audioType, out var channel))
+            {
+                channel.UnpauseSound(fadeInTime);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void StopSound(AudioType audioType, float fadeOutTime = 0)
+        {
+            if (TypeToChannel.TryGetValue(audioType, out var channel))
+            {
+                channel.StopSound(fadeOutTime);
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private async UniTaskVoid PlaySoundAndForget(
             AudioType type
             , float fadeInTime
@@ -27,16 +55,17 @@ namespace Module.Core.Extended.Audio.Sound
             => await PlaySoundAsyncInternal(type, fadeInTime, token);
 
         private async UniTask PlaySoundAsyncInternal(
-            AudioType type
+            AudioType audioType
             , float fadeInTime
             , CancellationToken token
         )
         {
-            var soundChannel = Pool.RentComponent(true);
+            var soundChannel = GetFromPool(audioType);
 
-            if(LoaderAsset.TryGetClip(type, out var clip))
+            if(LoaderAsset.TryGetClip(audioType, out var clip))
             {
                 soundChannel._container = this;
+                soundChannel.AudioType = audioType;
                 soundChannel.Initialize(clip);
                 await soundChannel.PlaySoundAsync(fadeInTime, token);
             }

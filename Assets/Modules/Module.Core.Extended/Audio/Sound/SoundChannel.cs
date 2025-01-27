@@ -53,8 +53,7 @@ namespace Module.Core.Extended.Audio.Sound
 
             await UniTask.WaitUntil(() => audioSource.isPlaying == false, cancellationToken: token);
 
-            OnReturnToPool();
-            _container.Pool.Return(this);
+            _container.ReturnToPool(this, OnReturnToPool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -133,8 +132,7 @@ namespace Module.Core.Extended.Audio.Sound
 
             audioSource.Stop();
 
-            OnReturnToPool();
-            _container.Pool.Return(this);
+            _container.ReturnToPool(this, OnReturnToPool);
         }
     }
 }

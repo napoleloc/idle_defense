@@ -54,8 +54,7 @@ namespace Module.Core.Extended.Audio.Music
 
             await UniTask.WaitUntil(() => audioSource.isPlaying == false, cancellationToken: token);
 
-            OnReturnToPool();
-            _container.Pool.Return(this);
+            _container.ReturnToPool(this, OnReturnToPool);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

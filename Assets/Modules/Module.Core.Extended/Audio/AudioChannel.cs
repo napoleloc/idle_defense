@@ -17,6 +17,8 @@ namespace Module.Core.Extended.Audio
         protected UniTask uniTask;
         protected CancellationTokenSource unitCts;
 
+        internal AudioType AudioType { get; set; }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected bool Validate()
            => audioSource && audioSource.clip;

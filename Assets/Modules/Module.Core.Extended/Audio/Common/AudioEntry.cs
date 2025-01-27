@@ -1,8 +1,16 @@
 using System;
+using EncosyTower.Modules.EnumExtensions;
 using UnityEngine;
 
 namespace Module.Core.Extended.Audio
 {
+    [EnumExtensions]
+    public enum AudioType
+    {
+        button,
+        claim
+    }
+
     [Serializable]
     public struct AudioEntry
     {

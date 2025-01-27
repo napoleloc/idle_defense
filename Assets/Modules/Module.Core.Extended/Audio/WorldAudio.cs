@@ -50,6 +50,9 @@ namespace Module.Core.Extended.Audio
 
             subscriber.Subscribe<AsyncMessage<PlayMusicMessage>>(static (state, msg, token) => state.HandleAsync(msg, token));
             subscriber.Subscribe<PlayMusicMessage>(static (state, msg) => state.Handle(msg));
+            subscriber.Subscribe<PauseMusicMessage>(static (state, msg) => state.Handle(msg));
+            subscriber.Subscribe<UnpauseMusicMessage>(static (state, msg) => state.Handle(msg));
+            subscriber.Subscribe<StopMusicMessage>(static (state, msg) => state.Handle(msg));
 
             GlobalObjectVault.TryAdd(PresetId, this);
             GlobalValueVault<bool>.TrySet(PresetId, true);
@@ -74,5 +77,14 @@ namespace Module.Core.Extended.Audio
 
         private void Handle(PlayMusicMessage message)
             => _musicChannelContainer.PlayMusic(message.AudioType, message.FadeInTime);
+
+        private void Handle(PauseMusicMessage messgae)
+            => _musicChannelContainer.PauseMusic(messgae.AudioType, messgae.FadeOutTime);
+
+        private void Handle(UnpauseMusicMessage message)
+            => _musicChannelContainer.UnpauseMusic(message.AudioType, message.FadeInTime);
+
+        private void Handle(StopMusicMessage message)
+            => _musicChannelContainer.StopMusic(message.AudioType, message.FadeOutTime);
     }
 }

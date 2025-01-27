@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -18,15 +20,41 @@ namespace Module.Core.Extended.Audio
         [SerializeField]
         private GameObject _source;
 
-        protected ComponentPool<ComponentPrefab, T> pool;
-        protected CancellationTokenSource initCts;
+        private readonly Dictionary<AudioType, T> _typeToChannel = new();
+        private ComponentPool<ComponentPrefab, T> _pool;
+        private CancellationTokenSource _initCts;
 
         public bool Initialized { get; private set; }
         public AudioLoaderAsset LoaderAsset => _loaderAsset;
-        internal ComponentPool<ComponentPrefab, T> Pool
+        
+        protected Dictionary<AudioType, T> TypeToChannel
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => pool;
+            get => _typeToChannel;
+        }
+
+        protected ComponentPool<ComponentPrefab, T> Pool
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get => _pool;
+        }
+
+        internal protected virtual T GetFromPool(AudioType audioType)
+        {
+            var component = _pool.RentComponent(true);
+            var id = component.GetInstanceID();
+
+            _typeToChannel[audioType] = component;
+
+            return component;
+        }
+
+        internal protected virtual void ReturnToPool(T instance, Action listener)
+        {
+            _pool.Return(instance);
+            _typeToChannel.Remove(instance.AudioType);
+
+            listener?.Invoke();
         }
 
         public async UniTask InitializeAsync()
@@ -36,13 +64,13 @@ namespace Module.Core.Extended.Audio
                 return;
             }
 
-            pool = new(new() {
+            _pool = new(new() {
                 Source = _source,
                 Parent = _parent,
             });
 
             RenewInitCts();
-            await _loaderAsset.InitializeAsync(initCts.Token);
+            await _loaderAsset.InitializeAsync(_initCts.Token);
 
             Initialized = true;
         }
@@ -61,11 +89,11 @@ namespace Module.Core.Extended.Audio
 
         private void RenewInitCts()
         {
-            initCts ??= new();
-            if (initCts.IsCancellationRequested)
+            _initCts ??= new();
+            if (_initCts.IsCancellationRequested)
             {
-                initCts.Dispose();
-                initCts = new();
+                _initCts.Dispose();
+                _initCts = new();
             }
         }
     }
