@@ -73,7 +73,7 @@ namespace Module.MainGame.Gameplay
         {
             // TODO:
             await GlobalValueVault<bool>.WaitUntil(MapLoader.PresetId, true, token);
-            await GlobalValueVault<bool>.WaitUntil(BuildingSpawnr.PresetId, true, token);
+            await GlobalValueVault<bool>.WaitUntil(BuildingSpawner.PresetId, true, token);
 
             // TODO:
             await WorldMessenger.Publisher.MapScope()

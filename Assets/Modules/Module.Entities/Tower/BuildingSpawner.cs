@@ -12,17 +12,17 @@ using UnityEngine.AddressableAssets;
 
 namespace Module.Entities.Tower
 {
-    public class BuildingSpawnr : MonoBehaviour
+    public class BuildingSpawner : MonoBehaviour
     {
-        public static readonly Id<BuildingSpawnr> PresetId = default;
+        public static readonly Id<BuildingSpawner> PresetId = default;
 
         [SerializeField]
-        private TowerDatabase _database;    
+        private TowerDatabaseAsset _database;    
 
         private GameObject _usedObject;
         private bool _loaded;
 
-        public TowerDatabase Database
+        public TowerDatabaseAsset Database
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _database;
