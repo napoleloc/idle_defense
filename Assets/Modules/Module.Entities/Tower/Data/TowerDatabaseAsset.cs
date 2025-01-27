@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Module.Entities.Tower.Data
 {
-    [CreateAssetMenu(fileName = nameof(TowerDatabase), menuName = "Idle-Defense/Entities/Tower/Database")]
-    public class TowerDatabase : ScriptableObject
+    using ConfigAssetRef = LazyLoadReference<TowerConfigAsset>;
+
+    [CreateAssetMenu(fileName = nameof(TowerDatabaseAsset), menuName = "Idle-Defense/Entities/Tower/Database")]
+    public class TowerDatabaseAsset : ScriptableObject
     {
         private readonly Dictionary<int, int> _idToIndexMap = new();
 
         [SerializeField]
-        [AssetSelector(IsUniqueList = true)]
-        private TowerConfigAsset[] _entries;
+        private ConfigAssetRef[] _entries;
 
-        public ReadOnlyMemory<TowerConfigAsset> Entries
+        public ReadOnlyMemory<ConfigAssetRef> Entries
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => _entries;
@@ -43,9 +43,8 @@ namespace Module.Entities.Tower.Data
 
         public bool TryGetEntry(int id, out TowerConfigAsset entry)
         {
-            var result = _idToIndexMap.TryGetValue(id, out var index);
-            entry = result ? Entries.Span[index] : default;
-            return result;
+            entry = null;
+            return false;
         }
     }
 }
