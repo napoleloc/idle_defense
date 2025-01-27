@@ -23,7 +23,7 @@ namespace Module.Core.Extended.Audio
 
         public bool Initialized { get; private set; }
         public AudioLoaderAsset LoaderAsset => _loaderAsset;
-        protected ComponentPool<ComponentPrefab, T> Pool
+        internal ComponentPool<ComponentPrefab, T> Pool
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get => pool;

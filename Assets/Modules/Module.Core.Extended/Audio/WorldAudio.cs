@@ -63,9 +63,7 @@ namespace Module.Core.Extended.Audio
         }
 
         private void Handle(PlaySoundMessage message)
-        {
-
-        }
+            => _soundChannelContainer.PlaySound(message.AudioType, message.FadeInTime);
 
         private async UniTask HandleAsync(AsyncMessage<PlayMusicMessage> asyncMessage, CancellationToken token)
         {
@@ -75,8 +73,6 @@ namespace Module.Core.Extended.Audio
         }
 
         private void Handle(PlayMusicMessage message)
-        {
-
-        }
+            => _musicChannelContainer.PlayMusic(message.AudioType, message.FadeInTime);
     }
 }

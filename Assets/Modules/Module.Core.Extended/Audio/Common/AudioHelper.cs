@@ -11,7 +11,7 @@ namespace Module.Core.Extended.Audio
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void PlaySound(AudioType audioType, float fadeInTime = 0)
             => WorldMessenger.Publisher.AudioScope()
-                .Publish(new PlaySoundMessage(audioType, fadeInTime));
+            .Publish(new PlaySoundMessage(audioType, fadeInTime));
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static async UniTask PlaySoundAsync(AudioType audioType, float fadeInTime, CancellationToken token = default)

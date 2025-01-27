@@ -36,6 +36,7 @@ namespace Module.Core.Extended.Audio.Sound
 
             if(LoaderAsset.TryGetClip(type, out var clip))
             {
+                soundChannel._container = this;
                 soundChannel.Initialize(clip);
                 await soundChannel.PlaySoundAsync(fadeInTime, token);
             }

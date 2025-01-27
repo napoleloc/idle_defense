@@ -13,33 +13,49 @@ namespace Module.Core.Extended.Audio
         protected bool paused;
         protected float volume;
         protected AudioSource audioSource;
-        protected AsyncLazy asyncLazy;
 
-        public void Test()
-        {
-            var task = SmoothChangeVolume(0, 0, default);
-            if(task.Status == UniTaskStatus.Succeeded)
-            {
-
-            }
-        }
+        protected UniTask uniTask;
+        protected CancellationTokenSource unitCts;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected bool Validate()
            => audioSource && audioSource.clip;
 
-        private async UniTask SmoothChangeVolume(float targetVolume, float duration, CancellationToken token)
+        protected void RenewUnitCts()
         {
-            while (duration > 0.01F)
+            if(gameObject == false || this == false)
+            {
+                return;
+            }
+
+            unitCts ??= new();
+            if (unitCts.IsCancellationRequested)
+            {
+                unitCts.Dispose();
+                unitCts = new();
+            }
+        }
+
+        protected async UniTask SmoothChangeVolume(
+            float targetVolume
+            , float duration
+            , CancellationToken token
+        )
+        {
+            float remainTime = duration;
+
+            while (remainTime > 0.01F)
             {
                 if (token.IsCancellationRequested)
                 {
                     break;
                 }
 
-                volume = Mathf.Lerp(volume, targetVolume, Time.deltaTime / duration);
+                volume = Mathf.Lerp(volume, targetVolume, Time.deltaTime / remainTime);
+                audioSource.volume = volume;
+                remainTime -= Time.deltaTime;
+
                 await UniTask.WaitForEndOfFrame(token);
-                duration -= Time.deltaTime;
 
                 if (token.IsCancellationRequested)
                 {
@@ -56,23 +72,21 @@ namespace Module.Core.Extended.Audio
         }
 
         public void Initialize([NotNull] AudioClip clip)
-        {
-            audioSource.clip = clip;
-        }
+            => audioSource.clip = clip;
 
         public void SetAudioMixerGroup(AudioMixerGroup mixerGroup)
-        {
+            => audioSource.outputAudioMixerGroup = mixerGroup;
 
+        public void SetVolume(float volume, float fadeInTime = 0)
+        {
+            this.volume = volume;
+            audioSource.volume = volume;
         }
 
         public void SetLoop(bool loop)
         {
-
-        }
-
-        public void SetVolume(float volume)
-        {
-
+            looping = loop;
+            audioSource.loop = loop;
         }
 
         public virtual void OnGetFromPool()
@@ -82,7 +96,7 @@ namespace Module.Core.Extended.Audio
 
         public virtual void OnReturnToPool()
         {
-
+            unitCts.Cancel();
         }
     }
 }

@@ -32,6 +32,7 @@ namespace Module.Core.Extended.Audio.Music
             var musicChannel = Pool.RentComponent(true);
             if (LoaderAsset.TryGetClip(audioType, out var clip))
             {
+                musicChannel._container = this;
                 musicChannel.Initialize(clip);
                 await musicChannel.PlayMusicAsync(fadeInTime, token);
             }
