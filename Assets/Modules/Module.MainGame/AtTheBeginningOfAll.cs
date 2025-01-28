@@ -28,8 +28,9 @@ namespace Module.MainGame
         private const string BUILDING_SPAWNER_NAME = "prefab-building-spawner";
 
         private const string WORLD_ENEMY_NAME = "prefab-world-enemy";
-        private const string ENEMY_POOLER_NAME = "prefab-enemy-pooler";
-        private const string ENEMY_PROGRESS_MANAGER_NAME = "prefab-enemy-progress-manager";
+        private const string MINION_POOL_MANAGER_NAME = "prefab-minion-pool-manager";
+        private const string ELITE_POOL_MANAGER_NAME = "prefab-elite-pool-manager";
+        private const string ENEMY_SPAWNER_MANAGER_NAME = "prefab-enemy-spawner-manager";
 
         private CancellationTokenSource _initCts;
 
@@ -91,12 +92,14 @@ namespace Module.MainGame
             var sceneScene = SceneManager.CreateScene(SCENE_ENTITIES_ENEMY_NAME);
 
             var handleWorldEnemy = new AddressableKey<GameObject>(WORLD_ENEMY_NAME);
-            var handleEnemyPooler = new AddressableKey<GameObject>(ENEMY_POOLER_NAME);
-            var handleEnemyProgress = new AddressableKey<GameObject>(ENEMY_PROGRESS_MANAGER_NAME);
+            var handleMinionPool = new AddressableKey<GameObject>(MINION_POOL_MANAGER_NAME);
+            var handleElitePool = new AddressableKey<GameObject>(ELITE_POOL_MANAGER_NAME);
+            var handleEnemySpawner = new AddressableKey<GameObject>(ENEMY_SPAWNER_MANAGER_NAME);
 
             await handleWorldEnemy.InstantiateAsync(sceneScene, trimCloneSuffix: true);
-            await handleEnemyPooler.InstantiateAsync(sceneScene, trimCloneSuffix: true);
-            await handleEnemyProgress.InstantiateAsync(sceneScene, trimCloneSuffix: true);
+            await handleMinionPool.InstantiateAsync(sceneScene, trimCloneSuffix: true);
+            await handleElitePool.InstantiateAsync(sceneScene, trimCloneSuffix: true);
+            await handleEnemySpawner.InstantiateAsync(sceneScene, trimCloneSuffix: true);
         }
 
         private async UniTask InitDebugSceneAsyncInternal(CancellationToken token)

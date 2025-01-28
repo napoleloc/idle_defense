@@ -30,11 +30,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 25a1f9a4d5ef28a4c8a0436473666424
-    m_Address: prefab-enemy-progress-manager
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2aa3745651801334ba3d2d3dfe0f5248
     m_Address: 1-scene-gameplay-map-1-3
     m_ReadOnly: 0
@@ -65,8 +60,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 52d91da01435834468b1e6576e356917
-    m_Address: prefab-enemy-pooler
+  - m_GUID: 6f07b8b29db5e8a48b276fe20c9dc44b
+    m_Address: prefab-enemy-spawner-manager
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f65af02d3c39d044ac4654a6275f716
+    m_Address: prefab-elite-pool-manager
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -132,6 +132,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d11e2d79cbb45414c9981ec86dcf91b1
     m_Address: prefab-map-loader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d25e150d10d85fa47ad429f00ecc727a
+    m_Address: prefab-minion-pool-manager
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

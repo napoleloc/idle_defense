@@ -1,6 +1,4 @@
 using EncosyTower.Modules;
-using EncosyTower.Modules.Logging;
-using EncosyTower.Modules.Vaults;
 using Module.Core.Extended.PubSub;
 using Module.Core.HFSM;
 using Module.Core.HFSM.States;
@@ -147,10 +145,6 @@ namespace Module.Entities.Characters.Enemy.AI
         protected virtual void OnEnterDeadState(State<EnemyState, EnemyStateEvent> state)
         {
             OnReturnToPool();
-            if(GlobalObjectVault.TryGet(EnemyPooler.PresetId, out var enemyPooler))
-            {
-                enemyPooler.ReturnToPoolBy(GameCommon.EnemyType.Minion, gameObject);
-            }
         }
 
         public void TriggerDying()

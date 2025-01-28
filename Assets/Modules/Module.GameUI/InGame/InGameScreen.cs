@@ -68,8 +68,6 @@ namespace Module.GameUI.InGame
 
         private void ButtonStart_OnClick()
         {
-            GlobalObjectVault.TryGet(EnemyProgressManager.PresetId, out var manager);
-            manager.BeginProgress();
         }
     }
 }
