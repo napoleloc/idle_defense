@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5309583667453691262}
   - component: {fileID: 9198485622895270648}
   m_Layer: 0
-  m_Name: prefab-enemy-spawner-manager
+  m_Name: prefab-enemy-spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

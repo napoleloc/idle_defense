@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5433800216814416985}
-  - component: {fileID: 2641662257071990207}
+  - component: {fileID: 3889997326342202380}
   m_Layer: 0
   m_Name: prefab-building-spawner
   m_TagString: Untagged
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2641662257071990207
+--- !u!114 &3889997326342202380
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,7 +41,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6885655110085146315}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21c530a6dd1831647990d5b97b732268, type: 3}
+  m_Script: {fileID: 11500000, guid: 805f0e03e8868a54d90009f2cfdd445e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _database: {fileID: 11400000, guid: d62b1a14ec9fd67479116b5b7a4c4235, type: 2}
