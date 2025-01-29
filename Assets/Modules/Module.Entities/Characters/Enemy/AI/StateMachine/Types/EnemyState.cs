@@ -5,6 +5,10 @@ namespace Module.Entities.Characters.Enemy.AI
         Appear,
         Idle,
         Chase,
+
+        NormalAttack,
+        SpecialAttack,
+
         Dying,
         Dead,
     }

@@ -15,9 +15,6 @@ namespace Module.Entities.Characters.Enemy.AI
         protected readonly StateMachine<EnemyState, EnemyStateEvent> StateMachine = new();
 
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
-        [InlineProperty]
-        [SerializeField, ReadOnly]
-        protected Id.Serializable uniqueId;
         [SerializeField, ReadOnly]
         protected bool initialized;
         [SerializeField, ReadOnly]
@@ -25,6 +22,7 @@ namespace Module.Entities.Characters.Enemy.AI
         [SerializeField, ReadOnly]
         private EnemyState _currentState;
 
+        protected Id uniqueId;
         protected NavMeshAgent navMeshAgent;
         protected CharacterController characterController;
         protected CharacterPhysicsComponent characterPhysicsComponent;
@@ -99,11 +97,24 @@ namespace Module.Entities.Characters.Enemy.AI
         protected virtual void InitStateMachine()
         {
             // Declare states
-            StateMachine.AddState(EnemyState.Appear, new EnemyAppearState(this, true, OnEnterAppearState, OnExitAppearState));
-            StateMachine.AddState(EnemyState.Idle, new EnemyIdleState(this, true));
-            StateMachine.AddState(EnemyState.Chase, new EnemyChaseState(this, true));
-            StateMachine.AddState(EnemyState.Dying, new EnemyDyingState(this, true, OnEnterDyingState));
-            StateMachine.AddState(EnemyState.Dead, new EnemyDeadState(this, true, OnEnterDeadState,0.33F));
+            StateMachine.AddState(EnemyState.Appear
+                , new EnemyAppearState(this, true, OnEnterAppearState, OnExitAppearState));
+            StateMachine.AddState(EnemyState.Idle
+                , new EnemyIdleState(this, true));
+            StateMachine.AddState(EnemyState.Chase
+                , new EnemyChaseState(this, true));
+
+            // Attack
+            StateMachine.AddState(EnemyState.NormalAttack
+                , new EnemyNormalAttackState(this, true, OnEnterNormalAttackState, OnExitNormalAttackState));
+            StateMachine.AddState(EnemyState.SpecialAttack
+                , new EnemySpecialAttackState(this, true, OnEnterSpecialAttackState, OnExitSpecialAttackState));
+
+            // Dead
+            StateMachine.AddState(EnemyState.Dying
+                , new EnemyDyingState(this, true, OnEnterDyingState));
+            StateMachine.AddState(EnemyState.Dead
+                , new EnemyDeadState(this, true, OnEnterDeadState,0.33F));
 
             InitTransitionConditions();
 
@@ -133,13 +144,19 @@ namespace Module.Entities.Characters.Enemy.AI
             characterPhysicsComponent.Activate();
         }
 
+        protected virtual void OnEnterNormalAttackState(State<EnemyState, EnemyStateEvent> state) { }
+
+        protected virtual void OnExitNormalAttackState(State<EnemyState, EnemyStateEvent> state) { }
+
+        protected virtual void OnEnterSpecialAttackState(State<EnemyState, EnemyStateEvent> state) { }
+
+        protected virtual void OnExitSpecialAttackState(State<EnemyState, EnemyStateEvent> state) { }
+
         protected virtual void OnEnterDyingState(State<EnemyState, EnemyStateEvent> state)
         {
             navMeshAgent.ResetPath();
             navMeshAgent.enabled = false;
             CharacterPhysicsComponent.Deactivate();
-
-            
         }
 
         protected virtual void OnEnterDeadState(State<EnemyState, EnemyStateEvent> state)

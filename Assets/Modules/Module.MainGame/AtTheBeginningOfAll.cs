@@ -30,7 +30,7 @@ namespace Module.MainGame
         private const string WORLD_ENEMY_NAME = "prefab-world-enemy";
         private const string MINION_POOL_MANAGER_NAME = "prefab-minion-pool-manager";
         private const string ELITE_POOL_MANAGER_NAME = "prefab-elite-pool-manager";
-        private const string ENEMY_SPAWNER_MANAGER_NAME = "prefab-enemy-spawner-manager";
+        private const string ENEMY_SPAWNER_NAME = "prefab-enemy-spawner";
 
         private CancellationTokenSource _initCts;
 
@@ -94,7 +94,7 @@ namespace Module.MainGame
             var handleWorldEnemy = new AddressableKey<GameObject>(WORLD_ENEMY_NAME);
             var handleMinionPool = new AddressableKey<GameObject>(MINION_POOL_MANAGER_NAME);
             var handleElitePool = new AddressableKey<GameObject>(ELITE_POOL_MANAGER_NAME);
-            var handleEnemySpawner = new AddressableKey<GameObject>(ENEMY_SPAWNER_MANAGER_NAME);
+            var handleEnemySpawner = new AddressableKey<GameObject>(ENEMY_SPAWNER_NAME);
 
             await handleWorldEnemy.InstantiateAsync(sceneScene, trimCloneSuffix: true);
             await handleMinionPool.InstantiateAsync(sceneScene, trimCloneSuffix: true);
