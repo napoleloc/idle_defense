@@ -3,9 +3,15 @@
     "rootNamespace": "Module.Data",
     "references": [
         "EncosyTower.Modules",
+        "Module.Core",
+        "Module.Core.Extended",
         "Module.GameCommon",
         "Module.Worlds.BattleWorld",
-        "Unity.Collections"
+        "UniTask",
+        "UniTask.Addressables",
+        "Unity.Addressables",
+        "Unity.Collections",
+        "Unity.ResourceManager"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

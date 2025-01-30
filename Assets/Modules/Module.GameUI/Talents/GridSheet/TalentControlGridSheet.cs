@@ -8,6 +8,7 @@ using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Module.GameUI.Talents.GridSheet
 {
@@ -20,6 +21,8 @@ namespace Module.GameUI.Talents.GridSheet
         private Transform _contents;
         [SerializeField]
         private TalentControlPooler _pooler;
+        [SerializeField]
+        private Button _buttonUnlockTalent;
 
         [Title("Soft Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
@@ -57,6 +60,11 @@ namespace Module.GameUI.Talents.GridSheet
 
             _attributeKind = kind;
             ReloadGridSheet();
+        }
+
+        private void ButtonUnlockTalent_OnClick()
+        {
+
         }
 
         private void ReloadGridSheet()
