@@ -61,7 +61,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6f07b8b29db5e8a48b276fe20c9dc44b
-    m_Address: prefab-enemy-spawner-manager
+    m_Address: prefab-enemy-spawner
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
