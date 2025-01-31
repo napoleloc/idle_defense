@@ -3,100 +3,117 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using EncosyTower.Modules;
 using EncosyTower.Modules.Logging;
+using Module.Data.Runtime.DataTableAsstes;
+using Module.Data.Runtime.Persistention;
 using Module.Data.Runtime.Serialization;
 using UnityEngine;
 
 namespace Module.Data.Runtime
 {
-    public static class RuntimeDataManager
+    public static class WorldRuntimeData
     {
         private const string FILE_NAME = "runtime-data";
+        private const string RESOURCE_PATH = nameof(RuntimeDatabaseAsset);
 
-        private static readonly Dictionary<string, RuntimeDataSerialize> s_nameToData = new();
         private static readonly Dictionary<Type, RuntimeDataSerialize> s_typeToData = new();
+        private static PersistentWrapper s_instance;
         private static RuntimeDataSerializeContainer s_container;
+        private static RuntimeDatabaseAsset s_runtimeDatabase;
 
-        private static bool s_initialized;
+        public static bool Initialized { get; private set; }
+        internal static PersistentWrapper Instance => s_instance ??= new();
+        public static RuntimeDatabaseAsset RuntimeDatabase
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                if(s_runtimeDatabase == false)
+                {
+                    var handle = new ResourceKey<RuntimeDatabaseAsset>(RESOURCE_PATH);
+                    var runtimeDatabaseOpt = handle.TryLoad();
 
+                    if (runtimeDatabaseOpt.HasValue)
+                    {
+                        s_runtimeDatabase = runtimeDatabaseOpt.ValueOrDefault();
+                        DevLoggerAPI.LogInfo($"[WorldRuntimeData] {s_runtimeDatabase.GetType().Name} loaded successfully.");
+                    }
+                    else
+                    {
+                        DevLoggerAPI.LogError($"[WorldRuntimeData] RuntimeDatabaseAsset not found at path: 'Resources/{RESOURCE_PATH}'. " +
+                                  "Ensure the asset exists and is in the correct Resources folder.");
+                    }
+                }
+
+                return s_runtimeDatabase;
+            }
+        }
+
+#if UNITY_EDITOR
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void Init()
+        {
+            s_instance = null;
+            s_container = null;
+
+            if (s_runtimeDatabase)
+            {
+                s_runtimeDatabase.Deinitialize();
+                s_runtimeDatabase = null;
+            }
+        }
+#endif
         public static void Initialize()
         {
-            if (s_initialized)
+            if (Initialized)
             {
                 return;
             }
 
+            s_container = Instance.Load(FILE_NAME);
+
             var entries = s_container.Entries.Span;
             var entriesLenght = entries.Length;
-            var nameToData = s_nameToData;
             var typeToData = s_typeToData;
 
-            nameToData.Clear();
-            nameToData.EnsureCapacity(entriesLenght);
-
             typeToData.Clear();
-            nameToData.EnsureCapacity(entriesLenght);
+            typeToData.EnsureCapacity(entriesLenght);
 
             for (var i = 0; i < entriesLenght; i++)
             {
                 var entry = entries[i];
 
                 var type = entry.GetType();
-                nameToData[type.Name] = entry;
                 typeToData[type] = entry;
 
                 entry.Serialize();
             }
 
-            s_initialized = true;
+            Initialized = true;
         }
 
         public static void Deinitialize()
         {
-            if(s_initialized == false)
+            if(Initialized == false)
             {
                 return;
             }
 
-            s_initialized = false;
+            Initialized = false;
 
             foreach (var entry in s_container.Entries.Span)
             {
                 entry.Deserialize();
             }
 
-            s_nameToData.Clear();
             s_typeToData.Clear();
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetData([NotNull] string name, out RuntimeDataSerialize data)
-        {
-            if(s_initialized == false)
-            {
-                LogErrorRuntimeDataIsNotInitialized();
-                data = null;
-                return false;
-            }
-
-            if(s_nameToData.TryGetValue(name, out var weakRef))
-            {
-                data = weakRef;
-                return true;
-            }
-            else
-            {
-                LogErrorCannotFindAsset(name);
-            }
-
-            data = null;
-            return false;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryGetData([NotNull] Type type, out RuntimeDataSerialize data)
         {
-            if (s_initialized == false)
+            if (Initialized == false)
             {
                 LogErrorRuntimeDataIsNotInitialized();
                 data = null;
@@ -121,7 +138,7 @@ namespace Module.Data.Runtime
         public static bool TryGetData<T>(out T data)
             where T : RuntimeDataSerialize
         {
-            if(s_initialized == false)
+            if(Initialized == false)
             {
                 LogErrorRuntimeDataIsNotInitialized();
                 data = null;

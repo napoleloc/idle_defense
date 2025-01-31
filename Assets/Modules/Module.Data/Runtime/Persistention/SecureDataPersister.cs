@@ -7,7 +7,7 @@ using System;
 
 namespace Module.Data.Runtime.Persistention
 {
-    internal static class PersistentHelper
+    internal static class SecureDataPersister
     {
         private static readonly string s_persistentDataPath;
 

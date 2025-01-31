@@ -10,6 +10,7 @@ namespace Module.Data.Runtime.DataTableAsstes
 {
     using RuntimeTableAssetRef = LazyLoadReference<RuntimeDataTableAsset>;
 
+    [CreateAssetMenu(fileName =nameof(RuntimeDatabaseAsset), menuName = "Idle-Defense/Runtime-Data/Runtime Database")]
     public class RuntimeDatabaseAsset : ScriptableObject
     {
         [SerializeField]
