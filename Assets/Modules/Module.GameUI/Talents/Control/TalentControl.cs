@@ -24,14 +24,30 @@ namespace Module.GameUI.Talents.Control
         [Title("Debugging", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
         [ReadOnly]
-        private AttributeType _attributeType;
+        private AttributeKind _kind;
+        [SerializeField]
+        [ReadOnly]
+        private AttributeType _attribute;
 
-        public void Initialize(AttributeType attributeType)
+        public void Initialize(AttributeKind kind, AttributeType subId)
         {
-            _attributeType = attributeType;
-            _labeTalentName.SetText(AttributeTypeExtensions.ToStringFast(attributeType));
+            _kind = kind;
+            _attribute = subId;
 
             _buttonControl.onClick.AddListener(ButtonControl_OnClick);
+        }
+
+        public void SetAllLabels(string name, string value, string cost)
+        {
+            _labeTalentName.SetText(name);
+            _labelTalentValue.SetText(value);
+            _labelCostAmount.SetText(cost);
+        }
+
+        public void SetAllImages(Sprite spriteTalent, Sprite spriteCost)
+        {
+            _imageTalent.sprite = spriteTalent;
+            _imageCost.sprite = spriteCost;
         }
 
         public void Cleanup()

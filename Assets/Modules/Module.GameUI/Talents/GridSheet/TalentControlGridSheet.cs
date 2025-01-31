@@ -61,7 +61,7 @@ namespace Module.GameUI.Talents.GridSheet
 
         private void ReloadGridSheet()
         {
-            //var count = dataTable.UnlockedCount(_attributeKind);
+           // var count = dataTable.UnlockedCount(_attributeKind);
             //var lenght = _attributeControls.Count - count;
 
             //if (lenght > 0)
