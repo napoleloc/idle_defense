@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b9a060e1bf2fbf45835117d287c3edf, type: 3}
   m_Name: RuntimeDatabaseAsset
   m_EditorClassIdentifier: 
-  _assetRefs: []
+  _assetRefs:
+  - {fileID: 11400000, guid: 7a83397b24a836f4f8d2f4f12f17901e, type: 2}
   _redundantAssetRefs: []
