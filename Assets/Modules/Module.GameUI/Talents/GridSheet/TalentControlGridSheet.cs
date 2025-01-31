@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
 using EncosyTower.Modules.Vaults;
@@ -21,8 +20,6 @@ namespace Module.GameUI.Talents.GridSheet
         private Transform _contents;
         [SerializeField]
         private TalentControlPooler _pooler;
-        [SerializeField]
-        private Button _buttonUnlockTalent;
 
         [Title("Soft Reference", titleAlignment: TitleAlignments.Centered)]
         [SerializeField]
@@ -60,11 +57,6 @@ namespace Module.GameUI.Talents.GridSheet
 
             _attributeKind = kind;
             ReloadGridSheet();
-        }
-
-        private void ButtonUnlockTalent_OnClick()
-        {
-
         }
 
         private void ReloadGridSheet()

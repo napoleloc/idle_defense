@@ -1,4 +1,3 @@
-using System;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -27,18 +26,22 @@ namespace Module.GameUI.Talents.Control
         [ReadOnly]
         private AttributeType _attributeType;
 
-        private event Action ButtonControl_OnClick;
-
         public void Initialize(AttributeType attributeType)
         {
             _attributeType = attributeType;
+            _labeTalentName.SetText(AttributeTypeExtensions.ToStringFast(attributeType));
 
-            _labeTalentName.SetText(AttributeTypeExtensions.ToDisplayStringFast(attributeType));
+            _buttonControl.onClick.AddListener(ButtonControl_OnClick);
         }
 
         public void Cleanup()
         {
             _buttonControl.onClick.RemoveAllListeners();
+        }
+
+        private void ButtonControl_OnClick()
+        {
+
         }
     }
 }
