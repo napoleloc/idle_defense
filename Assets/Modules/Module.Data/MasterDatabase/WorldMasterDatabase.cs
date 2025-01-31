@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
-using EncosyTower.Modules.AddressableKeys;
+using EncosyTower.Modules;
 using EncosyTower.Modules.Data;
 using EncosyTower.Modules.Logging;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace Module.Data.MasterDatabase
 {
     public class WorldMasterDatabase
     {
-        private const string KEY = nameof(DatabaseAsset);
+        private const string RESOURCE_PATH = "Database/DatabaseAsset";
 
         private static DatabaseAsset s_database;
 
@@ -21,11 +21,20 @@ namespace Module.Data.MasterDatabase
             {
                 if (s_database == false)
                 {
-                    var handle = new AddressableKey<DatabaseAsset>(KEY);
+                    var handle = new ResourceKey<DatabaseAsset>(RESOURCE_PATH);
                     s_database = handle.Load();
-                }
 
-                DevLoggerAPI.LogInfo("[DatabaseManager] DatabaseAsset loaded successfully.");
+                    if (s_database)
+                    {
+                        DevLoggerAPI.LogInfo("[WorldMasterDatabase] DatabaseAsset loaded successfully.");
+                        s_database.Initialize();
+                    }
+                    else
+                    {
+                        DevLoggerAPI.LogError("[WorldMasterDatabase] DatabaseAsset not found at path: 'Resources/Database/DatabaseAsset'. " +
+                                   "Ensure the asset exists and is in the correct Resources folder.");
+                    }
+                }
 
                 return s_database;
             }
@@ -51,5 +60,9 @@ namespace Module.Data.MasterDatabase
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool TryGetDataTableAsset<T>(out T dataTable) where T : DataTableAsset
             => Database.TryGetDataTableAsset<T>(out dataTable);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetDataTableAsset<T>([NotNull] string name, out T dataTable) where T : DataTableAsset
+            => Database.TryGetDataTableAsset<T>(name, out dataTable);
     }
 }
