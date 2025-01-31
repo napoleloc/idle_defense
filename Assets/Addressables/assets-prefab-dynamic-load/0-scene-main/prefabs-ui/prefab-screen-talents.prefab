@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3668040175673547265}
   - component: {fileID: 3259080471966501160}
   m_Layer: 5
-  m_Name: label-talent-amount
+  m_Name: label-talent-value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,7 +568,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8750212955040350961
 RectTransform:
   m_ObjectHideFlags: 0
@@ -604,7 +604,7 @@ MonoBehaviour:
   _imageTalent: {fileID: 414716615599281680}
   _imageCost: {fileID: 8680278545309821964}
   _labeTalentName: {fileID: 4444687161971604977}
-  _labelTalentValue: {fileID: 0}
+  _labelTalentValue: {fileID: 3259080471966501160}
   _labelCostAmount: {fileID: 8734450186471748368}
   _buttonControl: {fileID: 4699928377214674580}
   _attributeType: 0
@@ -1034,9 +1034,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97386ebe7ccc1904dabf8578d63df74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _tableData: {fileID: 11400000, guid: 6203d7509dee59046b56877f75633a38, type: 2}
   _contents: {fileID: 2534699166291729641}
   _pooler: {fileID: 5131907744961887245}
+  _buttonUnlockTalent: {fileID: 0}
   _attributeKind: 0
 --- !u!114 &7132966037922968977
 MonoBehaviour:
@@ -2974,7 +2974,7 @@ GameObject:
   - component: {fileID: 6700050941021063611}
   - component: {fileID: 4444687161971604977}
   m_Layer: 5
-  m_Name: label-talent
+  m_Name: label-talent-name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
