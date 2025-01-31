@@ -8,11 +8,21 @@ using UnityEngine;
 
 namespace Module.Data.Database.Talents
 {
+    [CreateAssetMenu(fileName =nameof(TalentDatabaseAsset))]
     public class TalentDatabaseAsset : ScriptableObject
     {
+        [ListDrawerSettings(ShowIndexLabels = true, ListElementLabelName = "_attribute")]
+        [SerializeField]
+        private TalentData[] _talents;
+
         [System.Serializable]
         private class TalentData
         {
+            [SerializeField]
+            private AttributeType _attribute;
+            [SerializeField]
+            private uint _unlockCost;
+
             [Title("Addressables Keys", titleAlignment: TitleAlignments.Centered)]
             [SerializeField]
             private string _talentAtlasedKey;
