@@ -1,0 +1,17 @@
+{
+    "name": "Module.Data.Testing",
+    "rootNamespace": "Module.Data.Testing",
+    "references": [
+        "EncosyTower.Modules",
+        "Module.Data"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
