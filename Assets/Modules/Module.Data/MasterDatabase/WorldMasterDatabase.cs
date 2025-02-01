@@ -22,12 +22,12 @@ namespace Module.Data.MasterDatabase
                 if (s_database == false)
                 {
                     var handle = new ResourceKey<DatabaseAsset>(RESOURCE_PATH);
-                    s_database = handle.Load();
+                    var databaseOpt = handle.TryLoad();
 
-                    if (s_database)
+                    if (databaseOpt.HasValue)
                     {
+                        s_database = databaseOpt.ValueOrDefault();
                         DevLoggerAPI.LogInfo("[WorldMasterDatabase] DatabaseAsset loaded successfully.");
-                        s_database.Initialize();
                     }
                     else
                     {
