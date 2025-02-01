@@ -72,6 +72,7 @@ namespace Module.Data.Runtime
             }
 
             s_container = Instance.Load(FILE_NAME);
+            s_runtimeDatabase.Initialize();
 
             var entries = s_container.Entries.Span;
             var entriesLenght = entries.Length;
@@ -111,7 +112,7 @@ namespace Module.Data.Runtime
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetData([NotNull] Type type, out RuntimeDataSerialize data)
+        public static bool TryGetRuntimeData([NotNull] Type type, out RuntimeDataSerialize data)
         {
             if (Initialized == false)
             {
@@ -135,7 +136,7 @@ namespace Module.Data.Runtime
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool TryGetData<T>(out T data)
+        public static bool TryGetRuntimeData<T>(out T data)
             where T : RuntimeDataSerialize
         {
             if(Initialized == false)
