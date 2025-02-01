@@ -3,7 +3,6 @@
     "rootNamespace": "EncosyTower.Modules",
     "references": [
         "AnnulusGames.UnityCodeGen.Editor",
-        "SpanExtensions.Net.Unity",
         "UniTask",
         "UniTask.Addressables",
         "Unity.Addressables",
