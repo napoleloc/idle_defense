@@ -1,3 +1,4 @@
+using Module.Data.Runtime.DataTableAsstes.Talents;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -29,10 +30,10 @@ namespace Module.GameUI.Talents.Control
         [ReadOnly]
         private AttributeType _attribute;
 
-        public void Initialize(AttributeKind kind, AttributeType subId)
+        public void Initialize(RuntimeTalentIdData id)
         {
-            _kind = kind;
-            _attribute = subId;
+            _kind = id.Kind;
+            _attribute = id.Type;
 
             _buttonControl.onClick.AddListener(ButtonControl_OnClick);
         }

@@ -169,6 +169,14 @@ namespace Module.Data.Runtime
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetRuntimeDataTableAsset([NotNull] Type type, out RuntimeDataTableAsset tableAsset)
+            => RuntimeDatabase.TryGetRuntimeDataTableAsset(type, out tableAsset);
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool TryGetRuntimeDataTableAsset<T>(out T tableAsset) where T : RuntimeDataTableAsset
+            => RuntimeDatabase.TryGetRuntimeDataTableAsset<T>(out  tableAsset);
+
         private static void InitializeAndClearInternal()
         {
 

@@ -1,14 +1,23 @@
 {
     "name": "Module.Data.Authoring",
     "rootNamespace": "Module.Data.Authoring",
-    "references": [],
+    "references": [
+        "EncosyTower.Modules",
+        "EncosyTower.Modules.Editor",
+        "Module.Core",
+        "Module.Data",
+        "Module.GameCommon",
+        "Module.Worlds.BattleWorld"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": [],
+    "defineConstraints": [
+        "UNITY_EDITOR"
+    ],
     "versionDefines": [],
     "noEngineReferences": false
 }

@@ -1,13 +1,16 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
-using EncosyTower.Modules.Vaults;
+using Module.Data.MasterDatabase;
+using Module.Data.MasterDatabase.Talents;
+using Module.Data.Runtime;
+using Module.Data.Runtime.DataTableAsstes.Talents;
+using Module.Data.Runtime.Serialization.Talents;
 using Module.GameUI.Talents.Control;
 using Module.Worlds.BattleWorld.Attribute;
 using Sirenix.OdinInspector;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Module.GameUI.Talents.GridSheet
 {
@@ -25,6 +28,9 @@ namespace Module.GameUI.Talents.GridSheet
         [SerializeField]
         private AttributeKind _attributeKind;
 
+        private TalentDataTableAsset _talentDataTable;
+        private RuntimeTalentDataTableAsset _runtimeTalentDataTable;
+
         public ReadOnlyMemory<TalentControl> AttributeControls
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -33,6 +39,9 @@ namespace Module.GameUI.Talents.GridSheet
 
         public virtual void Initialize()
         {
+            WorldMasterDatabase.TryGetDataTableAsset(out _talentDataTable);
+            WorldRuntimeData.TryGetRuntimeDataTableAsset(out  _runtimeTalentDataTable);
+
             _attributeKind = AttributeKind.Offensive;
             ReloadGridSheet();
         }
@@ -61,37 +70,38 @@ namespace Module.GameUI.Talents.GridSheet
 
         private void ReloadGridSheet()
         {
-           // var count = dataTable.UnlockedCount(_attributeKind);
-            //var lenght = _attributeControls.Count - count;
+            var count = _runtimeTalentDataTable.UnlockedCountByKind(_attributeKind);
+            var lenght = _attributeControls.Count - count;
 
-            //if (lenght > 0)
-            //{
-            //    var span = _attributeControls.AsSpan().Slice(0, lenght);
+            if (lenght > 0)
+            {
+                var span = _attributeControls.AsSpan().Slice(0, lenght);
 
-            //    _pooler.Pool.ReturnComponents(span);
-            //    _attributeControls.RemoveAt(0, lenght);
-            //}
-            //else
-            //{
-            //    count = count - _attributeControls.Count;
-            //    PrepareMany(count);
-            //}
+                _pooler.Pool.ReturnComponents(span);
+                _attributeControls.RemoveAt(0, lenght);
+            }
+            else
+            {
+                count = count - _attributeControls.Count;
+                PrepareMany(count);
+            }
 
-            //var amount = _attributeControls.Count;
-            //var talentsToUnlock = NativeArray.CreateFast<TalentEntry>(amount, Allocator.Temp);
-            //var attributeControls = _attributeControls.AsSpan();
+            var amount = _attributeControls.Count;
+            var unlockedTalents = NativeArray.CreateFast<RuntimeTalentDataEntry>(amount, Allocator.Temp);
+            var attributeControls = _attributeControls.AsSpan();
 
-            //if (dataTable.TryGetTalentsToUnlock(_attributeKind, talentsToUnlock))
-            //{
-            //    for (int i = 0; i < amount; i++)
-            //    {
-            //        var talent = talentsToUnlock[i];
-            //        var talentControl = attributeControls[i];
+            if (_runtimeTalentDataTable.TryGetUnlockedTalentsByKind(_attributeKind, unlockedTalents))
+            {
+                for (int i = 0; i < amount; i++)
+                {
+                    var talent = unlockedTalents[i];
+                    var id = talent.Id;
+                    var talentControl = attributeControls[i];
 
-            //        talentControl.transform.SetParent(_contents);
-            //        talentControl.Initialize(talent.Id.SubId);
-            //    }
-            //}
+                    talentControl.transform.SetParent(_contents);
+                    talentControl.Initialize(id);
+                }
+            }
         }
 
         private void PrepareMany(int amount)
@@ -112,5 +122,12 @@ namespace Module.GameUI.Talents.GridSheet
 
             pool.RentComponents(attributeControl.AsSpan(), true);
         }
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            
+        }
+#endif
     }
 }

@@ -12,3 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1976c7d5391e41b488168d425fd9d53f, type: 3}
   m_Name: RuntimeTalentDataTableAsset
   m_EditorClassIdentifier: 
+  _defaultTalents:
+  - _id:
+      _kind: 0
+      _type: 0
+    _level: 0
+  - _id:
+      _kind: 0
+      _type: 1
+    _level: 0
+  - _id:
+      _kind: 0
+      _type: 2
+    _level: 0
+  - _id:
+      _kind: 1
+      _type: 50
+    _level: 0
+  - _id:
+      _kind: 1
+      _type: 51
+    _level: 0
+  - _id:
+      _kind: 1
+      _type: 52
+    _level: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using EncosyTower.Modules.Collections;
+using Module.Data.Runtime.DataTableAsstes.Talents;
 
 namespace Module.Data.Runtime.Serialization.Talents
 {

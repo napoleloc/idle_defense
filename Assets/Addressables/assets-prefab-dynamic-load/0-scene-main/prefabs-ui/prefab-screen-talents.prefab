@@ -607,7 +607,8 @@ MonoBehaviour:
   _labelTalentValue: {fileID: 3259080471966501160}
   _labelCostAmount: {fileID: 8734450186471748368}
   _buttonControl: {fileID: 4699928377214674580}
-  _attributeType: 0
+  _kind: 0
+  _attribute: 0
 --- !u!222 &2306936738959774634
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1036,7 +1037,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _contents: {fileID: 2534699166291729641}
   _pooler: {fileID: 5131907744961887245}
-  _buttonUnlockTalent: {fileID: 0}
   _attributeKind: 0
 --- !u!114 &7132966037922968977
 MonoBehaviour:
